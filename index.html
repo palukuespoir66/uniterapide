@@ -1,121 +1,169 @@
-here<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>UnitéRapide.cd</title>
 <style>
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #f9f9f9;
-        margin: 0;
-        padding: 0;
-        text-align: center;
-    }
-    header {
-        background: linear-gradient(90deg, #ff3d00, #ff9100, #ffc107);
-        color: white;
-        padding: 20px;
-        font-size: 1.2em;
-        box-shadow: 0px 3px 6px rgba(0,0,0,0.2);
-    }
-    h1 {
-        margin: 0;
-        font-size: 2em;
-    }
-    .slogan {
-        font-style: italic;
-        animation: fadeIn 3s infinite alternate;
-    }
-    @keyframes fadeIn {
-        from {opacity: 0.6;}
-        to {opacity: 1;}
-    }
-    .container {
-        padding: 20px;
-    }
-    .card {
-        background: white;
-        padding: 20px;
-        margin: 15px auto;
-        border-radius: 12px;
-        max-width: 400px;
-        box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
-    }
-    .card h2 {
-        color: #333;
-    }
-    button {
-        background-color: #25D366;
-        color: white;
-        border: none;
-        padding: 12px 20px;
-        font-size: 1.1em;
-        border-radius: 8px;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: auto;
-        transition: 0.3s;
-    }
-    button img {
-        width: 24px;
-        margin-right: 8px;
-    }
-    button:hover {
-        background-color: #1ebe5b;
-    }
-    .icons img {
-        width: 40px;
-        margin: 5px;
-    }
-    footer {
-        margin-top: 20px;
-        padding: 15px;
-        background: #333;
-        color: white;
-    }
+/* Reset & Base */
+body {margin:0;font-family:Arial, sans-serif;background:#f7f7f7;color:#333;}
+h1,h2,h3{text-align:center;margin:20px 0;}
+section{padding:20px;max-width:1200px;margin:auto;}
+
+/* Promo Section */
+.promo{background:#ffefe0;padding:20px;border-radius:10px;margin-bottom:20px;text-align:center;}
+.promo h2{color:#d35400;}
+.promo .badge{background:#e67e22;color:#fff;padding:5px 10px;border-radius:6px;margin-left:10px;}
+
+/* Boutique Grid */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;}
+.card{background:#fff;padding:15px;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.1);text-align:center;}
+.card img{max-width:100%;border-radius:10px;}
+.card button{background:#25D366;color:#fff;border:none;padding:10px 15px;margin-top:10px;border-radius:6px;cursor:pointer;}
+.card button:hover{background:#1ebc57;}
+
+/* Témoignages */
+.testimonial{background:#fff;border-left:4px solid #25D366;padding:10px;margin-bottom:10px;border-radius:6px;}
+
+/* WhatsApp Floating */
+#whatsapp-float{position:fixed;bottom:20px;right:20px;background:#25D366;color:#fff;padding:12px;border-radius:50%;font-size:24px;cursor:pointer;box-shadow:0 4px 8px rgba(0,0,0,0.2);z-index:9999;}
+#whatsapp-float:hover{background:#1ebc57;}
+
+/* Avatar IA */
+#avatar-ai{position:fixed;bottom:20px;left:20px;width:80px;height:80px;border-radius:50%;overflow:hidden;border:3px solid #25D366;box-shadow:0 0 15px rgba(37,211,102,0.7);cursor:pointer;z-index:9999;animation:halo 2s infinite;}
+@keyframes halo {
+  0% {box-shadow:0 0 10px rgba(37,211,102,0.7);}
+  50% {box-shadow:0 0 20px rgba(37,211,102,1);}
+  100% {box-shadow:0 0 10px rgba(37,211,102,0.7);}
+}
+
+/* Modal Form */
+.modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.45);display:none;align-items:center;justify-content:center;z-index:99999}
+.modal{background:#fff;padding:16px;border-radius:10px;max-width:420px;width:95%;box-shadow:0 10px 30px rgba(0,0,0,0.2)}
+.modal h3{margin:0 0 8px}
+.form-row{margin-bottom:8px}
+.form-row input,.form-row select,.form-row textarea{width:100%;padding:8px;border:1px solid #ddd;border-radius:6px}
+.btn-row{display:flex;gap:8px;justify-content:flex-end}
+.btn{padding:10px 14px;border-radius:8px;border:none;cursor:pointer}
+.btn.green{background:#25D366;color:#fff}
+.btn.gray{background:#eee}
+.success{background:#e6ffed;border-left:4px solid #16a34a;padding:10px;border-radius:6px;margin-top:10px;display:none}
+.error{background:#fff4f4;border-left:4px solid #b91c1c;padding:10px;border-radius:6px;margin-top:10px;display:none}
 </style>
 </head>
 <body>
 
 <header>
-    <h1>UnitéRapide.cd</h1>
-    <p class="slogan">Rechargez en un clic, partout et à tout moment ⚡</p>
+  <h1>UnitéRapide.cd</h1>
+  <p style="text-align:center;">Vos recharges & produits livrés partout en RDC</p>
 </header>
 
-<div class="container">
-    <div class="card">
-        <h2>Nos Offres</h2>
-        <p>260 unités - 7.000 FC</p>
-        <p>520 unités - 14.000 FC</p>
-        <p>1040 unités - 28.000 FC</p>
-        <p>1 Go / 24h - 1.450 FC</p>
-        <p>2 Go / 48h - 3.500 FC</p>
-    </div>
+<section class="promo">
+  <h2>Promotions spéciales <span class="badge">Nouveau</span></h2>
+  <p>260 unités → <b>5.900 FC</b> au lieu de 7.000 FC</p>
+  <p>1Go 24h → <b>1.200 FC</b> au lieu de 1.450 FC</p>
+</section>
 
+<section>
+  <h2>Boutique</h2>
+  <div class="grid">
     <div class="card">
-        <h2>Contactez-nous</h2>
-        <p>WhatsApp : <a href="https://wa.me/243990564877" target="_blank">0990564877</a></p>
-        <div class="icons">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/2/20/Airtel_logo.svg" alt="Airtel">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/f/f8/Orange_logo.svg" alt="Orange">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/8/8e/Vodacom_logo.svg" alt="Vodacom">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/b/bf/Africell_logo.svg" alt="Africell">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/MTN_Logo.svg" alt="MTN">
-        </div>
+      <img src="https://via.placeholder.com/250x150" alt="Téléphone">
+      <h3>Téléphone Android</h3>
+      <p>Prix: 150.000 FC</p>
+      <button onclick="openOrderModal('Téléphone Android')">Commander</button>
     </div>
+    <div class="card">
+      <img src="https://via.placeholder.com/250x150" alt="Pochette PC">
+      <h3>Pochette PC 15"</h3>
+      <p>Prix: 20.000 FC</p>
+      <button onclick="openOrderModal('Pochette PC 15')">Commander</button>
+    </div>
+  </div>
+</section>
 
-    <button onclick="window.location.href='https://wa.me/243990564877'">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
-        Commander maintenant
-    </button>
+<section>
+  <h2>Témoignages</h2>
+  <div class="testimonial">"Service rapide et fiable !" — Marie</div>
+  <div class="testimonial">"Toujours des promos intéressantes" — Alain</div>
+</section>
+
+<!-- WhatsApp Floating -->
+<div id="whatsapp-float" onclick="window.open('https://wa.me/243990564877','_blank')">💬</div>
+
+<!-- Avatar IA -->
+<div id="avatar-ai" onclick="playAIMessage()">
+  <img src="https://i.ibb.co/jrBQkHr/avatar-femme.jpg" alt="Assistante" style="width:100%;height:100%;object-fit:cover;">
+</div>
+<audio id="ai-voice" autoplay>
+  <source src="https://www2.cs.uic.edu/~i101/SoundFiles/StarWars60.wav" type="audio/wav">
+</audio>
+
+<!-- Modal Form -->
+<div class="modal-backdrop" id="modalBackdrop">
+  <div class="modal" role="dialog" aria-modal="true">
+    <h3>Commande rapide</h3>
+    <div class="form-row"><input id="cmd-nom" placeholder="Ton nom" /></div>
+    <div class="form-row"><input id="cmd-phone" placeholder="Téléphone (ex: 0990...)" /></div>
+    <div class="form-row">
+      <select id="cmd-produit">
+        <option value="260 unités - Promo">260 unités - Promo</option>
+        <option value="1Go 24h">1Go 24h</option>
+        <option value="Téléphone Android">Téléphone Android</option>
+        <option value="Pochette PC 15">Pochette PC 15"</option>
+      </select>
+    </div>
+    <div class="form-row"><input id="cmd-qty" type="number" min="1" value="1" /></div>
+    <div class="form-row"><input id="cmd-prix" placeholder="Prix estimé (optionnel)" /></div>
+    <div class="form-row"><textarea id="cmd-rem" placeholder="Remarques (adresse, etc.)" rows="2"></textarea></div>
+    <div class="btn-row">
+      <button class="btn gray" onclick="closeOrderModal()">Annuler</button>
+      <button class="btn green" onclick="sendOrder()">Envoyer</button>
+    </div>
+    <div class="success" id="orderSuccess">✅ Commande reçue — on te contacte sur WhatsApp !</div>
+    <div class="error" id="orderError">❌ Erreur — réessaie.</div>
+  </div>
 </div>
 
-<footer>
-    © 2025 UnitéRapide.cd - Tous droits réservés
-</footer>
+<script>
+const WEB_APP_URL = 'YOUR_WEB_APP_URL'; // <<< À remplacer par ton URL Google Script
+
+function playAIMessage(){
+  const audio = document.getElementById('ai-voice');
+  audio.play();
+}
+
+function openOrderModal(product){
+  document.getElementById('modalBackdrop').style.display = 'flex';
+  if(product) document.getElementById('cmd-produit').value = product;
+}
+
+function closeOrderModal(){
+  document.getElementById('modalBackdrop').style.display = 'none';
+}
+
+async function sendOrder(){
+  const nom = document.getElementById('cmd-nom').value.trim();
+  const tel = document.getElementById('cmd-phone').value.trim();
+  const produit = document.getElementById('cmd-produit').value;
+  const quantite = document.getElementById('cmd-qty').value || '1';
+  const prix = document.getElementById('cmd-prix').value.trim();
+  const remarques = document.getElementById('cmd-rem').value.trim();
+  if(!nom || !tel){alert('Remplis ton nom et numéro');return;}
+  const payload = {nom, telephone: tel, produit, quantite, prix, remarques, source: 'Site Web'};
+  try {
+    const res = await fetch(WEB_APP_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+    const json = await res.json();
+    if(json.status==='ok'){
+      document.getElementById('orderSuccess').style.display='block';
+      window.open('https://wa.me/243990564877?text=' + encodeURIComponent(`Bonjour, j'ai passé une commande: ${produit} x${quantite}`),'_blank');
+      setTimeout(()=>{closeOrderModal();document.getElementById('orderSuccess').style.display='none';},2000);
+    } else throw new Error();
+  } catch(e){
+    document.getElementById('orderError').style.display='block';
+  }
+}
+</script>
 
 </body>
-    </html>
+      </html>
