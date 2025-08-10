@@ -1,446 +1,451 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>UnitéRapide.cd — Recharges & Boutique</title>
-<meta name="description" content="UnitéRapide.cd - Recharges instantanées, téléphones et pochettes. Commande via WhatsApp." />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UniteRapide - Accueil</title>
+<link rel="stylesheet" href="styles.css">
+<script src="script.js" defer></script>
+</head>
+<body>
+
+<header>
+  <div class="logo">📱 UniteRapide</div>
+  <nav>
+    <a href="index.html">Accueil</a>
+    <a href="produits.html">Produits</a>
+    <a href="contact.html">Contact</a>
+    <button id="darkModeToggle">🌙</button>
+  </nav>
+</header>
+
+<section class="hero">
+  <h1>Bienvenue chez UniteRapide</h1>
+  <p>Recharge rapide, forfaits Internet et accessoires à prix imbattables 💥</p>
+  <div class="hero-buttons">
+    <a href="https://wa.me/243990564877" class="btn">💬 WhatsApp</a>
+    <a href="https://t.me/+243970102580" class="btn">📨 Telegram</a>
+  </div>
+</section>
+
+<section class="promo-countdown">
+  <h2>🔥 Promo spéciale se termine dans :</h2>
+  <div id="countdown"></div>
+</section>
+
+<section class="why-us">
+  <h2>Pourquoi nous choisir ?</h2>
+  <div class="cards">
+    <div class="card">⚡ Rapide et fiable</div>
+    <div class="card">💰 Prix attractifs</div>
+    <div class="card">📦 Livraison instantanée</div>
+  </div>
+</section>
+
+<section class="products-preview">
+  <h2>Nos meilleures offres</h2>
+  <div class="product">
+    <img src="https://i.ibb.co/Tr4c3wm/airtel-units.jpg" alt="Recharge Airtel">
+    <h3>Recharge Airtel</h3>
+    <p>260 unités - <strong>6.9$</strong></p>
+  </div>
+  <div class="product">
+    <img src="https://i.ibb.co/6XZqQCd/internet-offer.jpg" alt="Forfait Internet">
+    <h3>Internet 1 Go / 24h</h3>
+    <p><strong>1.4$</strong></p>
+  </div>
+  <div class="product">
+    <img src="https://i.ibb.co/xXXmwn5/itel-phone.jpg" alt="Itel A58">
+    <h3>Itel A58</h3>
+    <p><strong>65$</strong></p>
+  </div>
+</section>
+
+<section class="testimonials">
+  <h2>Ce que disent nos clients</h2>
+  <blockquote>"Service super rapide et fiable !"</blockquote>
+  <blockquote>"Prix très compétitifs, je recommande."</blockquote>
+</section>
+
+<footer>
+  <p>&copy; 2025 UniteRapide - Tous droits réservés</p>
+</footer>
+
+</body>
+  </html>/* --- Styles de base --- */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #f5f5f5;
+  color: #333;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #222;
+  color: white;
+  padding: 10px 20px;
+}
+
+header .logo {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+nav a {
+  margin: 0 10px;
+  color: white;
+}
+
+nav button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.2em;
+  cursor: pointer;
+}
+
+.hero {
+  background: url('https://i.ibb.co/tXMFgx8/hero-banner.jpg') center/cover no-repeat;
+  color: white;
+  text-align: center;
+  padding: 50px 20px;
+}
+
+.hero h1 {
+  font-size: 2em;
+}
+
+.hero p {
+  font-size: 1.2em;
+}
+
+.hero-buttons {
+  margin-top: 20px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  margin: 5px;
+  background: #ff6600;
+  color: white;
+  border-radius: 5px;
+}
+
+.btn:hover {
+  background: #e65c00;
+}
+
+.promo-countdown {
+  text-align: center;
+  background: #fff;
+  padding: 20px;
+  margin: 20px 0;
+}
+
+#countdown {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.why-us {
+  background: white;
+  padding: 20px;
+  text-align: center;
+}
+
+.cards {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.card {
+  background: #ff6600;
+  color: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 150px;
+  font-weight: bold;
+}
+
+.products-preview {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 20px;
+}
+
+.product {
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  text-align: center;
+  width: 200px;
+}
+
+.product img {
+  max-width: 100%;
+  border-radius: 8px;
+}
+
+.testimonials {
+  background: #fff;
+  padding: 20px;
+  text-align: center;
+}
+
+blockquote {
+  font-style: italic;
+  margin: 10px 0;
+}
+
+footer {
+  text-align: center;
+  padding: 10px;
+  background: #222;
+  color: white;
+}// --- Compte à rebours ---
+function startCountdown() {
+    const countdownElement = document.getElementById('countdown');
+    const endDate = new Date();
+    endDate.setHours(endDate.getHours() + 48); // Promo sur 48h
+
+    function updateCountdown() {
+        const now = new Date();
+        const diff = endDate - now;
+
+        if (diff <= 0) {
+            countdownElement.textContent = "Promo terminée !";
+            return;
+        }
+
+        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const minutes = Math.floor((diff / (1000 * 60)) % 60);
+        const seconds = Math.floor((diff / 1000) % 60);
+
+        countdownElement.textContent = `${hours}h ${minutes}m ${seconds}s`;
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+}
+
+// --- Mode clair/sombre ---
+const darkModeToggle = document.getElementById('darkModeToggle');
+darkModeToggle.addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+    if (document.body.classList.contains('dark-mode')) {
+        darkModeToggle.textContent = "☀️";
+    } else {
+        darkModeToggle.textContent = "🌙";
+    }
+});
+
+// Appliquer le style sombre
+const style = document.createElement('style');
+style.textContent = `
+.dark-mode {
+    background-color: #111;
+    color: white;
+}
+.dark-mode header {
+    background: #000;
+}
+.dark-mode footer {
+    background: #000;
+}
+.dark-mode .card {
+    background: #333;
+}
+.dark-mode .product {
+    background: #222;
+}
+`;
+document.head.appendChild(style);
+
+// Lancer le compte à rebours
+startCountdown();<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UniteRapide - Produits</title>
+<link rel="stylesheet" href="styles.css">
+<script src="script.js" defer></script>
 <style>
-  :root{
-    --green:#25D366; --accent:#FFD24D; --dark:#0b3b2e; --muted:#6b7280;
-    --card-bg:#fff; --max-w:1100px;
+  .product-gallery {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding: 10px 0;
   }
-  *{box-sizing:border-box}
-  body{margin:0;font-family:Inter,system-ui,Arial,sans-serif;background:#f4f6f8;color:#111}
-  .wrap{max-width:var(--max-w);margin:0 auto;padding:18px}
-  header{background:linear-gradient(90deg,var(--green),#128C7E);color:#fff;padding:20px;border-radius:12px;box-shadow:0 8px 30px rgba(0,0,0,0.06)}
-  header h1{margin:0;font-size:1.6rem}
-  header p{margin:6px 0 0;opacity:0.95}
-  .slogan{font-style:italic;color:#fff9d9;margin-top:6px}
-
-  /* Hero / Promo */
-  .hero{display:flex;gap:14px;align-items:center;justify-content:space-between;margin-top:14px;flex-wrap:wrap}
-  .promo-card{background:var(--card-bg);padding:18px;border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,0.05);flex:1;min-width:260px}
-  .promo-title{display:flex;align-items:center;gap:8px}
-  .price{font-weight:800;color:var(--dark);font-size:1.25rem}
-  .old-price{text-decoration:line-through;color:var(--muted);font-size:0.9rem;margin-left:8px}
-
-  .cta{background:var(--green);color:#fff;padding:12px 16px;border-radius:10px;font-weight:800;border:none;cursor:pointer;display:inline-flex;gap:10px;align-items:center;box-shadow:0 10px 30px rgba(37,211,102,0.12)}
-  .cta img{width:20px}
-
-  /* Grid offers/products */
-  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:14px}
-  .card{background:var(--card-bg);padding:14px;border-radius:12px;box-shadow:0 8px 20px rgba(0,0,0,0.04)}
-  .offer-row{display:flex;justify-content:space-between;align-items:center}
-  .small{color:var(--muted);font-size:0.95rem}
-  .badge{background:var(--accent);color:#000;padding:6px 8px;border-radius:999px;font-weight:800}
-
-  .product-img{width:100%;height:160px;object-fit:cover;border-radius:8px}
-  .price-tag{font-weight:800;color:var(--dark)}
-
-  /* stock */
-  .stock{display:inline-block;padding:6px 10px;border-radius:8px;font-weight:700;margin-left:8px}
-  .stock.low{background:#fff4e6;color:#b45309}
-  .stock.ok{background:#e6ffed;color:#065f46}
-
-  /* testimonials */
-  .testimonials{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px}
-  .t{background:#fff;padding:10px;border-radius:10px;box-shadow:0 8px 20px rgba(0,0,0,0.03);flex:1;min-width:200px}
-
-  /* floating WhatsApp */
-  .whatsapp-float{position:fixed;right:18px;bottom:18px;z-index:9999;animation:float 2.8s ease-in-out infinite}
-  .whatsapp-float a{display:flex;align-items:center;gap:10px;background:var(--green);color:#fff;padding:12px 16px;border-radius:999px;text-decoration:none;font-weight:800;box-shadow:0 14px 40px rgba(37,211,102,0.16)}
-  @keyframes float{0%{transform:translateY(0)}50%{transform:translateY(-6px)}100%{transform:translateY(0)}}
-
-  /* avatar */
-  .avatar-float{position:fixed;left:14px;bottom:18px;z-index:9998;display:flex;align-items:center;gap:10px;cursor:pointer}
-  .avatar-wrap{width:72px;height:72px;border-radius:999px;overflow:hidden;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 30px rgba(0,0,0,0.12);position:relative;background:#fff}
-  .avatar-wrap img{width:100%;height:100%;object-fit:cover}
-  .avatar-label{background:rgba(255,255,255,0.95);padding:8px 12px;border-radius:10px;font-weight:700;box-shadow:0 6px 18px rgba(0,0,0,0.06)}
-  .halo{position:absolute;inset:-6px;border-radius:999px;box-shadow:0 0 0 0 rgba(255,200,60,0.18);pointer-events:none;opacity:0}
-  .talking .halo{opacity:1;animation:halo 1.8s infinite}
-  @keyframes halo{0%{box-shadow:0 0 0 0 rgba(255,200,60,0.18)}50%{box-shadow:0 0 20px 8px rgba(255,200,60,0.18)}100%{box-shadow:0 0 0 0 rgba(255,200,60,0.18)}}
-
-  /* popups (recent orders) */
-  .popup-order{position:fixed;right:20px;top:80px;background:#fff;padding:12px;border-radius:10px;box-shadow:0 12px 30px rgba(0,0,0,0.12);z-index:9997;display:none}
-
-  /* countdown small */
-  .countdown{font-weight:900;color:#b91c1c}
-
-  /* responsive */
-  @media (max-width:900px){
-    .grid{grid-template-columns:1fr}
-    .hero{flex-direction:column;align-items:flex-start}
-    .avatar-label{display:none}
+  .product-gallery img {
+    height: 120px;
+    border-radius: 8px;
   }
 </style>
 </head>
 <body>
-<div class="wrap">
-  <header>
-    <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
-      <div>
-        <h1>UnitéRapide.cd</h1>
-        <p class="slogan">Rechargez vite, vivez mieux 🚀 — Recharges & Boutique</p>
-      </div>
-      <div style="display:flex;gap:10px;align-items:center">
-        <div style="background:#fff;padding:8px 10px;border-radius:8px;font-weight:800;color:var(--dark)">Livraison express</div>
-      </div>
+
+<header>
+  <div class="logo">📱 UniteRapide</div>
+  <nav>
+    <a href="index.html">Accueil</a>
+    <a href="produits.html">Produits</a>
+    <a href="contact.html">Contact</a>
+    <button id="darkModeToggle">🌙</button>
+  </nav>
+</header>
+
+<section class="products-preview">
+  <h2>Catalogue complet</h2>
+
+  <div class="product">
+    <h3>Recharge Airtel</h3>
+    <div class="product-gallery">
+      <img src="https://i.ibb.co/Tr4c3wm/airtel-units.jpg" alt="Recharge Airtel">
+      <img src="https://i.ibb.co/3c7cW6c/airtel-topup.jpg" alt="Airtel recharge">
     </div>
-  </header>
-
-  <!-- hero / promo -->
-  <section class="hero">
-    <div class="promo-card">
-      <div class="promo-title">
-        <div>
-          <div class="small">Promo limitée</div>
-          <h2 style="margin:6px 0 0">260 unités — <span class="price">5.900 FC</span></h2>
-          <div class="small">Ancien: <span class="old-price">7.000 FC</span> • Économisez 1.100 FC</div>
-        </div>
-        <div style="text-align:right">
-          <div class="badge">MEILLEUR</div>
-          <div style="height:8px"></div>
-          <div class="small">Expire dans</div>
-          <div class="countdown" id="countdown-main">00:00:00</div>
-        </div>
-      </div>
-      <div style="margin-top:12px">
-        <button class="cta" onclick="openOrderModal('260 unités - Promo 5900 FC')"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="wa"> Commander promo</button>
-        <span style="margin-left:10px;color:var(--muted)">Meilleure vente</span>
-      </div>
-    </div>
-
-    <div style="flex:1;min-width:280px">
-      <div class="card" style="display:flex;flex-direction:column;gap:10px">
-        <div style="display:flex;justify-content:space-between;align-items:center">
-          <div>
-            <div class="small">Offres rapides</div>
-            <div style="font-weight:800">Unités & Internet</div>
-          </div>
-          <div><span class="badge">FLASH</span></div>
-        </div>
-
-        <div>
-          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:6px">
-            <div style="background:#fff;padding:10px;border-radius:8px;box-shadow:0 6px 18px rgba(0,0,0,0.03);min-width:120px">
-              <div class="small">520 unités</div>
-              <div class="price">13.200 FC</div>
-              <div style="margin-top:8px"><span class="stock ok" id="stock-520">En stock: 28</span></div>
-              <div style="margin-top:8px"><button class="cta" style="background:#0b74de" onclick="openOrderModal('520 unités - 13200 FC')">Commander</button></div>
-            </div>
-
-            <div style="background:#fff;padding:10px;border-radius:8px;min-width:120px;box-shadow:0 6px 18px rgba(0,0,0,0.03)">
-              <div class="small">1.040 unités</div>
-              <div class="price">25.000 FC</div>
-              <div style="margin-top:8px"><span class="stock ok" id="stock-1040">En stock: 12</span></div>
-              <div style="margin-top:8px"><button class="cta" onclick="openOrderModal('1040 unités - 25000 FC')">Commander</button></div>
-            </div>
-          </div>
-        </div>
-
-        <div style="margin-top:10px" class="small">Autres : 1 Go /24h — 1.300 FC · 2 Go /48h — 3.200 FC</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- products -->
-  <section>
-    <h2>🛍 Boutique — Smartphones & Accessoires</h2>
-    <div class="grid">
-      <!-- Prod 1 -->
-      <div class="card">
-        <img class="product-img" src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=800&auto=format&fit=crop&s=3f8d7a6b0b5d92d1b0fb6f5f4c3b2d01" alt="Téléphone A">
-        <h3>Téléphone A — Bon état</h3>
-        <div class="price-tag">72.250 FC <span class="small" style="text-decoration:line-through;margin-left:8px;color:var(--muted)">85.000 FC</span></div>
-        <div style="margin-top:8px" class="small">Garantie 1 mois</div>
-        <div style="margin-top:10px;display:flex;gap:8px;align-items:center">
-          <button class="cta" onclick="openOrderModal('Téléphone A - 72250 FC')">Commander sur WhatsApp</button>
-          <span class="stock ok" id="stock-telA">Stock: 3</span>
-        </div>
-      </div>
-
-      <!-- Prod 2 -->
-      <div class="card">
-        <img class="product-img" src="https://images.unsplash.com/photo-1585386959984-a4155227c9b8?q=80&w=800&auto=format&fit=crop&s=0f6d5e2b8a9c4f0b2a0f6a8a2c3b5c9d" alt="Pochette PC">
-        <h3>Pochette PC 15" — Néoprène</h3>
-        <div class="price-tag">8.500 FC</div>
-        <div style="margin-top:8px" class="small">Livraison offerte cette semaine</div>
-        <div style="margin-top:10px;display:flex;gap:8px;align-items:center">
-          <button class="cta" onclick="openOrderModal('Pochette PC 15 - 8500 FC')">Commander</button>
-          <span class="stock ok" id="stock-pochette">Stock: 12</span>
-        </div>
-      </div>
-
-      <!-- Prod 3 fictif -->
-      <div class="card">
-        <img class="product-img" src="https://images.unsplash.com/photo-1512496015851-a90fb38ba796?q=80&w=800&auto=format&fit=crop&s=1aa2d2d6f3d9b6c2b1b8c5d7" alt="Écouteurs">
-        <h3>Écouteurs Bluetooth X</h3>
-        <div class="price-tag">12.500 FC <span class="badge" style="margin-left:8px">NOUVEAU</span></div>
-        <div style="margin-top:10px"><button class="cta" onclick="openOrderModal('Écouteurs Bluetooth X - 12500 FC')">Commander</button></div>
-      </div>
-
-      <!-- Prod 4 fictif -->
-      <div class="card">
-        <img class="product-img" src="https://images.unsplash.com/photo-1545239351-1141bd82e8a6?q=80&w=800&auto=format&fit=crop&s=7f87d1eef7d9f8a1b1f2f5c2" alt="Powerbank">
-        <h3>Powerbank 10.000mAh</h3>
-        <div class="price-tag">9.900 FC</div>
-        <div style="margin-top:10px"><button class="cta" onclick="openOrderModal('Powerbank 10000 - 9900 FC')">Commander</button></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- offers / best sellers -->
-  <section style="margin-top:14px;display:flex;gap:12px;flex-wrap:wrap">
-    <div class="card" style="flex:1;min-width:200px">
-      <h3>Pourquoi nous choisir ?</h3>
-      <ul style="color:var(--muted);padding-left:16px">
-        <li>Livraison express en ville</li>
-        <li>Support WhatsApp 24/7</li>
-        <li>Paiement mobile money ou cash</li>
-      </ul>
-    </div>
-    <div class="card" style="flex:1;min-width:200px">
-      <h3>Réseaux supportés</h3>
-      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/2/20/Airtel_logo.svg" alt="Airtel" style="width:72px;height:30px;object-fit:contain">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/f/f8/Orange_logo.svg" alt="Orange" style="width:72px;height:30px;object-fit:contain">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/8/8e/Vodacom_logo.svg" alt="Vodacom" style="width:72px;height:30px;object-fit:contain">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/b/bf/Africell_logo.svg" alt="Africell" style="width:72px;height:30px;object-fit:contain">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/MTN_Logo.svg" alt="MTN" style="width:72px;height:30px;object-fit:contain">
-      </div>
-    </div>
-  </section>
-
-  <!-- testimonials -->
-  <section>
-    <h2>⭐ Témoignages</h2>
-    <div class="testimonials">
-      <div class="t"><strong>Patrick K.</strong><p class="small">"J'ai reçu ma recharge en 2 minutes. Service sérieux."</p></div>
-      <div class="t"><strong>Marie L.</strong><p class="small">"Téléphone en bon état, livrée rapidement."</p></div>
-      <div class="t"><strong>Issa B.</strong><p class="small">"Prix bas, contact facile sur WhatsApp."</p></div>
-    </div>
-  </section>
-
-  <footer style="margin-top:18px;text-align:center;color:var(--muted)">
-    WhatsApp : <strong>VOTRE_NUMERO</strong> • © <span id="year"></span> UnitéRapide.cd
-  </footer>
-</div>
-
-<!-- floating WhatsApp -->
-<div class="whatsapp-float" aria-hidden="true">
-  <a id="waFloat" href="https://wa.me/VOTRE_NUMERO" target="_blank" rel="noopener noreferrer">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="whatsapp" style="width:22px;height:22px"> Commander / WhatsApp
-  </a>
-</div>
-
-<!-- avatar IA -->
-<div class="avatar-float" id="avatar" title="Bonjour — cliquez pour réécouter">
-  <div class="avatar-wrap" id="avatar-wrap" role="button" aria-pressed="false">
-    <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=800&auto=format&fit=crop&s=7a3b2b9e6c9b6f1f2f1f2a6f5b0e4a66" alt="Avatar femme">
-    <div class="halo"></div>
+    <p>260 unités - <strong>6.9$</strong></p>
   </div>
-  <div class="avatar-label">Bonjour 👋</div>
-</div>
 
-<!-- popup recent order -->
-<div id="popupOrder" class="popup-order"></div>
-
-<!-- order modal -->
-<div class="modal-backdrop" id="modalBackdrop" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);align-items:center;justify-content:center;z-index:99999">
-  <div style="background:#fff;padding:16px;border-radius:10px;max-width:420px;width:95%;box-shadow:0 10px 30px rgba(0,0,0,0.2)">
-    <h3>Commande rapide</h3>
-    <div style="margin:8px 0"><input id="cmd-nom" placeholder="Ton nom" style="width:100%;padding:8px;border-radius:6px;border:1px solid #ddd" /></div>
-    <div style="margin:8px 0"><input id="cmd-phone" placeholder="Téléphone (ex: 0990...)" style="width:100%;padding:8px;border-radius:6px;border:1px solid #ddd" /></div>
-    <div style="margin:8px 0">
-      <select id="cmd-produit" style="width:100%;padding:8px;border-radius:6px;border:1px solid #ddd">
-        <option>260 unités - Promo</option>
-        <option>520 unités</option>
-        <option>1040 unités</option>
-        <option>1 Go 24h</option>
-        <option>2 Go 48h</option>
-        <option>Téléphone A</option>
-        <option>Pochette PC 15"</option>
-        <option>Écouteurs Bluetooth X</option>
-        <option>Powerbank 10000</option>
-      </select>
+  <div class="product">
+    <h3>Forfait Internet 1 Go / 24h</h3>
+    <div class="product-gallery">
+      <img src="https://i.ibb.co/6XZqQCd/internet-offer.jpg" alt="Forfait Internet">
+      <img src="https://i.ibb.co/m9PZrZP/4g-network.jpg" alt="4G rapide">
     </div>
-    <div style="display:flex;gap:8px">
-      <input id="cmd-qty" type="number" value="1" min="1" style="flex:1;padding:8px;border-radius:6px;border:1px solid #ddd" />
-      <input id="cmd-prix" placeholder="Prix estimé (optionnel)" style="flex:1;padding:8px;border-radius:6px;border:1px solid #ddd" />
-    </div>
-    <div style="margin-top:8px"><textarea id="cmd-rem" placeholder="Remarques / adresse" rows="2" style="width:100%;padding:8px;border-radius:6px;border:1px solid #ddd"></textarea></div>
-    <div style="margin-top:10px;display:flex;gap:8px;justify-content:flex-end">
-      <button onclick="closeOrderModal()" style="background:#eee;padding:10px 12px;border-radius:8px;border:none">Annuler</button>
-      <button id="sendBtn" onclick="sendOrder()" style="background:var(--green);color:#fff;padding:10px 12px;border-radius:8px;border:none">Envoyer</button>
-    </div>
-    <div id="orderOK" style="display:none;margin-top:10px;background:#e6ffed;padding:10px;border-left:4px solid #16a34a;border-radius:6px">✅ Commande enregistrée — on vous contacte sur WhatsApp.</div>
-    <div id="orderERR" style="display:none;margin-top:10px;background:#fff4f4;padding:10px;border-left:4px solid #b91c1c;border-radius:6px">❌ Erreur — réessayer.</div>
+    <p><strong>1.4$</strong></p>
   </div>
-</div>
 
-<script>
-/* ---------- PLACEHOLDERS ----------
- - WhatsApp: change 'VOTRE_NUMERO' to your number later (no +, full international code).
- - WEB_APP_URL: replace 'YOUR_WEB_APP_URL' with your Google Apps Script web app URL after you deploy it.
-*/
-const WEB_APP_URL = 'YOUR_WEB_APP_URL'; // <-- Replace later
-const WA_BASE = 'https://wa.me/VOTRE_NUMERO'; // <-- Replace later
+  <div class="product">
+    <h3>Itel A58</h3>
+    <div class="product-gallery">
+      <img src="https://i.ibb.co/xXXmwn5/itel-phone.jpg" alt="Itel A58">
+      <img src="https://i.ibb.co/7n8Pbyy/itel-box.jpg" alt="Boîte Itel">
+    </div>
+    <p><strong>65$</strong></p>
+  </div>
 
-// set year
-document.getElementById('year').textContent = new Date().getFullYear();
+  <div class="product">
+    <h3>Ordinateur HP ProBook</h3>
+    <div class="product-gallery">
+      <img src="https://i.ibb.co/PrfQNkQ/hp-laptop.jpg" alt="HP ProBook">
+      <img src="https://i.ibb.co/p0MspS2/hp-laptop2.jpg" alt="HP ProBook 2">
+    </div>
+    <p><strong>320$</strong></p>
+  </div>
 
-/* Stocks (editable) */
-const STOCKS = { '520':28, '1040':12, '1go':40, '2go':22, 'telA':3, 'pochette':12 };
+</section>
 
-/* bind stocks */
-document.addEventListener('DOMContentLoaded', () => {
-  function setText(id, n){
-    const el = document.getElementById(id);
-    if(!el) return;
-    el.textContent = (id.startsWith('stock-tel') ? 'Stock: ' + n : 'En stock: ' + n);
-    el.className = 'stock ' + (n <= 3 ? 'low' : 'ok');
-  }
-  setText('stock-520', STOCKS['520']);
-  setText('stock-1040', STOCKS['1040']);
-  setText('stock-1go', STOCKS['1go']);
-  setText('stock-2go', STOCKS['2go']);
-  setText('stock-telA', STOCKS['telA']);
-  setText('stock-pochette', STOCKS['pochette']);
-});
+<footer>
+  <p>&copy; 2025 UniteRapide - Tous droits réservés</p>
+</footer>
 
-/* countdown (12 hours) */
-(function(){
-  const el = document.getElementById('countdown-main');
-  const expire = new Date(Date.now() + 12*60*60*1000);
-  function update(){
-    const now = new Date();
-    let diff = Math.max(0, expire - now);
-    const h = String(Math.floor(diff/3600000)).padStart(2,'0');
-    diff %= 3600000;
-    const m = String(Math.floor(diff/60000)).padStart(2,'0');
-    diff %= 60000;
-    const s = String(Math.floor(diff/1000)).padStart(2,'0');
-    if(el) el.textContent = h+':'+m+':'+s;
-  }
-  update(); setInterval(update,1000);
-})();
-
-/* open order modal */
-function openOrderModal(product){
-  document.getElementById('modalBackdrop').style.display = 'flex';
-  if(product) document.getElementById('cmd-produit').value = product;
-}
-
-/* close modal */
-function closeOrderModal(){ document.getElementById('modalBackdrop').style.display = 'none'; }
-
-/* send order to Google Sheets via Web App + open WhatsApp */
-async function sendOrder(){
-  const nom = document.getElementById('cmd-nom').value.trim();
-  const tel = document.getElementById('cmd-phone').value.trim();
-  const prod = document.getElementById('cmd-produit').value;
-  const qty = document.getElementById('cmd-qty').value || 1;
-  const prix = document.getElementById('cmd-prix').value.trim();
-  const rem = document.getElementById('cmd-rem').value.trim();
-
-  if(!nom || !tel){ alert('Remplis ton nom et téléphone'); return; }
-
-  const payload = { nom: nom, telephone: tel, produit: prod, quantite: qty, prix: prix, remarques: rem, source: 'Site Web' };
-
-  // UI
-  const btn = document.getElementById('sendBtn');
-  btn.disabled = true; btn.textContent = 'Envoi...';
-
-  try {
-    // if user didn't set WEB_APP_URL, fallback: still open WA to confirm
-    if(WEB_APP_URL === 'YOUR_WEB_APP_URL'){
-      // open WhatsApp with message and show success
-      const waMsg = encodeURIComponent(`Bonjour UnitéRapide, j'ai commandé: ${prod} x${qty}. Nom: ${nom}, Tel: ${tel}.`);
-      window.open('https://wa.me/VOTRE_NUMERO?text=' + waMsg, '_blank');
-      document.getElementById('orderOK').style.display = 'block';
-      setTimeout(()=>{ closeOrderModal(); btn.disabled=false; btn.textContent='Envoyer'; document.getElementById('orderOK').style.display='none'; },1500);
-      return;
-    }
-
-    // POST to Google Apps Script Web App
-    const res = await fetch(WEB_APP_URL, {
-      method: 'POST',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify(payload)
-    });
-    const json = await res.json();
-    if(json && json.status === 'ok'){
-      document.getElementById('orderOK').style.display = 'block';
-      // open WA to notify/confirm with prefilled message
-      const waMsg = encodeURIComponent(`Bonjour UnitéRapide, j'ai commandé: ${prod} x${qty}. Nom: ${nom}, Tel: ${tel}.`);
-      window.open('https://wa.me/VOTRE_NUMERO?text=' + waMsg, '_blank');
-      setTimeout(()=>{ closeOrderModal(); btn.disabled=false; btn.textContent='Envoyer'; document.getElementById('orderOK').style.display='none'; },1600);
-    } else {
-      throw new Error('server');
-    }
-  } catch(e){
-    console.error(e);
-    document.getElementById('orderERR').style.display='block';
-    btn.disabled=false; btn.textContent='Envoyer';
-  }
-}
-
-/* popup recent order simulation (visual proof of activity) */
-(function(){
-  const messages = [
-    "Marie a commandé 260 unités (Kinshasa)",
-    "Patrick a pris Pochette PC 15\"",
-    "Issa a commandé 1Go — livraison en cours",
-    "Jean a réservé Téléphone A"
-  ];
-  const el = document.getElementById('popupOrder');
-  let i=0;
-  function show(){
-    el.textContent = messages[i % messages.length];
-    el.style.display = 'block';
-    setTimeout(()=> el.style.display='none',4200);
-    i++;
-  }
-  setInterval(show,7000);
-  setTimeout(show,2000);
-})();
-
-/* avatar speech (auto attempt, fallback on click) */
-(function(){
-  const avatarWrap = document.getElementById('avatar-wrap');
-  const WELCOME_TEXT = "Bonjour, bienvenue chez UnitéRapide point cd. Recharges et produits livrés rapidement partout en RDC. Cliquez pour commander ou réécouter.";
-  function speak(text){
-    if(!('speechSynthesis' in window)) return;
-    const u = new SpeechSynthesisUtterance(text);
-    u.lang = 'fr-FR';
-    u.rate = 1;
-    u.pitch = 1;
-    // try to pick a francophone female voice if available
-    const voices = speechSynthesis.getVoices();
-    if(voices && voices.length){
-      let v = voices.find(v=> v.lang && v.lang.startsWith('fr') && /female|femme|woman|woman/i.test(v.name)) || voices.find(v=> v.lang && v.lang.startsWith('fr')) || voices[0];
-      if(v) u.voice = v;
-    }
-    u.onstart = ()=>{ avatarWrap.classList.add('talking'); avatarWrap.setAttribute('aria-pressed','true'); }
-    u.onend = ()=>{ avatarWrap.classList.remove('talking'); avatarWrap.setAttribute('aria-pressed','false'); }
-    speechSynthesis.cancel(); speechSynthesis.speak(u);
-  }
-
-  // try autoplay after small delay (may be blocked)
-  window.addEventListener('load', ()=> setTimeout(()=> { try { speak(WELCOME_TEXT); } catch(e){} }, 500));
-
-  avatarWrap.addEventListener('click', ()=> {
-    if(speechSynthesis.speaking) speechSynthesis.cancel(); else speak(WELCOME_TEXT);
-  });
-})();
-
-/* clicking floating WA */
-document.getElementById('waFloat').addEventListener('click', function(e){
-  // if placeholder not replaced, open base placeholder
-  // let url = (WA_BASE.indexOf('VOTRE_NUMERO') !== -1) ? 'https://wa.me/VOTRE_NUMERO' : WA_BASE;
-  // directly follow anchor default href
-});
-</script>
 </body>
-          </html>
+  </html><!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UniteRapide - Contact</title>
+<link rel="stylesheet" href="styles.css">
+<script src="script.js" defer></script>
+<style>
+  .contact-container {
+    max-width: 500px;
+    margin: auto;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+  }
+  form input, form textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  form button {
+    background: #ff6600;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    font-size: 1em;
+    border-radius: 5px;
+  }
+  form button:hover {
+    background: #e65c00;
+  }
+  .contact-buttons {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+  .contact-buttons a {
+    flex: 1;
+    text-align: center;
+    padding: 10px;
+    background: #25D366;
+    color: white;
+    border-radius: 5px;
+  }
+  .contact-buttons a.telegram {
+    background: #0088cc;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">📱 UniteRapide</div>
+  <nav>
+    <a href="index.html">Accueil</a>
+    <a href="produits.html">Produits</a>
+    <a href="contact.html">Contact</a>
+    <button id="darkModeToggle">🌙</button>
+  </nav>
+</header>
+
+<section class="contact-container">
+  <h2>Contactez-nous</h2>
+  
+  <div class="contact-buttons">
+    <a href="https://wa.me/243990564877" target="_blank">💬 WhatsApp</a>
+    <a href="https://t.me/+243970102580" class="telegram" target="_blank">📨 Telegram</a>
+  </div>
+
+  <form action="mailto:tonemail@example.com" method="post" enctype="text/plain">
+    <label for="name">Nom :</label>
+    <input type="text" id="name" name="name" placeholder="Votre nom" required>
+
+    <label for="email">Email :</label>
+    <input type="email" id="email" name="email" placeholder="Votre email" required>
+
+    <label for="message">Message :</label>
+    <textarea id="message" name="message" rows="5" placeholder="Votre message..." required></textarea>
+
+    <button type="submit">Envoyer</button>
+  </form>
+</section>
+
+<footer>
+  <p>&copy; 2025 UniteRapide - Tous droits réservés</p>
+</footer>
+
+</body>
+  </html>
