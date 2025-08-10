@@ -3,449 +3,160 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>UniteRapide - Accueil</title>
-<link rel="stylesheet" href="styles.css">
-<script src="script.js" defer></script>
+<title>UniteRapide - Vente Rapide</title>
+<style>
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(-45deg, #ff6b6b, #ffcc70, #6bffb8, #6bb8ff);
+    background-size: 400% 400%;
+    animation: gradientBG 12s ease infinite;
+    color: #222;
+    transition: background 0.5s, color 0.5s;
+  }
+  @keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  header {
+    background: rgba(0,0,0,0.6);
+    padding: 15px;
+    color: white;
+    text-align: center;
+  }
+  nav a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+  }
+  nav a:hover { text-decoration: underline; }
+  .products {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+    gap: 15px;
+    padding: 20px;
+  }
+  .product {
+    background: rgba(255,255,255,0.9);
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    transition: transform 0.3s;
+  }
+  .product:hover { transform: scale(1.03); }
+  .product img {
+    max-width: 100%;
+    border-radius: 8px;
+  }
+  .cta {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 15px 0;
+  }
+  .cta a {
+    padding: 10px 15px;
+    border-radius: 5px;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  .whatsapp { background: #25D366; }
+  .telegram { background: #0088cc; }
+  footer {
+    text-align: center;
+    padding: 10px;
+    background: rgba(0,0,0,0.6);
+    color: white;
+    margin-top: 20px;
+  }
+  .counter {
+    text-align: center;
+    margin: 20px 0;
+    font-size: 1.2em;
+  }
+  button#darkModeToggle {
+    background: transparent;
+    color: white;
+    border: 1px solid white;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  body.dark {
+    background: #121212;
+    color: white;
+  }
+  body.dark .product {
+    background: #1e1e1e;
+  }
+</style>
 </head>
 <body>
 
 <header>
-  <div class="logo">📱 UniteRapide</div>
+  <h1>📱 UniteRapide</h1>
   <nav>
-    <a href="index.html">Accueil</a>
-    <a href="produits.html">Produits</a>
-    <a href="contact.html">Contact</a>
-    <button id="darkModeToggle">🌙</button>
+    <a href="#produits">Produits</a>
+    <a href="#contact">Contact</a>
+    <button id="darkModeToggle">🌙 Mode sombre</button>
   </nav>
 </header>
 
-<section class="hero">
-  <h1>Bienvenue chez UniteRapide</h1>
-  <p>Recharge rapide, forfaits Internet et accessoires à prix imbattables 💥</p>
-  <div class="hero-buttons">
-    <a href="https://wa.me/243990564877" class="btn">💬 WhatsApp</a>
-    <a href="https://t.me/+243970102580" class="btn">📨 Telegram</a>
-  </div>
-</section>
+<div class="counter">
+  👥 Visiteurs : <span id="visiteurs">0</span>  
+  | 💰 Gains estimés : <span id="gains">0</span> $
+</div>
 
-<section class="promo-countdown">
-  <h2>🔥 Promo spéciale se termine dans :</h2>
-  <div id="countdown"></div>
-</section>
-
-<section class="why-us">
-  <h2>Pourquoi nous choisir ?</h2>
-  <div class="cards">
-    <div class="card">⚡ Rapide et fiable</div>
-    <div class="card">💰 Prix attractifs</div>
-    <div class="card">📦 Livraison instantanée</div>
-  </div>
-</section>
-
-<section class="products-preview">
-  <h2>Nos meilleures offres</h2>
+<section id="produits" class="products">
   <div class="product">
     <img src="https://i.ibb.co/Tr4c3wm/airtel-units.jpg" alt="Recharge Airtel">
-    <h3>Recharge Airtel</h3>
-    <p>260 unités - <strong>6.9$</strong></p>
+    <h3>Recharge Airtel - 260 unités</h3>
+    <p><strong>6.9 $</strong></p>
   </div>
   <div class="product">
     <img src="https://i.ibb.co/6XZqQCd/internet-offer.jpg" alt="Forfait Internet">
-    <h3>Internet 1 Go / 24h</h3>
-    <p><strong>1.4$</strong></p>
+    <h3>Forfait Internet 1 Go / 24h</h3>
+    <p><strong>1.4 $</strong></p>
   </div>
   <div class="product">
     <img src="https://i.ibb.co/xXXmwn5/itel-phone.jpg" alt="Itel A58">
     <h3>Itel A58</h3>
-    <p><strong>65$</strong></p>
+    <p><strong>65 $</strong></p>
   </div>
-</section>
-
-<section class="testimonials">
-  <h2>Ce que disent nos clients</h2>
-  <blockquote>"Service super rapide et fiable !"</blockquote>
-  <blockquote>"Prix très compétitifs, je recommande."</blockquote>
-</section>
-
-<footer>
-  <p>&copy; 2025 UniteRapide - Tous droits réservés</p>
-</footer>
-
-</body>
-  </html>/* --- Styles de base --- */
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  background: #f5f5f5;
-  color: #333;
-}
-
-a {
-  text-decoration: none;
-  color: inherit;
-}
-
-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: #222;
-  color: white;
-  padding: 10px 20px;
-}
-
-header .logo {
-  font-size: 1.5em;
-  font-weight: bold;
-}
-
-nav a {
-  margin: 0 10px;
-  color: white;
-}
-
-nav button {
-  background: none;
-  border: none;
-  color: white;
-  font-size: 1.2em;
-  cursor: pointer;
-}
-
-.hero {
-  background: url('https://i.ibb.co/tXMFgx8/hero-banner.jpg') center/cover no-repeat;
-  color: white;
-  text-align: center;
-  padding: 50px 20px;
-}
-
-.hero h1 {
-  font-size: 2em;
-}
-
-.hero p {
-  font-size: 1.2em;
-}
-
-.hero-buttons {
-  margin-top: 20px;
-}
-
-.btn {
-  display: inline-block;
-  padding: 10px 20px;
-  margin: 5px;
-  background: #ff6600;
-  color: white;
-  border-radius: 5px;
-}
-
-.btn:hover {
-  background: #e65c00;
-}
-
-.promo-countdown {
-  text-align: center;
-  background: #fff;
-  padding: 20px;
-  margin: 20px 0;
-}
-
-#countdown {
-  font-size: 1.5em;
-  font-weight: bold;
-}
-
-.why-us {
-  background: white;
-  padding: 20px;
-  text-align: center;
-}
-
-.cards {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-  flex-wrap: wrap;
-}
-
-.card {
-  background: #ff6600;
-  color: white;
-  padding: 20px;
-  border-radius: 8px;
-  width: 150px;
-  font-weight: bold;
-}
-
-.products-preview {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 20px;
-  padding: 20px;
-}
-
-.product {
-  background: white;
-  padding: 15px;
-  border-radius: 8px;
-  text-align: center;
-  width: 200px;
-}
-
-.product img {
-  max-width: 100%;
-  border-radius: 8px;
-}
-
-.testimonials {
-  background: #fff;
-  padding: 20px;
-  text-align: center;
-}
-
-blockquote {
-  font-style: italic;
-  margin: 10px 0;
-}
-
-footer {
-  text-align: center;
-  padding: 10px;
-  background: #222;
-  color: white;
-}// --- Compte à rebours ---
-function startCountdown() {
-    const countdownElement = document.getElementById('countdown');
-    const endDate = new Date();
-    endDate.setHours(endDate.getHours() + 48); // Promo sur 48h
-
-    function updateCountdown() {
-        const now = new Date();
-        const diff = endDate - now;
-
-        if (diff <= 0) {
-            countdownElement.textContent = "Promo terminée !";
-            return;
-        }
-
-        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-        const minutes = Math.floor((diff / (1000 * 60)) % 60);
-        const seconds = Math.floor((diff / 1000) % 60);
-
-        countdownElement.textContent = `${hours}h ${minutes}m ${seconds}s`;
-    }
-
-    updateCountdown();
-    setInterval(updateCountdown, 1000);
-}
-
-// --- Mode clair/sombre ---
-const darkModeToggle = document.getElementById('darkModeToggle');
-darkModeToggle.addEventListener('click', () => {
-    document.body.classList.toggle('dark-mode');
-    if (document.body.classList.contains('dark-mode')) {
-        darkModeToggle.textContent = "☀️";
-    } else {
-        darkModeToggle.textContent = "🌙";
-    }
-});
-
-// Appliquer le style sombre
-const style = document.createElement('style');
-style.textContent = `
-.dark-mode {
-    background-color: #111;
-    color: white;
-}
-.dark-mode header {
-    background: #000;
-}
-.dark-mode footer {
-    background: #000;
-}
-.dark-mode .card {
-    background: #333;
-}
-.dark-mode .product {
-    background: #222;
-}
-`;
-document.head.appendChild(style);
-
-// Lancer le compte à rebours
-startCountdown();<!DOCTYPE html>
-<html lang="fr">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>UniteRapide - Produits</title>
-<link rel="stylesheet" href="styles.css">
-<script src="script.js" defer></script>
-<style>
-  .product-gallery {
-    display: flex;
-    gap: 10px;
-    overflow-x: auto;
-    padding: 10px 0;
-  }
-  .product-gallery img {
-    height: 120px;
-    border-radius: 8px;
-  }
-</style>
-</head>
-<body>
-
-<header>
-  <div class="logo">📱 UniteRapide</div>
-  <nav>
-    <a href="index.html">Accueil</a>
-    <a href="produits.html">Produits</a>
-    <a href="contact.html">Contact</a>
-    <button id="darkModeToggle">🌙</button>
-  </nav>
-</header>
-
-<section class="products-preview">
-  <h2>Catalogue complet</h2>
-
   <div class="product">
-    <h3>Recharge Airtel</h3>
-    <div class="product-gallery">
-      <img src="https://i.ibb.co/Tr4c3wm/airtel-units.jpg" alt="Recharge Airtel">
-      <img src="https://i.ibb.co/3c7cW6c/airtel-topup.jpg" alt="Airtel recharge">
-    </div>
-    <p>260 unités - <strong>6.9$</strong></p>
-  </div>
-
-  <div class="product">
-    <h3>Forfait Internet 1 Go / 24h</h3>
-    <div class="product-gallery">
-      <img src="https://i.ibb.co/6XZqQCd/internet-offer.jpg" alt="Forfait Internet">
-      <img src="https://i.ibb.co/m9PZrZP/4g-network.jpg" alt="4G rapide">
-    </div>
-    <p><strong>1.4$</strong></p>
-  </div>
-
-  <div class="product">
-    <h3>Itel A58</h3>
-    <div class="product-gallery">
-      <img src="https://i.ibb.co/xXXmwn5/itel-phone.jpg" alt="Itel A58">
-      <img src="https://i.ibb.co/7n8Pbyy/itel-box.jpg" alt="Boîte Itel">
-    </div>
-    <p><strong>65$</strong></p>
-  </div>
-
-  <div class="product">
+    <img src="https://i.ibb.co/PrfQNkQ/hp-laptop.jpg" alt="Ordinateur HP">
     <h3>Ordinateur HP ProBook</h3>
-    <div class="product-gallery">
-      <img src="https://i.ibb.co/PrfQNkQ/hp-laptop.jpg" alt="HP ProBook">
-      <img src="https://i.ibb.co/p0MspS2/hp-laptop2.jpg" alt="HP ProBook 2">
-    </div>
-    <p><strong>320$</strong></p>
+    <p><strong>320 $</strong></p>
   </div>
+</section>
 
+<section id="contact" class="cta">
+  <a href="https://wa.me/243990564877" class="whatsapp" target="_blank">💬 WhatsApp</a>
+  <a href="https://t.me/+243970102580" class="telegram" target="_blank">📨 Telegram</a>
 </section>
 
 <footer>
-  <p>&copy; 2025 UniteRapide - Tous droits réservés</p>
+  &copy; 2025 UniteRapide - Tous droits réservés
 </footer>
 
-</body>
-  </html><!DOCTYPE html>
-<html lang="fr">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>UniteRapide - Contact</title>
-<link rel="stylesheet" href="styles.css">
-<script src="script.js" defer></script>
-<style>
-  .contact-container {
-    max-width: 500px;
-    margin: auto;
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-  }
-  form input, form textarea {
-    width: 100%;
-    padding: 10px;
-    margin: 5px 0;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-  }
-  form button {
-    background: #ff6600;
-    color: white;
-    padding: 10px;
-    border: none;
-    cursor: pointer;
-    width: 100%;
-    font-size: 1em;
-    border-radius: 5px;
-  }
-  form button:hover {
-    background: #e65c00;
-  }
-  .contact-buttons {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 15px;
-  }
-  .contact-buttons a {
-    flex: 1;
-    text-align: center;
-    padding: 10px;
-    background: #25D366;
-    color: white;
-    border-radius: 5px;
-  }
-  .contact-buttons a.telegram {
-    background: #0088cc;
-  }
-</style>
-</head>
-<body>
+<script>
+  // Mode sombre
+  document.getElementById("darkModeToggle").addEventListener("click", () => {
+    document.body.classList.toggle("dark");
+  });
 
-<header>
-  <div class="logo">📱 UniteRapide</div>
-  <nav>
-    <a href="index.html">Accueil</a>
-    <a href="produits.html">Produits</a>
-    <a href="contact.html">Contact</a>
-    <button id="darkModeToggle">🌙</button>
-  </nav>
-</header>
-
-<section class="contact-container">
-  <h2>Contactez-nous</h2>
-  
-  <div class="contact-buttons">
-    <a href="https://wa.me/243990564877" target="_blank">💬 WhatsApp</a>
-    <a href="https://t.me/+243970102580" class="telegram" target="_blank">📨 Telegram</a>
-  </div>
-
-  <form action="mailto:tonemail@example.com" method="post" enctype="text/plain">
-    <label for="name">Nom :</label>
-    <input type="text" id="name" name="name" placeholder="Votre nom" required>
-
-    <label for="email">Email :</label>
-    <input type="email" id="email" name="email" placeholder="Votre email" required>
-
-    <label for="message">Message :</label>
-    <textarea id="message" name="message" rows="5" placeholder="Votre message..." required></textarea>
-
-    <button type="submit">Envoyer</button>
-  </form>
-</section>
-
-<footer>
-  <p>&copy; 2025 UniteRapide - Tous droits réservés</p>
-</footer>
+  // Compteur visiteurs + gains estimés
+  const apiKey = "uniterapide-visiteurs";
+  fetch(`https://api.countapi.xyz/hit/${apiKey}`)
+    .then(res => res.json())
+    .then(data => {
+      document.getElementById("visiteurs").innerText = data.value;
+      let gain = (data.value * 0.5).toFixed(2); // exemple calcul
+      document.getElementById("gains").innerText = gain;
+    });
+</script>
 
 </body>
   </html>
