@@ -1,162 +1,360 @@
-<!DOCTYPE html>
-<html lang="fr">
+<!DOCTYPE html><html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>UniteRapide - Vente Rapide</title>
-<style>
-  body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: linear-gradient(-45deg, #ff6b6b, #ffcc70, #6bffb8, #6bb8ff);
-    background-size: 400% 400%;
-    animation: gradientBG 12s ease infinite;
-    color: #222;
-    transition: background 0.5s, color 0.5s;
-  }
-  @keyframes gradientBG {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
-  header {
-    background: rgba(0,0,0,0.6);
-    padding: 15px;
-    color: white;
-    text-align: center;
-  }
-  nav a {
-    color: white;
-    text-decoration: none;
-    margin: 0 10px;
-  }
-  nav a:hover { text-decoration: underline; }
-  .products {
-    display: grid;
-    grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
-    gap: 15px;
-    padding: 20px;
-  }
-  .product {
-    background: rgba(255,255,255,0.9);
-    padding: 15px;
-    border-radius: 10px;
-    text-align: center;
-    transition: transform 0.3s;
-  }
-  .product:hover { transform: scale(1.03); }
-  .product img {
-    max-width: 100%;
-    border-radius: 8px;
-  }
-  .cta {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin: 15px 0;
-  }
-  .cta a {
-    padding: 10px 15px;
-    border-radius: 5px;
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-  }
-  .whatsapp { background: #25D366; }
-  .telegram { background: #0088cc; }
-  footer {
-    text-align: center;
-    padding: 10px;
-    background: rgba(0,0,0,0.6);
-    color: white;
-    margin-top: 20px;
-  }
-  .counter {
-    text-align: center;
-    margin: 20px 0;
-    font-size: 1.2em;
-  }
-  button#darkModeToggle {
-    background: transparent;
-    color: white;
-    border: 1px solid white;
-    padding: 5px 10px;
-    cursor: pointer;
-    border-radius: 5px;
-  }
-  body.dark {
-    background: #121212;
-    color: white;
-  }
-  body.dark .product {
-    background: #1e1e1e;
-  }
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Unité Rapide — Boutique</title>
+  <!-- CSP souple pour GitHub Pages + Google Sheets + compteur -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' https: data:; img-src 'self' https: data:; style-src 'self' 'unsafe-inline' https:; script-src 'self' 'unsafe-inline' https:; connect-src 'self' https:;" />
+  <style>
+    :root{
+      --bg1:#0f172a; /* slate-900 */
+      --bg2:#1e293b; /* slate-800 */
+      --brand:#10b981; /* emerald */
+      --accent:#f59e0b; /* amber */
+      --danger:#ef4444; /* red */
+      --info:#3b82f6; /* blue */
+      --text:#e5e7eb; /* gray-200 */
+      --muted:#94a3b8; /* slate-400 */
+      --card:#111827cc; /* semi */
+      --shadow:0 10px 30px rgba(0,0,0,.35);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; color:var(--text); font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial,"Noto Sans",sans-serif;
+      background: radial-gradient(1200px 800px at 10% 10%, #0b1225 0%, #0f172a 40%, #0a0f1f 100%);
+      overflow-x:hidden;
+    }
+    /* Arrière-plan animé discret */
+    .bg-anim{
+      position:fixed; inset: -20vmax; z-index:-1; filter: blur(80px) saturate(130%); opacity:.45;
+      background: conic-gradient(from 180deg, #00c2ff, #7c3aed, #10b981, #f59e0b, #00c2ff);
+      animation: spin 28s linear infinite;
+    }
+    @keyframes spin{to{transform:rotate(1turn)}}header{
+  position:sticky; top:0; z-index:50; backdrop-filter:saturate(140%) blur(8px);
+  background: linear-gradient(180deg, rgba(2,6,23,.85), rgba(2,6,23,.55));
+  border-bottom:1px solid rgba(148,163,184,.15);
+}
+.wrap{max-width:1150px; margin:0 auto; padding:16px 20px}
+.row{display:flex; gap:14px; align-items:center; flex-wrap:wrap}
+.brand{display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:.3px}
+.logo{
+  width:38px; height:38px; border-radius:12px;
+  background:linear-gradient(135deg, var(--brand), var(--info));
+  display:grid; place-items:center; box-shadow:var(--shadow);
+  font-weight:900; color:white;
+}
+
+.promo{
+  background:linear-gradient(90deg, rgba(16,185,129,.15), rgba(59,130,246,.15));
+  border:1px solid rgba(16,185,129,.25); color:#d1fae5;
+  padding:10px 14px; border-radius:12px; font-weight:600;
+  display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;
+}
+
+.badges{display:flex; gap:10px; flex-wrap:wrap}
+.badge{
+  background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
+  border:1px solid rgba(148,163,184,.18); padding:8px 12px; border-radius:999px; font-weight:600;
+  display:flex; align-items:center; gap:8px; color:#e2e8f0
+}
+
+main{max-width:1150px; margin:24px auto; padding:0 20px 80px}
+.cards{display:grid; grid-template-columns:repeat( auto-fit, minmax(240px, 1fr) ); gap:16px}
+.card{
+  background:linear-gradient(180deg, rgba(17,24,39,.85), rgba(17,24,39,.65));
+  border:1px solid rgba(148,163,184,.18); border-radius:18px; overflow:hidden; box-shadow:var(--shadow);
+  display:flex; flex-direction:column; min-height:100%;
+}
+.card img{width:100%; height:180px; object-fit:cover; background:#0b1020}
+.card .p{padding:12px 14px}
+.title{font-weight:800; font-size:1.05rem}
+.muted{color:var(--muted); font-size:.92rem}
+.price{display:flex; align-items:center; gap:10px; margin-top:6px}
+.price .fc{font-weight:900; font-size:1.15rem; color:#fff}
+.price .usd{color:#93c5fd; font-weight:700}
+.cta{margin-top:10px; display:flex; gap:8px}
+.btn{flex:1; display:inline-flex; justify-content:center; align-items:center; gap:8px; padding:10px 12px; border-radius:12px; border:1px solid transparent; cursor:pointer; font-weight:800}
+.btn.whatsapp{background:#25D36622; border-color:#25D36655; color:#c3f9d7}
+.btn.telegram{background:#229ED922; border-color:#229ED955; color:#cfe9ff}
+.btn:hover{transform:translateY(-1px)}
+
+/* Barre infos */
+.stats{display:flex; gap:12px; flex-wrap:wrap; margin:18px 0}
+.stat{background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02)); border:1px solid rgba(148,163,184,.18); padding:10px 14px; border-radius:14px; font-weight:700}
+
+/* Boutons flottants */
+.float{
+  position:fixed; right:18px; bottom:18px; display:flex; flex-direction:column; gap:10px; z-index:60;
+}
+.float a{
+  display:flex; align-items:center; gap:8px; padding:10px 12px; border-radius:999px; text-decoration:none; font-weight:800; box-shadow:var(--shadow);
+}
+.float .w{background:#25D366; color:#06250f}
+.float .t{background:#229ED9; color:#041e2a}
+
+footer{max-width:1150px; margin:40px auto; padding:0 20px 60px; color:#cbd5e1}
+.pay{display:flex; gap:10px; flex-wrap:wrap}
+.pill{background:rgba(255,255,255,.07); border:1px solid rgba(148,163,184,.18); padding:8px 12px; border-radius:999px; font-weight:700}
+
+details{background:rgba(255,255,255,.05); border:1px solid rgba(148,163,184,.18); padding:12px; border-radius:14px}
+details summary{cursor:pointer; font-weight:900}
+
+.filters{display:flex; gap:8px; flex-wrap:wrap; margin:14px 0 18px}
+.chip{padding:8px 12px; border-radius:999px; background:rgba(255,255,255,.06); border:1px solid rgba(148,163,184,.18); cursor:pointer; font-weight:700}
+.chip.active{background:linear-gradient(90deg, rgba(16,185,129,.25), rgba(59,130,246,.25)); border-color:#34d39977}
+
+  </style>
 </head>
 <body>
+  <div class="bg-anim"></div>  <header>
+    <div class="wrap">
+      <div class="row" style="justify-content:space-between">
+        <div class="brand">
+          <div class="logo">UR</div>
+          <div>
+            <div style="font-size:1.05rem">Unité Rapide</div>
+            <div class="muted" style="font-size:.85rem">Unités • Téléphones • Vêtements • Accessoires</div>
+          </div>
+        </div>
+        <div class="badges">
+          <div class="badge">🔒 Paiement sécurisé</div>
+          <div class="badge">🚚 Livraison rapide</div>
+          <div class="badge">⭐ Qualité garantie</div>
+          <div class="badge">🕘 Disponible 24/7</div>
+          <div class="badge" id="visitsBadge">👁️ Visites : …</div>
+        </div>
+      </div>
+      <div class="promo" style="margin-top:12px">
+        <div>🔥 <strong>Promos</strong> cette semaine sur téléphones & unités — meilleurs prix garantis.</div>
+        <div class="muted">WhatsApp : <strong>+243 990 564 877</strong> • Telegram : <strong>@cphkkk66</strong></div>
+      </div>
+    </div>
+  </header>  <main>
+    <section class="stats">
+      <div class="stat">👁️ Vues (ce navigateur) : <span id="viewsLocal">0</span></div>
+      <div class="stat">❤️ J'aime : <span id="likesCount">0</span> <button id="likeBtn" class="chip" style="margin-left:8px">+ J'aime</button></div>
+      <div class="stat">📶 État : Public (lecture) / Privé (édition)</div>
+    </section><section>
+  <h2>Catalogue</h2>
+  <div class="filters" id="filters"></div>
+  <div class="cards" id="cards">Chargement…</div>
+</section>
 
-<header>
-  <h1>📱 UniteRapide</h1>
-  <nav>
-    <a href="#produits">Produits</a>
-    <a href="#contact">Contact</a>
-    <button id="darkModeToggle">🌙 Mode sombre</button>
-  </nav>
-</header>
-
-<div class="counter">
-  👥 Visiteurs : <span id="visiteurs">0</span>  
-  | 💰 Gains estimés : <span id="gains">0</span> $
-</div>
-
-<section id="produits" class="products">
-  <div class="product">
-    <img src="https://i.ibb.co/Tr4c3wm/airtel-units.jpg" alt="Recharge Airtel">
-    <h3>Recharge Airtel - 260 unités</h3>
-    <p><strong>6.9 $</strong></p>
-  </div>
-  <div class="product">
-    <img src="https://i.ibb.co/6XZqQCd/internet-offer.jpg" alt="Forfait Internet">
-    <h3>Forfait Internet 1 Go / 24h</h3>
-    <p><strong>1.4 $</strong></p>
-  </div>
-  <div class="product">
-    <img src="https://i.ibb.co/xXXmwn5/itel-phone.jpg" alt="Itel A58">
-    <h3>Itel A58</h3>
-    <p><strong>65 $</strong></p>
-  </div>
-  <div class="product">
-    <img src="https://i.ibb.co/PrfQNkQ/hp-laptop.jpg" alt="Ordinateur HP">
-    <h3>Ordinateur HP ProBook</h3>
-    <p><strong>320 $</strong></p>
+<section style="margin-top:28px">
+  <h2>Contact</h2>
+  <div class="row">
+    <a class="btn whatsapp" href="https://wa.me/243990564877" target="_blank">📱 WhatsApp</a>
+    <a class="btn telegram" href="https://t.me/cphkkk66" target="_blank">💬 Telegram</a>
   </div>
 </section>
 
-<section id="contact" class="cta">
-  <a href="https://wa.me/243990564877" class="whatsapp" target="_blank">💬 WhatsApp</a>
-  <a href="https://t.me/+243970102580" class="telegram" target="_blank">📨 Telegram</a>
+<section style="margin-top:28px">
+  <h2>Modes de paiement</h2>
+  <div class="pay">
+    <span class="pill">💳 Airtel Money — <strong>Prince Alex</strong></span>
+    <span class="pill">📲 M‑Pesa (Vodacom)</span>
+    <span class="pill">🟠 Orange Money</span>
+    <span class="pill">🟣 Afrimoney (Africell)</span>
+    <span class="pill">🟡 MoMo (MTN)</span>
+  </div>
 </section>
 
-<footer>
-  &copy; 2025 UniteRapide - Tous droits réservés
-</footer>
+<section style="margin-top:28px">
+  <details>
+    <summary>🔧 Paramètres & Sécurité (infos client)</summary>
+    <ul>
+      <li>Ce site affiche seulement les <strong>produits et prix</strong>. Aucune donnée sensible n'est publique.</li>
+      <li>Les mises à jour viennent d'une feuille <strong>MASTER (privée)</strong> vers une feuille <strong>PUBLIC (lecture)</strong>.</li>
+      <li>Contacts officiels : WhatsApp <strong>+243 990 564 877</strong>, Telegram <strong>@cphkkk66</strong>, Airtel Money <strong>Prince Alex</strong>.</li>
+    </ul>
+  </details>
+</section>
 
-<script>
-  // Mode sombre
-  document.getElementById("darkModeToggle").addEventListener("click", () => {
-    document.body.classList.toggle("dark");
-  });
+  </main>  <div class="float">
+    <a class="w" href="https://wa.me/243990564877" target="_blank">📱 WhatsApp</a>
+    <a class="t" href="https://t.me/cphkkk66" target="_blank">💬 Telegram</a>
+  </div>  <footer>
+    <hr style="border-color:rgba(148,163,184,.2); border-style:solid; border-width:1px 0 0; margin-bottom:16px">
+    <div>© <span id="year"></span> Unité Rapide — RDC. Tous droits réservés.</div>
+  </footer>  <script>
+    // ========= CONFIG =========
+    // 1) Publie ta feuille Google en CSV et colle le lien ici :
+    // Exemple: https://docs.google.com/spreadsheets/d/ID/export?format=csv
+    const SHEET_CSV_URL = ""; // ⬅️ colle ici ton lien CSV public
 
-  // Compteur visiteurs + gains estimés
-  const apiKey = "uniterapide-visiteurs";
-  fetch(`https://api.countapi.xyz/hit/${apiKey}`)
-    .then(res => res.json())
-    .then(data => {
-      document.getElementById("visiteurs").innerText = data.value;
-      let gain = (data.value * 0.5).toFixed(2); // exemple calcul
-      document.getElementById("gains").innerText = gain;
-    });
-</script>
+    // 2) Taux FC/US$ (utilisé seulement si la feuille n'a pas la colonne Franc (E))
+    const RATE_FC = 2800;
 
-</body>
-  </html>
+    // 3) Numéro WhatsApp pour préremplir le message
+    const WHATSAPP = "243990564877";
+
+    // ========= Compteur global (CountAPI) + fallback local =========
+    (function(){
+      const badge = document.getElementById('visitsBadge');
+      const ns = 'uniterapide_paluku_visitor_v1';
+      fetch(`https://api.countapi.xyz/hit/${ns}/visits`).then(r=>r.json()).then(j=>{
+        badge.textContent = `👁️ Visites : ${j.value.toLocaleString('fr-FR')}`;
+      }).catch(()=>{
+        // fallback local
+        const k='ur_visits_fallback';
+        const v=(parseInt(localStorage.getItem(k)||'0',10)+1);
+        localStorage.setItem(k,String(v));
+        badge.textContent = `👁️ Visites : ${v.toLocaleString('fr-FR')}*`;
+      });
+    })();
+
+    // ========= VUES (local device) =========
+    const localKeyViews = 'ur_views';
+    const v = parseInt(localStorage.getItem(localKeyViews) || '0', 10) + 1;
+    localStorage.setItem(localKeyViews, String(v));
+    document.getElementById('viewsLocal').textContent = v.toLocaleString('fr-FR');
+
+    // ========= LIKES (local device) =========
+    (function(){
+      const likeKey = 'ur_like';
+      const likeBtn = document.getElementById('likeBtn');
+      const likesCount = document.getElementById('likesCount');
+      let liked = localStorage.getItem(likeKey) === '1';
+      likesCount.textContent = liked ? 1 : 0;
+      if(liked){ likeBtn.textContent = '❤️ Merci'; likeBtn.disabled = true; }
+      likeBtn.addEventListener('click', ()=>{
+        if(liked) return; liked = true; localStorage.setItem(likeKey,'1'); likesCount.textContent = 1; likeBtn.textContent='❤️ Merci'; likeBtn.disabled=true;
+      });
+    })();
+
+    // ========= UTIL: parse CSV simple (gère guillemets) =========
+    function parseCSV(text){
+      const rows=[]; let cur=[]; let cell=''; let inQ=false; for(let i=0;i<text.length;i++){
+        const ch=text[i], nx=text[i+1];
+        if(inQ){
+          if(ch==='"' && nx==='"'){ cell+='"'; i++; }
+          else if(ch==='"'){ inQ=false; }
+          else cell+=ch;
+        } else {
+          if(ch==='"'){ inQ=true; }
+          else if(ch===','){ cur.push(cell); cell=''; }
+          else if(ch==='\n' || ch==='\r'){ if(cell!=='' || cur.length){ cur.push(cell); rows.push(cur); cur=[]; cell=''; } }
+          else cell+=ch;
+        }
+      }
+      if(cell!=='' || cur.length){ cur.push(cell); rows.push(cur); }
+      return rows.filter(r=>r.some(c=>String(c).trim()!==''));
+    }
+
+    // ========= RENDER =========
+    const cards = document.getElementById('cards');
+    const filtersEl = document.getElementById('filters');
+
+    function formatMoney(n){
+      try{ return n.toLocaleString('fr-FR'); }catch(e){ return n; }
+    }
+
+    function makeCard(p){
+      const promo = p.promo && p.promo.trim()? `<span class="pill" style="margin-left:auto;background:rgba(245,158,11,.18);border-color:#f59e0b55;color:#fde68a">🎯 ${p.promo}</span>`: '';
+      const img = p.img && p.img.startsWith('http') ? p.img : 'https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1200&auto=format&fit=crop';
+      const link = p.link && p.link.startsWith('http') ? p.link : `https://wa.me/${WHATSAPP}?text=${encodeURIComponent('Bonjour, je suis intéressé par: '+p.name+' ('+p.cat+')')}`;
+      return `
+        <article class="card">
+          <img loading="lazy" src="${img}" alt="${p.name}">
+          <div class="p">
+            <div class="row" style="justify-content:space-between; align-items:flex-start">
+              <div class="title">${p.name}</div>
+              ${promo}
+            </div>
+            <div class="muted">${p.cat}${p.notes? ' • '+p.notes:''}</div>
+            <div class="price">
+              <div class="fc">${formatMoney(p.priceFC)} FC</div>
+              ${p.priceUSD? `<div class="usd">(~ ${formatMoney(p.priceUSD)} $)</div>`:''}
+            </div>
+            <div class="cta">
+              <a class="btn whatsapp" href="${link}" target="_blank">🛒 Commander</a>
+              <a class="btn telegram" href="https://t.me/cphkkk66" target="_blank">💬 Demander</a>
+            </div>
+          </div>
+        </article>`;
+    }
+
+    function buildFilters(products){
+      const cats = Array.from(new Set(products.map(p=>p.cat))).filter(Boolean);
+      filtersEl.innerHTML = ['_all', ...cats].map(c=>`<span class="chip${c==='_all'? ' active':''}" data-cat="${c}">${c==='_all'? 'Tout':c}</span>`).join('');
+      filtersEl.querySelectorAll('.chip').forEach(el=>{
+        el.addEventListener('click',()=>{
+          filtersEl.querySelectorAll('.chip').forEach(x=>x.classList.remove('active'));
+          el.classList.add('active');
+          const cat = el.getAttribute('data-cat');
+          renderCards(cat==='_all'? products : products.filter(p=>p.cat===cat));
+        })
+      })
+    }
+
+    function renderCards(list){
+      cards.innerHTML = list.map(makeCard).join('');
+    }
+
+    // ========= CHARGER FEUILLE GOOGLE OU DEMO =========
+    async function load(){
+      let products=[];
+      if(SHEET_CSV_URL){
+        try{
+          const res = await fetch(SHEET_CSV_URL, {cache:'no-store'});
+          const txt = await res.text();
+          const rows = parseCSV(txt);
+          // Attendu: A Catégorie | B Nom | C Lien image | D Prix $ | E Franc | F Promo | G Lien | H Notes | I Stock
+          const hdr = rows[0].map(h=>h.trim().toLowerCase());
+          const idx = {
+            cat: hdr.indexOf('catégorie')>-1? hdr.indexOf('catégorie') : 0,
+            name: hdr.indexOf('nom du produit')>-1? hdr.indexOf('nom du produit') : 1,
+            img: hdr.indexOf('lien image')>-1? hdr.indexOf('lien image') : 2,
+            usd: hdr.indexOf('prix $')>-1? hdr.indexOf('prix $') : 3,
+            fc: hdr.indexOf('franc (total)')>-1? hdr.indexOf('franc (total)') : 4,
+            promo: hdr.indexOf('promo')>-1? hdr.indexOf('promo') : 5,
+            link: hdr.indexOf('lien')>-1? hdr.indexOf('lien') : 6,
+            notes: hdr.indexOf('notes')>-1? hdr.indexOf('notes') : 7,
+            stock: hdr.indexOf('stock')>-1? hdr.indexOf('stock') : 8
+          };
+          for(let i=1;i<rows.length;i++){
+            const r=rows[i]; if(!r || !r.length) continue;
+            const priceUSD = parseFloat((r[idx.usd]||'').toString().replace(/[^0-9.\-]/g,''));
+            const priceFC  = parseFloat((r[idx.fc]||'').toString().replace(/[^0-9.\-]/g,''));
+            const fc = !isNaN(priceFC) ? priceFC : (!isNaN(priceUSD) ? Math.round(priceUSD*RATE_FC) : 0);
+            products.push({
+              cat: (r[idx.cat]||'').trim()||'Autres',
+              name: (r[idx.name]||'Sans nom').trim(),
+              img: (r[idx.img]||'').trim(),
+              priceUSD: isNaN(priceUSD)? null : priceUSD,
+              priceFC: fc,
+              promo: (r[idx.promo]||'').trim(),
+              link: (r[idx.link]||'').trim(),
+              notes: (r[idx.notes]||'').trim(),
+              stock: (r[idx.stock]||'').trim()
+            });
+          }
+        }catch(e){ console.error('Erreur Sheet', e); }
+      }
+      if(!products.length){
+        // Démo si la feuille n'est pas prête
+        products = [
+          {cat:"Vêtements", name:"Chemise classique homme", img:"https://images.unsplash.com/photo-1520974769661-3b1d5b4a3b53?q=80&w=1200&auto=format&fit=crop", priceUSD:15, priceFC:15*RATE_FC, desc:"Tissu respirant, tailles S-XL", link:""},
+          {cat:"Vêtements", name:"Pantalon jean", img:"https://images.unsplash.com/photo-1490111718993-d98654ce6cf7?q=80&w=1200&auto=format&fit=crop", priceUSD:22, priceFC:22*RATE_FC, link:""},
+          {cat:"Chaussures", name:"Baskets sport", img:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1200&auto=format&fit=crop", priceUSD:35, priceFC:35*RATE_FC, link:""},
+          {cat:"Téléphones", name:"Smartphone Android 4G", img:"https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=1200&auto=format&fit=crop", priceUSD:120, priceFC:120*RATE_FC, link:""},
+          {cat:"Accessoires", name:"Écouteurs filaires", img:"https://images.unsplash.com/photo-1518441902115-f96f9f4889cc?q=80&w=1200&auto=format&fit=crop", priceUSD:6, priceFC:6*RATE_FC, link:""},
+          {cat:"Sacs", name:"Pochette ordinateur 15\"", img:"https://images.unsplash.com/photo-1521907237590-290a24e8f277?q=80&w=1200&auto=format&fit=crop", priceUSD:14, priceFC:14*RATE_FC, link:""},
+          {cat:"Scolarité", name:"Cahier 200 pages", img:"https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1200&auto=format&fit=crop", priceUSD:2, priceFC:2*RATE_FC, link:""},
+          {cat:"Unités", name:"Unités Airtel Money (RDC)", img:"https://images.unsplash.com/photo-1563986768494-4dee2763ff3f?q=80&w=1200&auto=format&fit=crop", priceUSD:5, priceFC:5*RATE_FC, link:""}
+        ];
+      }
+      // Nettoyage + tri léger (facultatif)
+      products = products.filter(p=>p.name && p.priceFC>0);
+      // Construire filtres + cartes
+      buildFilters(products);
+      renderCards(products);
+    }
+
+    load();
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script></body>
+        </html>
