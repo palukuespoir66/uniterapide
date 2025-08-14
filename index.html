@@ -1,114 +1,67 @@
-<!DOCTYPE html><html lang="fr">
-<head>
+<!-- =========================
+ FICHIER 1 : public.html
+========================== --><!DOCTYPE html><html lang="fr"><head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Unité Rapide — Boutique</title>
+  <title>Unité Rapide — Boutique (Public)</title>
   <!-- CSP souple pour GitHub Pages + Google Sheets + compteur -->
   <meta http-equiv="Content-Security-Policy" content="default-src 'self' https: data:; img-src 'self' https: data:; style-src 'self' 'unsafe-inline' https:; script-src 'self' 'unsafe-inline' https:; connect-src 'self' https:;" />
   <style>
     :root{
-      --bg1:#0f172a; /* slate-900 */
-      --bg2:#1e293b; /* slate-800 */
-      --brand:#10b981; /* emerald */
-      --accent:#f59e0b; /* amber */
-      --danger:#ef4444; /* red */
-      --info:#3b82f6; /* blue */
-      --text:#e5e7eb; /* gray-200 */
-      --muted:#94a3b8; /* slate-400 */
-      --card:#111827cc; /* semi */
-      --shadow:0 10px 30px rgba(0,0,0,.35);
+      --bg1:#0f172a; --bg2:#1e293b; --brand:#10b981; --accent:#f59e0b; --danger:#ef4444; --info:#3b82f6; --text:#e5e7eb; --muted:#94a3b8; --card:#111827cc; --shadow:0 10px 30px rgba(0,0,0,.35);
     }
     *{box-sizing:border-box}
     html,body{height:100%}
-    body{
-      margin:0; color:var(--text); font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial,"Noto Sans",sans-serif;
-      background: radial-gradient(1200px 800px at 10% 10%, #0b1225 0%, #0f172a 40%, #0a0f1f 100%);
-      overflow-x:hidden;
-    }
-    /* Arrière-plan animé discret */
-    .bg-anim{
-      position:fixed; inset: -20vmax; z-index:-1; filter: blur(80px) saturate(130%); opacity:.45;
-      background: conic-gradient(from 180deg, #00c2ff, #7c3aed, #10b981, #f59e0b, #00c2ff);
-      animation: spin 28s linear infinite;
-    }
-    @keyframes spin{to{transform:rotate(1turn)}}header{
-  position:sticky; top:0; z-index:50; backdrop-filter:saturate(140%) blur(8px);
-  background: linear-gradient(180deg, rgba(2,6,23,.85), rgba(2,6,23,.55));
-  border-bottom:1px solid rgba(148,163,184,.15);
-}
-.wrap{max-width:1150px; margin:0 auto; padding:16px 20px}
-.row{display:flex; gap:14px; align-items:center; flex-wrap:wrap}
-.brand{display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:.3px}
-.logo{
-  width:38px; height:38px; border-radius:12px;
-  background:linear-gradient(135deg, var(--brand), var(--info));
-  display:grid; place-items:center; box-shadow:var(--shadow);
-  font-weight:900; color:white;
-}
-
-.promo{
-  background:linear-gradient(90deg, rgba(16,185,129,.15), rgba(59,130,246,.15));
-  border:1px solid rgba(16,185,129,.25); color:#d1fae5;
-  padding:10px 14px; border-radius:12px; font-weight:600;
-  display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;
-}
-
-.badges{display:flex; gap:10px; flex-wrap:wrap}
-.badge{
-  background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
-  border:1px solid rgba(148,163,184,.18); padding:8px 12px; border-radius:999px; font-weight:600;
-  display:flex; align-items:center; gap:8px; color:#e2e8f0
-}
-
-main{max-width:1150px; margin:24px auto; padding:0 20px 80px}
-.cards{display:grid; grid-template-columns:repeat( auto-fit, minmax(240px, 1fr) ); gap:16px}
-.card{
-  background:linear-gradient(180deg, rgba(17,24,39,.85), rgba(17,24,39,.65));
-  border:1px solid rgba(148,163,184,.18); border-radius:18px; overflow:hidden; box-shadow:var(--shadow);
-  display:flex; flex-direction:column; min-height:100%;
-}
-.card img{width:100%; height:180px; object-fit:cover; background:#0b1020}
-.card .p{padding:12px 14px}
-.title{font-weight:800; font-size:1.05rem}
-.muted{color:var(--muted); font-size:.92rem}
-.price{display:flex; align-items:center; gap:10px; margin-top:6px}
-.price .fc{font-weight:900; font-size:1.15rem; color:#fff}
-.price .usd{color:#93c5fd; font-weight:700}
-.cta{margin-top:10px; display:flex; gap:8px}
-.btn{flex:1; display:inline-flex; justify-content:center; align-items:center; gap:8px; padding:10px 12px; border-radius:12px; border:1px solid transparent; cursor:pointer; font-weight:800}
-.btn.whatsapp{background:#25D36622; border-color:#25D36655; color:#c3f9d7}
-.btn.telegram{background:#229ED922; border-color:#229ED955; color:#cfe9ff}
-.btn:hover{transform:translateY(-1px)}
-
-/* Barre infos */
-.stats{display:flex; gap:12px; flex-wrap:wrap; margin:18px 0}
-.stat{background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02)); border:1px solid rgba(148,163,184,.18); padding:10px 14px; border-radius:14px; font-weight:700}
-
-/* Boutons flottants */
-.float{
-  position:fixed; right:18px; bottom:18px; display:flex; flex-direction:column; gap:10px; z-index:60;
-}
-.float a{
-  display:flex; align-items:center; gap:8px; padding:10px 12px; border-radius:999px; text-decoration:none; font-weight:800; box-shadow:var(--shadow);
-}
-.float .w{background:#25D366; color:#06250f}
-.float .t{background:#229ED9; color:#041e2a}
-
-footer{max-width:1150px; margin:40px auto; padding:0 20px 60px; color:#cbd5e1}
-.pay{display:flex; gap:10px; flex-wrap:wrap}
-.pill{background:rgba(255,255,255,.07); border:1px solid rgba(148,163,184,.18); padding:8px 12px; border-radius:999px; font-weight:700}
-
-details{background:rgba(255,255,255,.05); border:1px solid rgba(148,163,184,.18); padding:12px; border-radius:14px}
-details summary{cursor:pointer; font-weight:900}
-
-.filters{display:flex; gap:8px; flex-wrap:wrap; margin:14px 0 18px}
-.chip{padding:8px 12px; border-radius:999px; background:rgba(255,255,255,.06); border:1px solid rgba(148,163,184,.18); cursor:pointer; font-weight:700}
-.chip.active{background:linear-gradient(90deg, rgba(16,185,129,.25), rgba(59,130,246,.25)); border-color:#34d39977}
-
+    body{margin:0; color:var(--text); font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial,"Noto Sans",sans-serif; background: radial-gradient(1200px 800px at 10% 10%, #0b1225 0%, #0f172a 40%, #0a0f1f 100%); overflow-x:hidden}
+    .bg-anim{position:fixed; inset:-20vmax; z-index:-1; filter:blur(80px) saturate(130%); opacity:.45; background:conic-gradient(from 180deg, #00c2ff, #7c3aed, #10b981, #f59e0b, #00c2ff); animation:spin 28s linear infinite}
+    @keyframes spin{to{transform:rotate(1turn)}}
+    header{position:sticky; top:0; z-index:50; backdrop-filter:saturate(140%) blur(8px); background:linear-gradient(180deg, rgba(2,6,23,.85), rgba(2,6,23,.55)); border-bottom:1px solid rgba(148,163,184,.15)}
+    .wrap{max-width:1150px; margin:0 auto; padding:16px 20px}
+    .row{display:flex; gap:14px; align-items:center; flex-wrap:wrap}
+    .brand{display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:.3px}
+    .logo{width:38px; height:38px; border-radius:12px; background:linear-gradient(135deg, var(--brand), var(--info)); display:grid; place-items:center; box-shadow:var(--shadow); font-weight:900; color:#fff}
+    .promo{background:linear-gradient(90deg, rgba(16,185,129,.15), rgba(59,130,246,.15)); border:1px solid rgba(16,185,129,.25); color:#d1fae5; padding:10px 14px; border-radius:12px; font-weight:600; display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap}
+    .badges{display:flex; gap:10px; flex-wrap:wrap}
+    .badge{background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02)); border:1px solid rgba(148,163,184,.18); padding:8px 12px; border-radius:999px; font-weight:600; display:flex; align-items:center; gap:8px; color:#e2e8f0}
+    main{max-width:1150px; margin:24px auto; padding:0 20px 80px}
+    .cards{display:grid; grid-template-columns:repeat(auto-fit, minmax(240px,1fr)); gap:16px}
+    .card{background:linear-gradient(180deg, rgba(17,24,39,.85), rgba(17,24,39,.65)); border:1px solid rgba(148,163,184,.18); border-radius:18px; overflow:hidden; box-shadow:var(--shadow); display:flex; flex-direction:column}
+    .card img{width:100%; height:180px; object-fit:cover; background:#0b1020}
+    .card .p{padding:12px 14px}
+    .title{font-weight:800; font-size:1.05rem}
+    .muted{color:var(--muted); font-size:.92rem}
+    .price{display:flex; align-items:center; gap:10px; margin-top:6px}
+    .price .fc{font-weight:900; font-size:1.15rem; color:#fff}
+    .price .usd{color:#93c5fd; font-weight:700}
+    .cta{margin-top:10px; display:flex; gap:8px}
+    .btn{flex:1; display:inline-flex; justify-content:center; align-items:center; gap:8px; padding:10px 12px; border-radius:12px; border:1px solid transparent; cursor:pointer; font-weight:800}
+    .btn.whatsapp{background:#25D36622; border-color:#25D36655; color:#c3f9d7}
+    .btn.telegram{background:#229ED922; border-color:#229ED955; color:#cfe9ff}
+    .btn:hover{transform:translateY(-1px)}
+    .stats{display:flex; gap:12px; flex-wrap:wrap; margin:18px 0}
+    .stat{background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02)); border:1px solid rgba(148,163,184,.18); padding:10px 14px; border-radius:14px; font-weight:700}
+    .float{position:fixed; right:18px; bottom:18px; display:flex; flex-direction:column; gap:10px; z-index:60}
+    .float a{display:flex; align-items:center; gap:8px; padding:10px 12px; border-radius:999px; text-decoration:none; font-weight:800; box-shadow:var(--shadow)}
+    .float .w{background:#25D366; color:#06250f}
+    .float .t{background:#229ED9; color:#041e2a}
+    footer{max-width:1150px; margin:40px auto; padding:0 20px 60px; color:#cbd5e1}
+    .pay{display:flex; gap:10px; flex-wrap:wrap}
+    .pill{background:rgba(255,255,255,.07); border:1px solid rgba(148,163,184,.18); padding:8px 12px; border-radius:999px; font-weight:700}
+    details{background:rgba(255,255,255,.05); border:1px solid rgba(148,163,184,.18); padding:12px; border-radius:14px}
+    details summary{cursor:pointer; font-weight:900}
+    .filters{display:flex; gap:8px; flex-wrap:wrap; margin:14px 0 18px}
+    .chip{padding:8px 12px; border-radius:999px; background:rgba(255,255,255,.06); border:1px solid rgba(148,163,184,.18); cursor:pointer; font-weight:700}
+    .chip.active{background:linear-gradient(90deg, rgba(16,185,129,.25), rgba(59,130,246,.25)); border-color:#34d39977}
+    /* Avis/Commentaires */
+    .reviews{margin-top:26px}
+    .review{background:rgba(255,255,255,.06); border:1px solid rgba(148,163,184,.18); border-radius:14px; padding:12px; margin-top:10px}
+    .stars{font-weight:900}
+    .countdown{font-weight:900; letter-spacing:.5px}
   </style>
 </head>
 <body>
-  <div class="bg-anim"></div>  <header>
+  <div class="bg-anim"></div>
+  <header>
     <div class="wrap">
       <div class="row" style="justify-content:space-between">
         <div class="brand">
@@ -127,25 +80,45 @@ details summary{cursor:pointer; font-weight:900}
         </div>
       </div>
       <div class="promo" style="margin-top:12px">
-        <div>🔥 <strong>Promos</strong> cette semaine sur téléphones & unités — meilleurs prix garantis.</div>
-        <div class="muted">WhatsApp : <strong>+243 990 564 877</strong> • Telegram : <strong>@cphkkk66</strong></div>
+        <div>🔥 <strong>Promos</strong> — <span id="promoText">meilleurs prix garantis</span>. <span class="countdown" id="countdown"></span></div>
+        <div class="muted">WhatsApp : <strong id="waShown">+243 990 564 877</strong> • Telegram : <strong>@cphkkk66</strong></div>
       </div>
     </div>
-  </header>  <main>
+  </header>
+  <main>
     <section class="stats">
       <div class="stat">👁️ Vues (ce navigateur) : <span id="viewsLocal">0</span></div>
       <div class="stat">❤️ J'aime : <span id="likesCount">0</span> <button id="likeBtn" class="chip" style="margin-left:8px">+ J'aime</button></div>
-      <div class="stat">📶 État : Public (lecture) / Privé (édition)</div>
-    </section><section>
+      <div class="stat">📶 État : Public (lecture)</div>
+    </section><nav class="filters" id="filtersTop"></nav>
+
+<section>
   <h2>Catalogue</h2>
   <div class="filters" id="filters"></div>
   <div class="cards" id="cards">Chargement…</div>
 </section>
 
+<section class="reviews">
+  <h2>Avis clients <span class="muted" id="avgStars"></span></h2>
+  <form id="reviewForm" class="row" style="gap:8px; align-items:flex-end">
+    <div>
+      <label>Nom<br><input id="rName" required placeholder="Votre nom" style="padding:8px;border-radius:10px;border:1px solid rgba(148,163,184,.25);background:rgba(255,255,255,.06);color:#fff"></label>
+    </div>
+    <div>
+      <label>Note (1-5)<br><input id="rStars" type="number" min="1" max="5" required value="5" style="width:80px;padding:8px;border-radius:10px;border:1px solid rgba(148,163,184,.25);background:rgba(255,255,255,.06);color:#fff"></label>
+    </div>
+    <div style="flex:1">
+      <label>Commentaire<br><input id="rText" required placeholder="Écrivez un avis" style="width:100%;padding:8px;border-radius:10px;border:1px solid rgba(148,163,184,.25);background:rgba(255,255,255,.06);color:#fff"></label>
+    </div>
+    <button class="chip" type="submit">Publier</button>
+  </form>
+  <div id="reviewsList"></div>
+</section>
+
 <section style="margin-top:28px">
   <h2>Contact</h2>
   <div class="row">
-    <a class="btn whatsapp" href="https://wa.me/243990564877" target="_blank">📱 WhatsApp</a>
+    <a class="btn whatsapp" id="waBtn" href="https://wa.me/243990564877" target="_blank">📱 WhatsApp</a>
     <a class="btn telegram" href="https://t.me/cphkkk66" target="_blank">💬 Telegram</a>
   </div>
 </section>
@@ -163,41 +136,43 @@ details summary{cursor:pointer; font-weight:900}
 
 <section style="margin-top:28px">
   <details>
-    <summary>🔧 Paramètres & Sécurité (infos client)</summary>
+    <summary>🔧 Paramètres & Sécurité (infos)</summary>
     <ul>
-      <li>Ce site affiche seulement les <strong>produits et prix</strong>. Aucune donnée sensible n'est publique.</li>
+      <li>Affichage <strong>lecture seule</strong> — aucune donnée sensible.</li>
       <li>Les mises à jour viennent d'une feuille <strong>MASTER (privée)</strong> vers une feuille <strong>PUBLIC (lecture)</strong>.</li>
-      <li>Contacts officiels : WhatsApp <strong>+243 990 564 877</strong>, Telegram <strong>@cphkkk66</strong>, Airtel Money <strong>Prince Alex</strong>.</li>
+      <li>Pour modifier le site : rendez‑vous sur <code>admin.html</code> (protégé).</li>
     </ul>
   </details>
 </section>
 
   </main>  <div class="float">
-    <a class="w" href="https://wa.me/243990564877" target="_blank">📱 WhatsApp</a>
+    <a class="w" id="waFloat" href="https://wa.me/243990564877" target="_blank">📱 WhatsApp</a>
     <a class="t" href="https://t.me/cphkkk66" target="_blank">💬 Telegram</a>
   </div>  <footer>
     <hr style="border-color:rgba(148,163,184,.2); border-style:solid; border-width:1px 0 0; margin-bottom:16px">
     <div>© <span id="year"></span> Unité Rapide — RDC. Tous droits réservés.</div>
   </footer>  <script>
-    // ========= CONFIG =========
-    // 1) Publie ta feuille Google en CSV et colle le lien ici :
-    // Exemple: https://docs.google.com/spreadsheets/d/ID/export?format=csv
-    const SHEET_CSV_URL = ""; // ⬅️ colle ici ton lien CSV public
+    // ====== LECTURE DES REGLAGES SAUVEGARDES PAR L'ADMIN ======
+    const CFG = JSON.parse(localStorage.getItem('ur_cfg')||'{}');
+    const SHEET_CSV_URL = CFG.sheet || '';
+    const RATE_FC = Number(CFG.rate||2800);
+    const WHATSAPP = (CFG.wa||'243990564877').replace(/\D/g,'');
+    const COUNTDOWN_TO = CFG.countdown || '';
+    const PROMO_TEXT = CFG.promo || 'meilleurs prix garantis';
 
-    // 2) Taux FC/US$ (utilisé seulement si la feuille n'a pas la colonne Franc (E))
-    const RATE_FC = 2800;
+    // UI sync (WA + promo)
+    document.getElementById('waShown').textContent = '+'+WHATSAPP.replace(/(\d{3})(\d{3})(\d{3})(\d{3})/,'$1 $2 $3 $4');
+    document.getElementById('waBtn').href = `https://wa.me/${WHATSAPP}`;
+    document.getElementById('waFloat').href = `https://wa.me/${WHATSAPP}`;
+    document.getElementById('promoText').textContent = PROMO_TEXT;
 
-    // 3) Numéro WhatsApp pour préremplir le message
-    const WHATSAPP = "243990564877";
-
-    // ========= Compteur global (CountAPI) + fallback local =========
+    // ====== Compteur global (CountAPI) + fallback local ======
     (function(){
       const badge = document.getElementById('visitsBadge');
-      const ns = 'uniterapide_paluku_visitor_v1';
+      const ns = 'uniterapide_paluku_visitor_v2';
       fetch(`https://api.countapi.xyz/hit/${ns}/visits`).then(r=>r.json()).then(j=>{
         badge.textContent = `👁️ Visites : ${j.value.toLocaleString('fr-FR')}`;
       }).catch(()=>{
-        // fallback local
         const k='ur_visits_fallback';
         const v=(parseInt(localStorage.getItem(k)||'0',10)+1);
         localStorage.setItem(k,String(v));
@@ -205,13 +180,13 @@ details summary{cursor:pointer; font-weight:900}
       });
     })();
 
-    // ========= VUES (local device) =========
+    // ====== VUES (local device) ======
     const localKeyViews = 'ur_views';
-    const v = parseInt(localStorage.getItem(localKeyViews) || '0', 10) + 1;
-    localStorage.setItem(localKeyViews, String(v));
-    document.getElementById('viewsLocal').textContent = v.toLocaleString('fr-FR');
+    const _v = parseInt(localStorage.getItem(localKeyViews) || '0', 10) + 1;
+    localStorage.setItem(localKeyViews, String(_v));
+    document.getElementById('viewsLocal').textContent = _v.toLocaleString('fr-FR');
 
-    // ========= LIKES (local device) =========
+    // ====== LIKES (local device) ======
     (function(){
       const likeKey = 'ur_like';
       const likeBtn = document.getElementById('likeBtn');
@@ -224,32 +199,35 @@ details summary{cursor:pointer; font-weight:900}
       });
     })();
 
-    // ========= UTIL: parse CSV simple (gère guillemets) =========
+    // ====== COMPTE À REBOURS ======
+    (function(){
+      const el = document.getElementById('countdown');
+      if(!COUNTDOWN_TO){ el.textContent=''; return; }
+      function tick(){
+        const t = new Date(COUNTDOWN_TO).getTime() - Date.now();
+        if(isNaN(t) || t<=0){ el.textContent='Promo en cours !'; return; }
+        const d=Math.floor(t/86400000), h=Math.floor(t%86400000/3600000), m=Math.floor(t%3600000/60000), s=Math.floor(t%60000/1000);
+        el.textContent = `⏳ ${d}j ${h}h ${m}m ${s}s`;
+      }
+      tick(); setInterval(tick,1000);
+    })();
+
+    // ====== CSV Parser ======
     function parseCSV(text){
       const rows=[]; let cur=[]; let cell=''; let inQ=false; for(let i=0;i<text.length;i++){
         const ch=text[i], nx=text[i+1];
-        if(inQ){
-          if(ch==='"' && nx==='"'){ cell+='"'; i++; }
-          else if(ch==='"'){ inQ=false; }
-          else cell+=ch;
-        } else {
-          if(ch==='"'){ inQ=true; }
-          else if(ch===','){ cur.push(cell); cell=''; }
-          else if(ch==='\n' || ch==='\r'){ if(cell!=='' || cur.length){ cur.push(cell); rows.push(cur); cur=[]; cell=''; } }
-          else cell+=ch;
-        }
+        if(inQ){ if(ch==='"' && nx==='"'){ cell+='"'; i++; } else if(ch==='"'){ inQ=false; } else cell+=ch; }
+        else { if(ch==='"'){ inQ=true; } else if(ch===','){ cur.push(cell); cell=''; } else if(ch==='\n' || ch==='\r'){ if(cell!==''||cur.length){ cur.push(cell); rows.push(cur); cur=[]; cell=''; } } else cell+=ch; }
       }
       if(cell!=='' || cur.length){ cur.push(cell); rows.push(cur); }
       return rows.filter(r=>r.some(c=>String(c).trim()!==''));
     }
 
-    // ========= RENDER =========
     const cards = document.getElementById('cards');
     const filtersEl = document.getElementById('filters');
+    const filtersTop = document.getElementById('filtersTop');
 
-    function formatMoney(n){
-      try{ return n.toLocaleString('fr-FR'); }catch(e){ return n; }
-    }
+    function formatMoney(n){ try{ return n.toLocaleString('fr-FR'); }catch(e){ return n; } }
 
     function makeCard(p){
       const promo = p.promo && p.promo.trim()? `<span class="pill" style="margin-left:auto;background:rgba(245,158,11,.18);border-color:#f59e0b55;color:#fde68a">🎯 ${p.promo}</span>`: '';
@@ -278,30 +256,29 @@ details summary{cursor:pointer; font-weight:900}
 
     function buildFilters(products){
       const cats = Array.from(new Set(products.map(p=>p.cat))).filter(Boolean);
-      filtersEl.innerHTML = ['_all', ...cats].map(c=>`<span class="chip${c==='_all'? ' active':''}" data-cat="${c}">${c==='_all'? 'Tout':c}</span>`).join('');
-      filtersEl.querySelectorAll('.chip').forEach(el=>{
+      const html = ['_all', ...cats].map(c=>`<span class="chip${c==='_all'? ' active':''}" data-cat="${c}">${c==='_all'? 'Tout':c}</span>`).join('');
+      filtersEl.innerHTML = html; filtersTop.innerHTML = html;
+      [...filtersEl.querySelectorAll('.chip'), ...filtersTop.querySelectorAll('.chip')].forEach(el=>{
         el.addEventListener('click',()=>{
-          filtersEl.querySelectorAll('.chip').forEach(x=>x.classList.remove('active'));
-          el.classList.add('active');
+          document.querySelectorAll('.chip').forEach(x=>x.classList.remove('active'));
           const cat = el.getAttribute('data-cat');
-          renderCards(cat==='_all'? products : products.filter(p=>p.cat===cat));
-        })
-      })
+          document.querySelectorAll(`.chip[data-cat="${cat}"]`).forEach(x=>x.classList.add('active'));
+          renderCards(cat==='_all'? _products : _products.filter(p=>p.cat===cat));
+        });
+      });
     }
 
-    function renderCards(list){
-      cards.innerHTML = list.map(makeCard).join('');
-    }
+    function renderCards(list){ cards.innerHTML = list.map(makeCard).join(''); }
 
-    // ========= CHARGER FEUILLE GOOGLE OU DEMO =========
+    // ====== CHARGER FEUILLE GOOGLE OU DEMO ======
+    let _products = [];
     async function load(){
       let products=[];
       if(SHEET_CSV_URL){
         try{
-          const res = await fetch(SHEET_CSV_URL, {cache:'no-store'});
+          const res = await fetch(SHEET_CSV_URL,{cache:'no-store'});
           const txt = await res.text();
           const rows = parseCSV(txt);
-          // Attendu: A Catégorie | B Nom | C Lien image | D Prix $ | E Franc | F Promo | G Lien | H Notes | I Stock
           const hdr = rows[0].map(h=>h.trim().toLowerCase());
           const idx = {
             cat: hdr.indexOf('catégorie')>-1? hdr.indexOf('catégorie') : 0,
@@ -334,9 +311,8 @@ details summary{cursor:pointer; font-weight:900}
         }catch(e){ console.error('Erreur Sheet', e); }
       }
       if(!products.length){
-        // Démo si la feuille n'est pas prête
         products = [
-          {cat:"Vêtements", name:"Chemise classique homme", img:"https://images.unsplash.com/photo-1520974769661-3b1d5b4a3b53?q=80&w=1200&auto=format&fit=crop", priceUSD:15, priceFC:15*RATE_FC, desc:"Tissu respirant, tailles S-XL", link:""},
+          {cat:"Vêtements", name:"Chemise classique homme", img:"https://images.unsplash.com/photo-1520974769661-3b1d5b4a3b53?q=80&w=1200&auto=format&fit=crop", priceUSD:15, priceFC:15*RATE_FC, link:""},
           {cat:"Vêtements", name:"Pantalon jean", img:"https://images.unsplash.com/photo-1490111718993-d98654ce6cf7?q=80&w=1200&auto=format&fit=crop", priceUSD:22, priceFC:22*RATE_FC, link:""},
           {cat:"Chaussures", name:"Baskets sport", img:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1200&auto=format&fit=crop", priceUSD:35, priceFC:35*RATE_FC, link:""},
           {cat:"Téléphones", name:"Smartphone Android 4G", img:"https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=1200&auto=format&fit=crop", priceUSD:120, priceFC:120*RATE_FC, link:""},
@@ -346,15 +322,260 @@ details summary{cursor:pointer; font-weight:900}
           {cat:"Unités", name:"Unités Airtel Money (RDC)", img:"https://images.unsplash.com/photo-1563986768494-4dee2763ff3f?q=80&w=1200&auto=format&fit=crop", priceUSD:5, priceFC:5*RATE_FC, link:""}
         ];
       }
-      // Nettoyage + tri léger (facultatif)
-      products = products.filter(p=>p.name && p.priceFC>0);
-      // Construire filtres + cartes
-      buildFilters(products);
-      renderCards(products);
+      _products = products.filter(p=>p.name && p.priceFC>0);
+      buildFilters(_products);
+      renderCards(_products);
     }
 
-    load();
+    // ====== AVIS / COMMENTAIRES (localStorage) ======
+    const REV_KEY='ur_reviews_v1';
+    function loadReviews(){
+      const list = JSON.parse(localStorage.getItem(REV_KEY)||'[]');
+      const box = document.getElementById('reviewsList');
+      if(!list.length){ box.innerHTML = '<div class="muted">Pas encore d\'avis. Soyez le premier !</div>'; document.getElementById('avgStars').textContent=''; return; }
+      box.innerHTML = list.map(r=>`<div class="review"><div class="stars">${'⭐'.repeat(r.stars)} <span class="muted">par ${r.name}</span></div><div>${r.text}</div></div>`).join('');
+      const avg = (list.reduce((a,b)=>a+b.stars,0)/list.length).toFixed(1);
+      document.getElementById('avgStars').textContent = `(${avg}/5 • ${list.length} avis)`;
+    }
+    document.getElementById('reviewForm').addEventListener('submit',e=>{
+      e.preventDefault();
+      const name = document.getElementById('rName').value.trim();
+      const stars = Math.max(1, Math.min(5, parseInt(document.getElementById('rStars').value,10)||5));
+      const text = document.getElementById('rText').value.trim();
+      const list = JSON.parse(localStorage.getItem(REV_KEY)||'[]');
+      list.unshift({name, stars, text, at: Date.now()});
+      localStorage.setItem(REV_KEY, JSON.stringify(list.slice(0,100)));
+      (e.target).reset(); document.getElementById('rStars').value=5; loadReviews();
+    });
 
+    loadReviews();
+    load();
     document.getElementById('year').textContent = new Date().getFullYear();
-  </script></body>
-        </html>
+  </script></body></html><!-- =========================
+ FICHIER 2 : admin.html
+ (Partie privée — protégée par mot de passe côté client)
+========================== --><!DOCTYPE html><html lang="fr"><head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Unité Rapide — Admin</title>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' https: data:; img-src 'self' https: data:; style-src 'self' 'unsafe-inline' https:; script-src 'self' 'unsafe-inline' https:; connect-src 'self' https:;" />
+  <style>
+    body{margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Arial,sans-serif; color:#e5e7eb; background:#0f172a}
+    .wrap{max-width:900px; margin:0 auto; padding:24px}
+    h1{margin:0 0 10px}
+    .card{background:linear-gradient(180deg, rgba(17,24,39,.9), rgba(17,24,39,.75)); border:1px solid rgba(148,163,184,.18); border-radius:16px; padding:16px; margin:14px 0}
+    label{display:block; margin:8px 0 4px}
+    input, textarea{width:100%; padding:10px; border-radius:10px; border:1px solid rgba(148,163,184,.25); background:rgba(255,255,255,.06); color:#fff}
+    .row{display:flex; gap:12px; flex-wrap:wrap}
+    .btn{display:inline-flex; align-items:center; gap:8px; padding:10px 12px; border-radius:10px; border:1px solid rgba(148,163,184,.25); background:rgba(59,130,246,.15); color:#dbeafe; cursor:pointer; font-weight:800}
+    .muted{color:#94a3b8}
+    .ok{background:rgba(16,185,129,.15); color:#d1fae5}
+    .danger{background:rgba(239,68,68,.15); color:#fecaca}
+    .center{display:grid; place-items:center; min-height:40vh}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Admin — Unité Rapide</h1>
+    <p class="muted">Cette page permet de configurer <code>public.html</code> en <strong>lecture seule</strong>. Aucune clé sensible n'est exposée. Pour plus de sécurité, hébergez l'admin séparément.</p><div id="gate" class="card">
+  <h2>🔐 Accès</h2>
+  <p class="muted">Entrez le mot de passe admin pour déverrouiller les paramètres.</p>
+  <div class="row">
+    <input id="pwd" type="password" placeholder="Mot de passe" />
+    <button class="btn" id="loginBtn">Se connecter</button>
+    <button class="btn danger" id="resetPwd">Réinitialiser mot de passe</button>
+  </div>
+  <p class="muted">Mot de passe initial : <code>ur-admin-2025</code> (changez-le ci‑dessous après connexion).</p>
+</div>
+
+<div id="panel" style="display:none">
+  <div class="card">
+    <h2>⚙️ Paramètres généraux</h2>
+    <div class="row">
+      <div style="flex:1">
+        <label>WhatsApp (numéro international sans +)</label>
+        <input id="cfgWa" placeholder="243990564877" />
+      </div>
+      <div>
+        <label>Taux FC / USD</label>
+        <input id="cfgRate" type="number" placeholder="2800" />
+      </div>
+    </div>
+    <label>Texte promo</label>
+    <input id="cfgPromo" placeholder="meilleurs prix garantis" />
+    <div class="row">
+      <div style="flex:1">
+        <label>Compte à rebours jusqu'au… (ex: 2025-12-31T23:59:59)</label>
+        <input id="cfgCountdown" placeholder="2025-12-31T23:59:59" />
+      </div>
+      <div style="flex:1">
+        <label>URL CSV public (Google Sheets)</label>
+        <input id="cfgSheet" placeholder="https://docs.google.com/spreadsheets/d/ID/export?format=csv" />
+      </div>
+    </div>
+    <div class="row" style="margin-top:10px">
+      <button class="btn ok" id="saveCfg">💾 Enregistrer</button>
+      <button class="btn" id="exportCfg">📤 Exporter config</button>
+      <button class="btn" id="importCfgBtn">📥 Importer config</button>
+      <input id="fileCfg" type="file" accept="application/json" style="display:none" />
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🧪 Prévisualiser le CSV</h2>
+    <div class="row">
+      <button class="btn" id="testLoad">Charger & compter les produits</button>
+      <span id="testInfo" class="muted"></span>
+    </div>
+    <pre id="sample" style="white-space:pre-wrap; max-height:220px; overflow:auto; background:rgba(0,0,0,.35); padding:10px; border-radius:10px"></pre>
+  </div>
+
+  <div class="card">
+    <h2>🔑 Sécurité (locale)</h2>
+    <div class="row">
+      <div style="flex:1">
+        <label>Nouveau mot de passe admin</label>
+        <input id="newPwd" type="password" placeholder="••••••" />
+      </div>
+      <button class="btn ok" id="changePwd">Changer</button>
+    </div>
+    <p class="muted">Le mot de passe est stocké <em>haché</em> dans le navigateur (localStorage). Pour une vraie sécurité, utilisez un back‑end.</p>
+  </div>
+
+  <div class="card">
+    <h2>🧼 Nettoyage</h2>
+    <div class="row">
+      <button class="btn danger" id="clearCfg">Effacer la configuration locale</button>
+      <button class="btn danger" id="clearReviews">Effacer les avis clients (public)</button>
+    </div>
+  </div>
+</div>
+
+  </div>  <script>
+    // ======= UTIL HASH (SHA-256 via SubtleCrypto) =======
+    async function sha(text){
+      const enc = new TextEncoder().encode(text);
+      const buf = await crypto.subtle.digest('SHA-256', enc);
+      return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+    }
+
+    // ======= MOT DE PASSE (local) =======
+    const PWD_KEY='ur_admin_pwd_hash_v1';
+    const DEFAULT_PWD='ur-admin-2025';
+
+    async function ensureDefaultPwd(){
+      if(!localStorage.getItem(PWD_KEY)){
+        localStorage.setItem(PWD_KEY, await sha(DEFAULT_PWD));
+      }
+    }
+
+    // ======= CONFIG =======
+    const CFG_KEY='ur_cfg';
+    function readCfg(){ return JSON.parse(localStorage.getItem(CFG_KEY)||'{}'); }
+    function writeCfg(obj){ localStorage.setItem(CFG_KEY, JSON.stringify(obj)); }
+
+    // ======= LOGIN FLOW =======
+    const gate = document.getElementById('gate');
+    const panel = document.getElementById('panel');
+    const loginBtn = document.getElementById('loginBtn');
+
+    loginBtn.addEventListener('click', async()=>{
+      const v = document.getElementById('pwd').value;
+      const ok = (await sha(v)) === localStorage.getItem(PWD_KEY);
+      if(ok){ gate.style.display='none'; panel.style.display='block'; loadCfgToForm(); }
+      else alert('Mot de passe invalide');
+    });
+
+    document.getElementById('resetPwd').addEventListener('click', async()=>{
+      if(!confirm('Réinitialiser le mot de passe au défaut ?')) return;
+      localStorage.setItem(PWD_KEY, await sha(DEFAULT_PWD));
+      alert('Mot de passe réinitialisé.');
+    });
+
+    document.getElementById('changePwd').addEventListener('click', async()=>{
+      const np = document.getElementById('newPwd').value;
+      if(!np || np.length<6) return alert('Mot de passe trop court');
+      localStorage.setItem(PWD_KEY, await sha(np));
+      document.getElementById('newPwd').value='';
+      alert('Mot de passe changé.');
+    });
+
+    // ======= FORM CFG =======
+    const f = {
+      wa: document.getElementById('cfgWa'),
+      rate: document.getElementById('cfgRate'),
+      promo: document.getElementById('cfgPromo'),
+      countdown: document.getElementById('cfgCountdown'),
+      sheet: document.getElementById('cfgSheet')
+    };
+
+    function loadCfgToForm(){
+      const c = readCfg();
+      f.wa.value = c.wa||'243990564877';
+      f.rate.value = c.rate||2800;
+      f.promo.value = c.promo||'meilleurs prix garantis';
+      f.countdown.value = c.countdown||'';
+      f.sheet.value = c.sheet||'';
+    }
+
+    document.getElementById('saveCfg').addEventListener('click', ()=>{
+      const c = {
+        wa: (f.wa.value||'').replace(/\D/g,''),
+        rate: Number(f.rate.value||2800),
+        promo: f.promo.value||'',
+        countdown: f.countdown.value||'',
+        sheet: f.sheet.value||''
+      };
+      writeCfg(c);
+      alert('Configuration enregistrée. Ouvrez public.html pour voir les changements.');
+    });
+
+    // Export/Import
+    document.getElementById('exportCfg').addEventListener('click', ()=>{
+      const blob = new Blob([JSON.stringify(readCfg(),null,2)], {type:'application/json'});
+      const a = Object.assign(document.createElement('a'), {href:URL.createObjectURL(blob), download:'ur-config.json'});
+      document.body.appendChild(a); a.click(); setTimeout(()=>{URL.revokeObjectURL(a.href); a.remove();}, 0);
+    });
+
+    document.getElementById('importCfgBtn').addEventListener('click', ()=> document.getElementById('fileCfg').click());
+    document.getElementById('fileCfg').addEventListener('change', e=>{
+      const file = e.target.files[0]; if(!file) return;
+      const rd = new FileReader(); rd.onload = ()=>{ try{ writeCfg(JSON.parse(rd.result)); loadCfgToForm(); alert('Config importée.'); }catch{ alert('Fichier invalide'); } }; rd.readAsText(file);
+    });
+
+    // ======= TEST CHARGEMENT CSV =======
+    function parseCSV(text){
+      const rows=[]; let cur=[]; let cell=''; let inQ=false; for(let i=0;i<text.length;i++){
+        const ch=text[i], nx=text[i+1];
+        if(inQ){ if(ch==='"' && nx==='"'){ cell+='"'; i++; } else if(ch==='"'){ inQ=false; } else cell+=ch; }
+        else { if(ch==='"'){ inQ=true; } else if(ch===','){ cur.push(cell); cell=''; } else if(ch==='\n' || ch==='\r'){ if(cell!==''||cur.length){ cur.push(cell); rows.push(cur); cur=[]; cell=''; } } else cell+=ch; }
+      }
+      if(cell!=='' || cur.length){ cur.push(cell); rows.push(cur); }
+      return rows.filter(r=>r.some(c=>String(c).trim()!==''));
+    }
+
+    document.getElementById('testLoad').addEventListener('click', async()=>{
+      const url = f.sheet.value.trim();
+      if(!url) return alert('Renseignez l\'URL CSV dans les paramètres.');
+      try{
+        const res = await fetch(url, {cache:'no-store'});
+        const txt = await res.text();
+        const rows = parseCSV(txt);
+        document.getElementById('testInfo').textContent = `${rows.length-1} produits trouvés`;
+        document.getElementById('sample').textContent = txt.slice(0,1200);
+      }catch(e){
+        document.getElementById('testInfo').textContent = 'Erreur de chargement';
+      }
+    });
+
+    // ======= NETTOYAGE =======
+    document.getElementById('clearCfg').addEventListener('click', ()=>{
+      if(confirm('Effacer toute la configuration locale ?')){ localStorage.removeItem(CFG_KEY); alert('Config effacée.'); loadCfgToForm(); }
+    });
+    document.getElementById('clearReviews').addEventListener('click', ()=>{
+      if(confirm('Effacer les avis publics ?')){ localStorage.removeItem('ur_reviews_v1'); alert('Avis effacés.'); }
+    });
+
+    // Init
+    ensureDefaultPwd();
+  </script></body></html>
