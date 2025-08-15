@@ -1,463 +1,698 @@
-<!DOCTYPE html>
+here<!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Unité Rapide — Boutique</title>
-<meta http-equiv="Content-Security-Policy" content="default-src 'self' https: data:; img-src 'self' https: data:; style-src 'self' 'unsafe-inline' https:; script-src 'self' 'unsafe-inline' https:; connect-src 'self' https:;" />
+<title>Uniterapide — Boutique</title>
+
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' https: data:; img-src 'self' https: data: blob:; style-src 'self' 'unsafe-inline' https:; script-src 'self' 'unsafe-inline' https:; connect-src 'self' https:;" />
+
 <style>
   :root{
-    --bg1:#0f172a; --bg2:#1e293b; --brand:#10b981; --accent:#f59e0b; --danger:#ef4444; --info:#3b82f6;
-    --text:#e5e7eb; --muted:#94a3b8; --card:#111827cc; --shadow:0 10px 30px rgba(0,0,0,.35);
+    --bg:#0b0f1a; --bg2:#0f172a; --card:#111827; --text:#e5e7eb; --muted:#94a3b8;
+    --brand:#10b981; --info:#3b82f6; --accent:#f59e0b; --danger:#ef4444; --ok:#22c55e;
+    --ring: rgba(59,130,246,.45); --bd: rgba(148,163,184,.2);
   }
-  *{box-sizing:border-box} html,body{height:100%}
-  body{margin:0;color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial,"Noto Sans",sans-serif;background: radial-gradient(1200px 800px at 10% 10%, #0b1225 0%, #0f172a 40%, #0a0f1f 100%);overflow-x:hidden}
-  .bg-anim{position:fixed;inset:-20vmax;z-index:-1;filter:blur(80px) saturate(130%);opacity:.45;background:conic-gradient(from 180deg,#00c2ff,#7c3aed,#10b981,#f59e0b,#00c2ff);animation:spin 28s linear infinite}
+  [data-theme="light"]{
+    --bg:#f4f6fb; --bg2:#e9eef8; --card:#ffffff; --text:#0f172a; --muted:#475569;
+    --ring: rgba(59,130,246,.25); --bd: rgba(15,23,42,.12);
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0; color:var(--text); font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial,"Noto Sans",sans-serif;
+    background: radial-gradient(1200px 800px at 10% 10%, var(--bg2) 0%, var(--bg) 40%, #0a0f1f 100%);
+    overflow-x:hidden;
+  }
+  .bg-anim{position:fixed; inset:-20vmax; z-index:-1; filter:blur(80px) saturate(130%); opacity:.35;
+    background: conic-gradient(from 180deg, #00c2ff, #7c3aed, var(--brand), var(--accent), #00c2ff);
+    animation: spin 28s linear infinite;}
   @keyframes spin{to{transform:rotate(1turn)}}
-  header{position:sticky;top:0;z-index:50;backdrop-filter:saturate(140%) blur(8px);background:linear-gradient(180deg,rgba(2,6,23,.85),rgba(2,6,23,.55));border-bottom:1px solid rgba(148,163,184,.15)}
-  .wrap{max-width:1150px;margin:0 auto;padding:16px 20px}
-  .row{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
-  .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.3px}
-  .logo{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,var(--brand),var(--info));display:grid;place-items:center;box-shadow:var(--shadow);font-weight:900;color:#fff}
-  .promo{background:linear-gradient(90deg,rgba(16,185,129,.15),rgba(59,130,246,.15));border:1px solid rgba(16,185,129,.25);color:#d1fae5;padding:10px 14px;border-radius:12px;font-weight:600;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
-  .badges{display:flex;gap:10px;flex-wrap:wrap}
-  .badge{background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.02));border:1px solid rgba(148,163,184,.18);padding:8px 12px;border-radius:999px;font-weight:600;display:flex;align-items:center;gap:8px;color:#e2e8f0}
-  main{max-width:1150px;margin:24px auto;padding:0 20px 80px}
-  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
-  .card{background:linear-gradient(180deg,rgba(17,24,39,.85),rgba(17,24,39,.65));border:1px solid rgba(148,163,184,.18);border-radius:18px;overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column;min-height:100%}
-  .card .thumb{width:100%;height:180px;object-fit:cover;background:#0b1020}
-  .card .p{padding:12px 14px}
-  .title{font-weight:800;font-size:1.05rem}
-  .muted{color:var(--muted);font-size:.92rem}
-  .price{display:flex;align-items:center;gap:10px;margin-top:6px}
-  .price .fc{font-weight:900;font-size:1.15rem;color:#fff}
-  .price .old{color:#fca5a5;text-decoration:line-through;font-weight:700}
-  .price .usd{color:#93c5fd;font-weight:700}
-  .cta{margin-top:10px;display:flex;gap:8px}
-  .btn{flex:1;display:inline-flex;justify-content:center;align-items:center;gap:8px;padding:10px 12px;border-radius:12px;border:1px solid transparent;cursor:pointer;font-weight:800}
-  .btn.whatsapp{background:#25D36622;border-color:#25D36655;color:#c3f9d7}
-  .btn.secondary{background:rgba(255,255,255,.06);border-color:rgba(148,163,184,.18);color:#e2e8f0}
+
+  header{position:sticky; top:0; z-index:40; backdrop-filter:saturate(140%) blur(8px);
+    background: linear-gradient(180deg, rgba(2,6,23,.85), rgba(2,6,23,.55)); border-bottom:1px solid var(--bd);}
+  [data-theme="light"] header{background: linear-gradient(180deg, rgba(255,255,255,.85), rgba(255,255,255,.7));}
+  .wrap{max-width:1150px; margin:0 auto; padding:14px 18px}
+  .row{display:flex; gap:14px; align-items:center; flex-wrap:wrap}
+  .brand{display:flex; align-items:center; gap:10px; font-weight:800}
+  .logo{width:38px; height:38px; border-radius:12px; display:grid; place-items:center; color:white;
+    background:linear-gradient(135deg, var(--brand), var(--info)); box-shadow:0 10px 30px rgba(0,0,0,.35); font-weight:900}
+  .muted{color:var(--muted)}
+  .badges{display:flex; gap:10px; flex-wrap:wrap}
+  .badge{background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02)); border:1px solid var(--bd);
+    padding:8px 12px; border-radius:999px; font-weight:600; display:flex; align-items:center; gap:8px}
+  main{max-width:1150px; margin:20px auto 80px; padding:0 18px}
+  .promo{background:linear-gradient(90deg, rgba(16,185,129,.15), rgba(59,130,246,.15)); border:1px solid rgba(16,185,129,.25);
+    padding:10px 14px; border-radius:12px; font-weight:600; display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; color:#d1fae5}
+  [data-theme="light"] .promo{color:#064e3b}
+
+  /* Auth rapide */
+  .auth{display:flex; gap:10px; flex-wrap:wrap; margin-top:10px}
+  .in{padding:10px 12px; border-radius:10px; border:1px solid var(--bd); background:var(--card); color:var(--text)}
+  [data-theme="light"] .in{background:#fff}
+  .btn{display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:10px 12px; border-radius:12px; border:1px solid transparent; font-weight:800; cursor:pointer}
+  .btn.brand{background:linear-gradient(135deg, var(--brand), var(--info)); color:#fff}
+  .btn.whatsapp{background:#25D36622; border-color:#25D36655; color:#c3f9d7}
+  .btn.telegram{background:#229ED922; border-color:#229ED955; color:#cfe9ff}
+  .btn.ghost{background:transparent; border:1px solid var(--bd); color:var(--text)}
   .btn:hover{transform:translateY(-1px)}
-  .stats{display:flex;gap:12px;flex-wrap:wrap;margin:18px 0}
-  .stat{background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.02));border:1px solid rgba(148,163,184,.18);padding:10px 14px;border-radius:14px;font-weight:700}
-  .filters{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 18px}
-  .chip{padding:8px 12px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(148,163,184,.18);cursor:pointer;font-weight:700}
-  .chip.active{background:linear-gradient(90deg,rgba(16,185,129,.25),rgba(59,130,246,.25));border-color:#34d39977}
-  .float{position:fixed;right:18px;bottom:18px;display:flex;flex-direction:column;gap:10px;z-index:60}
-  .float a{display:flex;align-items:center;gap:8px;padding:10px 12px;border-radius:999px;text-decoration:none;font-weight:800;box-shadow:var(--shadow)}
-  .float .w{background:#25D366;color:#06250f}.float .t{background:#229ED9;color:#041e2a}
-  footer{max-width:1150px;margin:40px auto;padding:0 20px 60px;color:#cbd5e1}
-  .pay{display:flex;gap:10px;flex-wrap:wrap}
-  .pill{background:rgba(255,255,255,.07);border:1px solid rgba(148,163,184,.18);padding:8px 12px;border-radius:999px;font-weight:700}
-  details{background:rgba(255,255,255,.05);border:1px solid rgba(148,163,184,.18);padding:12px;border-radius:14px}
-  details summary{cursor:pointer;font-weight:900}
+
+  /* Tools bar */
+  .tools{display:flex; gap:8px; flex-wrap:wrap; margin:12px 0}
+  .chip{padding:8px 12px; border-radius:999px; background:rgba(255,255,255,.06); border:1px solid var(--bd); cursor:pointer; font-weight:700}
+  .chip.active{background:linear-gradient(90deg, rgba(16,185,129,.25), rgba(59,130,246,.25)); border-color:#34d39977}
+  .search{flex:1; min-width:240px}
+  .select{padding:10px 12px; border-radius:10px; border:1px solid var(--bd); background:var(--card); color:var(--text)}
+
+  /* Cards */
+  .cards{display:grid; grid-template-columns:repeat( auto-fit, minmax(240px, 1fr) ); gap:16px}
+  .card{background:linear-gradient(180deg, rgba(17,24,39,.85), rgba(17,24,39,.65));
+    border:1px solid var(--bd); border-radius:18px; overflow:hidden; display:flex; flex-direction:column; min-height:100%}
+  [data-theme="light"] .card{background:#fff}
+  .thumb{width:100%; height:180px; object-fit:cover; background:#0b1020}
+  .p{padding:12px 14px}
+  .title{font-weight:800; font-size:1.06rem}
+  .price{display:flex; align-items:center; gap:10px; margin:6px 0}
+  .price .fc{font-weight:900; font-size:1.12rem}
+  .price .usd{color:#93c5fd; font-weight:700}
+  .row-b{display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap}
+
+  /* Stats bar */
+  .stats{display:flex; gap:12px; flex-wrap:wrap; margin:14px 0}
+  .stat{background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02)); border:1px solid var(--bd);
+    padding:10px 14px; border-radius:14px; font-weight:700}
+
+  /* Float */
+  .float{position:fixed; right:18px; bottom:18px; display:flex; flex-direction:column; gap:10px; z-index:50}
+  .float a{display:flex; align-items:center; gap:8px; padding:10px 12px; border-radius:999px; text-decoration:none; font-weight:800; box-shadow:0 10px 30px rgba(0,0,0,.35)}
+  .float .w{background:#25D366; color:#06250f}
+  .float .t{background:#229ED9; color:#041e2a}
+
+  footer{max-width:1150px; margin:40px auto; padding:0 18px 60px}
+  .pay{display:flex; gap:10px; flex-wrap:wrap}
+  .pill{background:rgba(255,255,255,.07); border:1px solid var(--bd); padding:8px 12px; border-radius:999px; font-weight:700}
+
+  details{background:rgba(255,255,255,.05); border:1px solid var(--bd); padding:12px; border-radius:14px}
+  details summary{cursor:pointer; font-weight:900}
+
   /* Modal */
-  .modal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;padding:20px;z-index:80}
+  .modal{position:fixed; inset:0; display:none; align-items:center; justify-content:center; background:rgba(0,0,0,.6); z-index:60}
   .modal.show{display:flex}
-  .box{max-width:520px;width:100%;background:rgba(2,6,23,.95);border:1px solid rgba(148,163,184,.2);border-radius:16px;box-shadow:var(--shadow);padding:16px}
-  .box h3{margin:6px 0 10px}
-  .radio{display:flex;gap:8px;flex-wrap:wrap}
-  .radio .chip{user-select:none}
-  .gallery{display:flex;gap:6px;margin-top:10px}
-  .gallery img{width:56px;height:56px;border-radius:10px;object-fit:cover;border:1px solid rgba(148,163,184,.18);cursor:pointer}
-  .big{width:100%;max-height:60vh;object-fit:contain;background:#0b1020;border-radius:12px}
-  .comment{display:flex;gap:8px;margin-top:8px}
-  .comment input{flex:1;padding:10px 12px;border-radius:10px;border:1px solid rgba(148,163,184,.25);background:rgba(255,255,255,.06);color:#e2e8f0}
+  .sheet{background:var(--card); border:1px solid var(--bd); border-radius:16px; padding:16px; max-width:920px; width:min(92vw,920px); color:var(--text)}
+  [data-theme="light"] .sheet{background:#fff}
+  .close{cursor:pointer; border:none; background:transparent; font-size:20px; color:var(--muted)}
+
+  /* Gallery */
+  .gallery{display:grid; grid-template-columns:1fr; gap:10px}
+  .big{width:100%; height:360px; object-fit:cover; border-radius:12px}
+  .thumbs{display:grid; grid-template-columns:repeat(5, 1fr); gap:8px}
+  .timg{height:70px; object-fit:cover; border-radius:10px; cursor:pointer; border:2px solid transparent}
+  .timg.active{border-color:var(--ring)}
+
+  /* Comments */
+  .comments{margin-top:12px}
+  .comment{border-top:1px dashed var(--bd); padding:8px 0}
+  .stars{cursor:pointer; font-size:18px}
+  .toast{position:fixed; top:12px; right:12px; background:var(--card); border:1px solid var(--bd); padding:10px 12px; border-radius:10px; z-index:70}
 </style>
 </head>
 <body>
-<div class="bg-anim"></div>
+  <div class="bg-anim"></div>
 
-<header>
-  <div class="wrap">
-    <div class="row" style="justify-content:space-between">
-      <div class="brand">
-        <div class="logo">UR</div>
-        <div>
-          <div style="font-size:1.05rem">Unité Rapide</div>
-          <div class="muted" style="font-size:.85rem">Unités • Téléphones • Vêtements • Accessoires</div>
+  <header>
+    <div class="wrap">
+      <div class="row" style="justify-content:space-between">
+        <div class="brand">
+          <div class="logo">UR</div>
+          <div>
+            <div style="font-size:1.05rem">Uniterapide</div>
+            <div class="muted" style="font-size:.85rem">Unités • Téléphones • Vêtements • Accessoires</div>
+          </div>
+        </div>
+
+        <div class="badges">
+          <div class="badge">🔒 Sécurisé</div>
+          <div class="badge">🚚 Livraison rapide</div>
+          <div class="badge">⭐ Qualité garantie</div>
+          <div class="badge">🕘 24/7</div>
+          <div class="badge" id="visitsBadge">👁️ Visites : …</div>
+          <div class="badge">
+            <select id="lang" class="select">
+              <option value="fr">FR</option>
+              <option value="en">EN</option>
+            </select>
+          </div>
+          <button id="themeBtn" class="btn ghost">🌓</button>
         </div>
       </div>
-      <div class="badges">
-        <div class="badge">🔒 Paiement sécurisé</div>
-        <div class="badge">🚚 Livraison rapide</div>
-        <div class="badge">⭐ Qualité garantie</div>
-        <div class="badge">🕘 Disponible 24/7</div>
-        <div class="badge" id="visitsBadge">👁️ Visites : …</div>
+
+      <div class="promo" style="margin-top:10px">
+        <div>🔥 <strong>Promos</strong> cette semaine sur téléphones, unités & accessoires — meilleurs prix garantis.</div>
+        <div class="muted">WhatsApp : <strong>+243 990 564 877</strong> • Telegram : <strong>@cphkkk66</strong></div>
+      </div>
+
+      <!-- Inscription rapide -->
+      <div class="auth">
+        <input id="custName" class="in" placeholder="Votre nom (obligatoire)" />
+        <input id="custPhone" class="in" placeholder="Téléphone ex: 0990564877" />
+        <button id="saveProfile" class="btn brand">Enregistrer</button>
+        <span id="hello" class="muted"></span>
       </div>
     </div>
-    <div class="promo" style="margin-top:12px">
-      <div>🔥 <strong>Promos</strong> cette semaine — meilleurs prix garantis.</div>
-      <div class="muted">WhatsApp : <strong>+243 990 564 877</strong> • Telegram : <strong>@cphkkk66</strong></div>
+  </header>
+
+  <main>
+    <section class="stats">
+      <div class="stat">👁️ Vues (ce navigateur) : <span id="viewsLocal">0</span></div>
+      <div class="stat">❤️ J'aime : <span id="likesCount">0</span> <button id="likeBtn" class="chip" style="margin-left:8px">+ J'aime</button></div>
+      <div class="stat">🔄 Partages : <span id="shareCount">0</span> <button id="shareBtn" class="chip" style="margin-left:8px">Partager</button></div>
+      <div class="stat">📶 État : Public</div>
+    </section>
+
+    <!-- Outils -->
+    <section>
+      <div class="tools">
+        <input id="q" class="in search" placeholder="Recherche produit…" />
+        <select id="sort" class="select">
+          <option value="new">🆕 Nouveautés</option>
+          <option value="priceAsc">⬇️ Prix (FC)</option>
+          <option value="priceDesc">⬆️ Prix (FC)</option>
+          <option value="pop">🔥 Popularité</option>
+        </select>
+        <div id="filters" class="tools"></div>
+      </div>
+    </section>
+
+    <!-- Catalogue -->
+    <section>
+      <h2>Catalogue</h2>
+      <div id="cards" class="cards">Chargement…</div>
+    </section>
+
+    <!-- Ventes d'unités -->
+    <section style="margin-top:28px">
+      <h2>Unités & Forfaits — Promos</h2>
+      <div class="cards" id="units">
+        <!-- Rendu par JS -->
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section style="margin-top:28px">
+      <h2>Contact</h2>
+      <div class="row">
+        <a class="btn whatsapp" href="https://wa.me/243990564877" target="_blank">📱 WhatsApp</a>
+        <a class="btn telegram" href="https://t.me/cphkkk66" target="_blank">💬 Telegram</a>
+      </div>
+    </section>
+
+    <!-- Paiements -->
+    <section style="margin-top:28px">
+      <h2>Modes de paiement</h2>
+      <div class="pay">
+        <span class="pill">💳 Airtel Money — <strong>Mugisho Stéphane</strong> — <strong>+243 990 564 877</strong></span>
+        <span class="pill">📲 M-Pesa (Vodacom)</span>
+        <span class="pill">🟠 Orange Money</span>
+        <span class="pill">🟣 Afrimoney (Africell)</span>
+        <span class="pill">🟡 MoMo (MTN)</span>
+      </div>
+    </section>
+
+    <!-- Infos sécurité -->
+    <section style="margin-top:28px">
+      <details>
+        <summary>🔧 Paramètres & Sécurité (infos client)</summary>
+        <ul>
+          <li>Ce site affiche seulement les <strong>produits et prix</strong>. Aucune donnée sensible n'est publique.</li>
+          <li>Les mises à jour viennent d’une feuille <strong>PUBLIC (lecture)</strong> ou CSV hébergé.</li>
+          <li>Contacts officiels : WhatsApp <strong>+243 990 564 877</strong>, Telegram <strong>@cphkkk66</strong>, Airtel Money <strong>Mugisho Stéphane</strong>.</li>
+          <li>⚠️ Le paiement sur le site est une <strong>simulation de confirmation</strong>. <u>Ne saisissez jamais votre vrai code SIM</u>. Le paiement réel se fait via Airtel Money/USSD/app.</li>
+        </ul>
+      </details>
+    </section>
+  </main>
+
+  <!-- Boutons flottants -->
+  <div class="float">
+    <a class="w" href="https://wa.me/243990564877" target="_blank">📱 WhatsApp</a>
+    <a class="t" href="https://t.me/cphkkk66" target="_blank">💬 Telegram</a>
+  </div>
+
+  <footer>
+    <hr style="border-color:var(--bd); border-style:solid; border-width:1px 0 0; margin-bottom:16px">
+    <div>© <span id="year"></span> Uniterapide — RDC. Tous droits réservés.</div>
+  </footer>
+
+  <!-- Modal Produit -->
+  <div id="productModal" class="modal" role="dialog" aria-modal="true">
+    <div class="sheet">
+      <div class="row-b">
+        <div style="font-weight:900" id="pmTitle">Produit</div>
+        <button class="close" id="pmClose">✖</button>
+      </div>
+      <div class="gallery" style="margin-top:8px">
+        <img id="pmBig" class="big" src="" alt="">
+        <div id="pmThumbs" class="thumbs"></div>
+      </div>
+      <div style="margin-top:10px" class="muted" id="pmMeta"></div>
+      <div class="price" id="pmPrice" style="margin-top:6px"></div>
+      <div class="row" style="margin-top:8px; flex-wrap:wrap; gap:8px">
+        <input id="pmQty" class="in" type="number" min="1" value="1" style="width:110px" />
+        <button id="pmBuyAirtel" class="btn brand">Acheter — Airtel Money</button>
+        <a id="pmWhats" class="btn whatsapp" target="_blank">Commander sur WhatsApp</a>
+        <button id="pmShare" class="btn ghost">Partager</button>
+      </div>
+
+      <!-- Ratings & comments -->
+      <div class="comments">
+        <div><strong>Avis & Notes</strong></div>
+        <div id="pmStars" class="stars" aria-label="Notation">★★★★★</div>
+        <div class="row" style="margin-top:8px">
+          <input id="pmComment" class="in" placeholder="Laissez un commentaire…" style="flex:1" />
+          <button id="pmAddComment" class="btn ghost">Publier</button>
+        </div>
+        <div id="pmCommentList"></div>
+      </div>
     </div>
   </div>
-</header>
 
-<main class="wrap">
-  <section class="stats">
-    <div class="stat">👁️ Vues (ce navigateur) : <span id="viewsLocal">0</span></div>
-    <div class="stat">❤️ J'aime : <span id="likesCount">0</span> <button id="likeBtn" class="chip" style="margin-left:8px">+ J'aime</button></div>
-    <div class="stat">🔁 Partages : <span id="shareCount">0</span> <button id="shareBtn" class="chip" style="margin-left:8px">Partager</button></div>
-    <div class="stat">🛒 Commandes : <span id="ordersCount">0</span></div>
-  </section>
-
-  <section>
-    <h2>Catalogue</h2>
-    <div class="filters" id="filters"></div>
-    <div class="cards" id="cards">Chargement…</div>
-  </section>
-
-  <section style="margin-top:28px">
-    <h2>Contact</h2>
-    <div class="row">
-      <a class="btn whatsapp" href="https://wa.me/243990564877" target="_blank">📱 WhatsApp</a>
-      <a class="btn secondary" href="https://t.me/cphkkk66" target="_blank">💬 Telegram</a>
+  <!-- Modal Paiement (simulation) -->
+  <div id="payModal" class="modal" role="dialog" aria-modal="true">
+    <div class="sheet" style="max-width:520px">
+      <div class="row-b">
+        <div style="font-weight:900">Airtel Money — Confirmation</div>
+        <button class="close" id="payClose">✖</button>
+      </div>
+      <div id="paySummary" style="margin-top:10px"></div>
+      <div class="pill" style="margin:10px 0; line-height:1.4">
+        ⚠️ <strong>Simulation</strong> : ne saisissez <u>jamais</u> votre vrai code SIM. Utilisez le code de test <strong>1515</strong> pour valider.
+      </div>
+      <input id="payPin" class="in" placeholder="PIN de test (1515)" maxlength="4" style="width:160px" />
+      <div class="row" style="margin-top:10px">
+        <button id="payConfirm" class="btn brand">Payer</button>
+        <button id="payCancel" class="btn ghost">Annuler</button>
+      </div>
     </div>
-  </section>
-
-  <section style="margin-top:28px">
-    <h2>Modes de paiement</h2>
-    <div class="pay">
-      <span class="pill">💳 Airtel Money — <strong>Mugisho Stéphane</strong> — <strong>+243 990 564 877</strong></span>
-      <span class="pill">📲 M-Pesa (Vodacom)</span>
-      <span class="pill">🟠 Orange Money</span>
-      <span class="pill">🟣 Afrimoney (Africell)</span>
-      <span class="pill">🟡 MoMo (MTN)</span>
-    </div>
-  </section>
-
-  <section style="margin-top:28px">
-    <details>
-      <summary>🔧 Paramètres & Sécurité (infos client)</summary>
-      <ul>
-        <li>Affichage public = <strong>produits + prix</strong> uniquement.</li>
-        <li>Compteurs globaux: vues, j’aime, partages, commandes (CountAPI).</li>
-        <li>Vos paiements passent par l’app mobile de votre opérateur (USSD non déclenchable par le web pour sécurité).</li>
-      </ul>
-    </details>
-  </section>
-</main>
-
-<div class="float">
-  <a class="w" href="https://wa.me/243990564877" target="_blank">📱 WhatsApp</a>
-  <a class="t" href="https://t.me/cphkkk66" target="_blank">💬 Telegram</a>
-</div>
-
-<footer class="wrap">
-  <hr style="border-color:rgba(148,163,184,.2); border-style:solid; border-width:1px 0 0; margin-bottom:16px">
-  <div>© <span id="year"></span> Unité Rapide — RDC. Tous droits réservés.</div>
-</footer>
-
-<!-- ===== Modals ===== -->
-<div id="galleryModal" class="modal" aria-hidden="true">
-  <div class="box">
-    <div class="row" style="justify-content:space-between">
-      <h3 id="galTitle">Photos</h3>
-      <button class="chip" onclick="closeModal('galleryModal')">Fermer</button>
-    </div>
-    <img id="galBig" class="big" src="" alt=""/>
-    <div id="galThumbs" class="gallery"></div>
   </div>
-</div>
 
-<div id="payModal" class="modal" aria-hidden="true">
-  <div class="box">
-    <div class="row" style="justify-content:space-between">
-      <h3 id="payTitle">Paiement</h3>
-      <button class="chip" onclick="closeModal('payModal')">Fermer</button>
-    </div>
-    <div id="payInfo" class="muted" style="margin-bottom:10px"></div>
-    <div class="radio" id="payMethods">
-      <span class="chip active" data-method="airtel">Airtel Money</span>
-      <span class="chip" data-method="mpesa">M-Pesa</span>
-      <span class="chip" data-method="orange">Orange Money</span>
-      <span class="chip" data-method="afri">Afrimoney</span>
-      <span class="chip" data-method="mtn">MoMo</span>
-    </div>
-    <div id="payPane" style="margin-top:12px"></div>
-  </div>
-</div>
+  <div id="toast" class="toast" style="display:none"></div>
 
 <script>
-/* ====== CONFIG ====== */
-const SHEETS_PUBHTML = [
-  "https://docs.google.com/spreadsheets/d/e/2PACX-1vRNgEaiSzpwmHuoj1bfIFzi9A34beLlxoqz8_ocD5hvb7I2T-4GRcamMbFRCKvw5-lKivYqo3Kpg0Ti/pubhtml?gid=0&single=true",
-  "https://docs.google.com/spreadsheets/d/e/2PACX-1vRNgEaiSzpwmHuoj1bfIFzi9A34beLlxoqz8_ocD5hvb7I2T-4GRcamMbFRCKvw5-lKivYqo3Kpg0Ti/pubhtml?gid=2097070430&single=true",
-  "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ7yaRVA16yeVYrB9YAGs_ckiodiHqMns2igOT2ozVM92EXoBOJpCoxZzZ3NLxmHY1G_KqvYKZfvjTS/pubhtml?gid=0&single=true"
+/* ================== CONFIG ================== */
+// Mets ici tes CSV publics (Option 1). Tu peux en lister plusieurs.
+const CSV_URLS = [
+  // Exemples: (remplace par tes liens CSV "export?format=csv" ou GitHub raw)
+  // "https://raw.githubusercontent.com/toncompte/tonrepo/main/produits.csv"
 ];
-// Optionnel: lien CSV direct si tu en as un (prioritaire sur pubhtml)
-const SHEET_CSV_URL = ""; // ex: https://docs.google.com/spreadsheets/d/ID/export?format=csv
-const DISCOUNT_PERCENT = 10; // remise auto pour attirer l’attention
-const RATE_FC = 2800;
-const WHATSAPP_NUM = "243990564877";
-const SELLER_NAME = "Mugisho Stéphane";
-const AIRTEL_NUM = "+243990564877";
-const COUNT_NS = "uniterapide_global_v3";
 
-/* ====== Compteurs globaux (CountAPI) + fallback ====== */
-(async function initCounters(){
-  const badge = document.getElementById('visitsBadge');
-  try{
-    const j = await fetch(`https://api.countapi.xyz/hit/${COUNT_NS}/visits`).then(r=>r.json());
-    badge.textContent = `👁️ Visites : ${Number(j.value||0).toLocaleString('fr-FR')}`;
-  }catch{
-    const k='ur_visits_fallback', v=(parseInt(localStorage.getItem(k)||'0',10)+1);
+// Phrase WhatsApp
+const WHATSAPP_PHONE_INTL = "243990564877"; // pour wa.me
+const WHATSAPP_DISPLAY = "+243 990 564 877";
+const TELEGRAM = "@cphkkk66";
+const BRAND = "Uniterapide";
+const AIRTEL_NAME = "Mugisho Stéphane";
+const AIRTEL_MAIN_NUMBER = "0990564877";
+const AIRTEL_PIN_TEST = "1515";
+const USD_RATE = 2800; // fallback si pas de colonne FC
+const COUNTAPI_NS = "uniterapide_pub_v2";
+
+/* ================== UTIL ================== */
+const $ = s => document.querySelector(s);
+const $$ = s => Array.from(document.querySelectorAll(s));
+const fmt = n => isNaN(n)? n : Number(n).toLocaleString('fr-FR');
+const money = (n, curr="FC") => `${fmt(n)} ${curr}`;
+const toast = (t, ms=2500) => { const el=$("#toast"); el.textContent=t; el.style.display='block'; setTimeout(()=>el.style.display='none', ms); };
+const store = {
+  get(k, def=null){ try{ return JSON.parse(localStorage.getItem(k)) ?? def }catch(e){ return def }},
+  set(k, v){ localStorage.setItem(k, JSON.stringify(v)); }
+};
+
+/* ================== I18N (simple) ================== */
+const i18n = {
+  fr: {
+    search:"Recherche produit…", new:"Nouveautés", priceAsc:"Prix croissant", priceDesc:"Prix décroissant",
+    pop:"Popularité", buy:"Acheter — Airtel Money", share:"Partager", commentPH:"Laissez un commentaire…",
+    rate:"Notez ce produit", added:"Ajouté !", paid:"Paiement simulé validé ✅", wrongPin:"PIN incorrect ❌"
+  },
+  en: {
+    search:"Search products…", new:"Newest", priceAsc:"Price ↑", priceDesc:"Price ↓",
+    pop:"Popularity", buy:"Buy — Airtel Money", share:"Share", commentPH:"Leave a comment…",
+    rate:"Rate this product", added:"Added!", paid:"Simulated payment success ✅", wrongPin:"Wrong PIN ❌"
+  }
+};
+function setLang(l){
+  store.set('lang', l);
+  $("#q").placeholder = i18n[l].search;
+  $("#pmBuyAirtel").textContent = i18n[l].buy;
+  $("#pmShare").textContent = i18n[l].share;
+  $("#pmComment").placeholder = i18n[l].commentPH;
+}
+$("#lang").addEventListener('change', e=> setLang(e.target.value));
+
+/* ================== Thème ================== */
+function applyTheme(t){ document.documentElement.setAttribute('data-theme', t); store.set('theme', t); }
+$("#themeBtn").addEventListener('click', ()=>{
+  const cur = document.documentElement.getAttribute('data-theme') || 'dark';
+  applyTheme(cur==='dark' ? 'light' : 'dark');
+});
+
+/* ================== Compteurs ================== */
+(function visits(){
+  const badge = $("#visitsBadge");
+  fetch(`https://api.countapi.xyz/hit/${COUNTAPI_NS}/visits`).then(r=>r.json()).then(j=>{
+    badge.textContent = `👁️ Visites : ${j.value.toLocaleString('fr-FR')}`;
+  }).catch(()=>{
+    const k='visits_fallback'; const v=(parseInt(localStorage.getItem(k)||'0',10)+1);
     localStorage.setItem(k,String(v));
     badge.textContent = `👁️ Visites : ${v.toLocaleString('fr-FR')}*`;
-  }
-})();
-const localKeyViews='ur_views'; const v=parseInt(localStorage.getItem(localKeyViews)||'0',10)+1;
-localStorage.setItem(localKeyViews,String(v));
-document.getElementById('viewsLocal').textContent=v.toLocaleString('fr-FR');
-
-(async function likesShares(){
-  const likeKey='ur_like'; const likeBtn=document.getElementById('likeBtn'); const likesCount=document.getElementById('likesCount');
-  const shareBtn=document.getElementById('shareBtn'); const shareCount=document.getElementById('shareCount');
-  let liked=localStorage.getItem(likeKey)==='1';
-  try{
-    const j=await fetch(`https://api.countapi.xyz/get/${COUNT_NS}/likes`).then(r=>r.json()).catch(()=>({value:0}));
-    likesCount.textContent=(j.value||0)+(liked?1:0);
-  }catch{likesCount.textContent=liked?1:0}
-  if(liked){ likeBtn.textContent='❤️ Merci'; likeBtn.disabled=true; }
-  likeBtn.addEventListener('click', async ()=>{
-    if(liked) return; liked=true; localStorage.setItem(likeKey,'1'); likeBtn.textContent='❤️ Merci'; likeBtn.disabled=true;
-    try{ const j=await fetch(`https://api.countapi.xyz/hit/${COUNT_NS}/likes`).then(r=>r.json()); likesCount.textContent=j.value; }catch{}
-  });
-  try{
-    const j=await fetch(`https://api.countapi.xyz/get/${COUNT_NS}/shares`).then(r=>r.json()).catch(()=>({value:0}));
-    shareCount.textContent=j.value||0;
-  }catch{}
-  shareBtn.addEventListener('click', async ()=>{
-    try{
-      await navigator.clipboard.writeText(location.href);
-      alert("Lien copié ! Merci pour le partage 🙏");
-    }catch{}
-    try{ const j=await fetch(`https://api.countapi.xyz/hit/${COUNT_NS}/shares`).then(r=>r.json()); shareCount.textContent=j.value; }catch{}
   });
 })();
+(function viewsLocal(){
+  const k='views_local'; const v=(parseInt(localStorage.getItem(k)||'0',10)+1);
+  localStorage.setItem(k,String(v)); $("#viewsLocal").textContent = v.toLocaleString('fr-FR');
+})();
+(function likesLocal(){
+  const k='like_site'; const liked=localStorage.getItem(k)==='1';
+  $("#likesCount").textContent = liked? 1 : 0;
+  if(liked){ const b=$("#likeBtn"); b.textContent='❤️ Merci'; b.disabled=true; }
+  $("#likeBtn").addEventListener('click', ()=>{
+    if(localStorage.getItem(k)==='1') return;
+    localStorage.setItem(k,'1'); $("#likesCount").textContent=1; const b=$("#likeBtn"); b.textContent='❤️ Merci'; b.disabled=true;
+  });
+})();
+$("#shareBtn").addEventListener('click', async ()=>{
+  try{
+    if(navigator.share){ await navigator.share({title:BRAND, text:"Découvrez nos promos 🔥", url:location.href}); }
+    const k='share_count'; const v=(parseInt(localStorage.getItem(k)||'0',10)+1);
+    localStorage.setItem(k,String(v)); $("#shareCount").textContent=v;
+  }catch(e){}
+});
 
-/* ====== Commentaires (local pour l’instant) ====== */
-const commentsKey='ur_comments';
-function addComment(text){ const arr=JSON.parse(localStorage.getItem(commentsKey)||'[]'); arr.push({t:Date.now(),text}); localStorage.setItem(commentsKey,JSON.stringify(arr)); renderComments(); }
-function renderComments(){
-  let list=JSON.parse(localStorage.getItem(commentsKey)||'[]'); list=list.slice(-10).reverse();
-  if(!document.getElementById('comments')) {
-    const wrap=document.createElement('section'); wrap.innerHTML=`<h2>💬 Avis récents</h2><div id="comments"></div><div class="comment"><input id="cmt" placeholder="Donne ton avis (public)..." /><button class="chip" id="cmtBtn">Publier</button></div>`;
-    document.querySelector('main').appendChild(wrap);
-    document.getElementById('cmtBtn').onclick=()=>{ const v=document.getElementById('cmt').value.trim(); if(v){ addComment(v); document.getElementById('cmt').value=''; } };
-  }
-  document.getElementById('comments').innerHTML=list.map(x=>`<div class="pill" style="display:block;margin:6px 0">${new Date(x.t).toLocaleString('fr-FR')} — ${x.text}</div>`).join('');
+/* ================== Profil client ================== */
+function loadProfile(){
+  const p = store.get('profile', {name:'', phone:''});
+  $("#custName").value = p.name||'';
+  $("#custPhone").value = p.phone||'';
+  $("#hello").textContent = p.name? `Bienvenue, ${p.name}!` : '';
 }
-renderComments();
+$("#saveProfile").addEventListener('click', ()=>{
+  const name=$("#custName").value.trim(); const phone=$("#custPhone").value.trim();
+  if(!name || !phone){ toast("Nom et téléphone obligatoires"); return; }
+  store.set('profile', {name, phone});
+  $("#hello").textContent = `Bienvenue, ${name}!`;
+  toast("Profil enregistré");
+});
+loadProfile();
 
-/* ====== Sheets loader (CSV ou pubhtml table) ====== */
-async function loadCSV(url){
-  const text=await fetch(url,{cache:'no-store'}).then(r=>r.text());
-  const rows=[];let cur=[];let cell='';let inQ=false;for(let i=0;i<text.length;i++){
-    const ch=text[i],nx=text[i+1];
-    if(inQ){ if(ch==='"'&&nx==='"'){cell+='"';i++;} else if(ch==='"'){inQ=false;} else cell+=ch; }
-    else { if(ch==='"'){inQ=true;} else if(ch===','){cur.push(cell);cell='';} else if(ch==='\n' || ch==='\r'){ if(cell!==''||cur.length){cur.push(cell);rows.push(cur);cur=[];cell='';} } else cell+=ch; }
+/* ================== CSV PARSER ================== */
+function parseCSV(text){
+  const rows=[]; let cur=[]; let cell=''; let inQ=false;
+  for(let i=0;i<text.length;i++){
+    const ch=text[i], nx=text[i+1];
+    if(inQ){
+      if(ch==='"' && nx==='"'){ cell+='"'; i++; }
+      else if(ch==='"'){ inQ=false; }
+      else cell+=ch;
+    } else {
+      if(ch==='"'){ inQ=true; }
+      else if(ch===','){ cur.push(cell); cell=''; }
+      else if(ch==='\n' || ch==='\r'){ if(cell!=='' || cur.length){ cur.push(cell); rows.push(cur); cur=[]; cell=''; } }
+      else cell+=ch;
+    }
   }
-  if(cell!==''||cur.length){cur.push(cell);rows.push(cur)}
+  if(cell!=='' || cur.length){ cur.push(cell); rows.push(cur); }
   return rows.filter(r=>r.some(c=>String(c).trim()!==''));
 }
-async function loadPubHtml(url){
-  const html=await fetch(url,{cache:'no-store'}).then(r=>r.text());
-  const doc=new DOMParser().parseFromString(html,'text/html');
-  const table=doc.querySelector('table'); if(!table) return [];
-  const rows=[...table.querySelectorAll('tr')].map(tr=>[...tr.children].map(td=>td.textContent.trim()));
-  return rows;
-}
-function headerIndex(hdr,name){ name=name.toLowerCase(); return hdr.findIndex(x=>x.trim().toLowerCase()===name); }
 
-async function fetchProducts(){
-  let rows=[];
-  if(SHEET_CSV_URL){
-    try{ rows=await loadCSV(SHEET_CSV_URL); }catch(e){ console.warn('CSV fail',e); }
+/* ================== Données Produits ================== */
+let PRODUCTS = []; // {id, cat, name, imgs[], priceUSD, priceFC, promo, link, notes, stock, score, likes, created}
+
+async function loadProducts(){
+  let list=[];
+  for(const url of CSV_URLS){
+    try{
+      const txt = await fetch(url, {cache:'no-store'}).then(r=>r.text());
+      const rows = parseCSV(txt);
+      const hdr = rows[0].map(h=>h.trim().toLowerCase());
+      const idx = {
+        cat:   hdr.findIndex(x=>/catég|catego|category/.test(x)),
+        name:  hdr.findIndex(x=>/nom|name/.test(x)),
+        img:   hdr.findIndex(x=>/lien image|image|img/.test(x)),
+        usd:   hdr.findIndex(x=>/prix\s*\$|usd/.test(x)),
+        fc:    hdr.findIndex(x=>/franc|fc/.test(x)),
+        promo: hdr.findIndex(x=>/promo/.test(x)),
+        link:  hdr.findIndex(x=>/^lien$|link/.test(x)),
+        notes: hdr.findIndex(x=>/notes?/.test(x)),
+        stock: hdr.findIndex(x=>/stock|qty|quant/.test(x))
+      };
+      for(let i=1;i<rows.length;i++){
+        const r=rows[i]; if(!r || !r.length) continue;
+        const priceUSD = parseFloat((r[idx.usd]||'').toString().replace(/[^0-9.\-]/g,'')); 
+        const priceFC  = parseFloat((r[idx.fc]||'').toString().replace(/[^0-9.\-]/g,''));
+        const fc = !isNaN(priceFC) ? priceFC : (!isNaN(priceUSD) ? Math.round(priceUSD*USD_RATE) : 0);
+        const imgsRaw = (r[idx.img]||'').trim();
+        const imgs = imgsRaw ? imgsRaw.split('|').map(s=>s.trim()).filter(Boolean) : [];
+        list.push({
+          id: crypto.randomUUID(),
+          cat: (r[idx.cat]||'').trim()||'Autres',
+          name: (r[idx.name]||'Sans nom').trim(),
+          imgs,
+          priceUSD: isNaN(priceUSD)? null : priceUSD,
+          priceFC: fc,
+          promo: (r[idx.promo]||'').trim(),
+          link: (r[idx.link]||'').trim(),
+          notes: (r[idx.notes]||'').trim(),
+          stock: (r[idx.stock]||'').trim(),
+          score: 0,
+          likes: 0,
+          created: Date.now()-Math.floor(Math.random()*1e9)
+        });
+      }
+    }catch(e){ console.error('CSV error', e); toast("Erreur de chargement d'une feuille CSV"); }
   }
-  if(!rows.length){
-    for(const u of SHEETS_PUBHTML){
-      try{
-        const r=await loadPubHtml(u);
-        if(r.length) rows=rows.concat(r);
-      }catch(e){ console.warn('PUBHTML fail',e); }
-    }
+
+  if(!list.length){
+    // Démo si pas de CSV fourni
+    list = [
+      {id:crypto.randomUUID(), cat:"Vêtements", name:"Chemise classique homme", imgs:["https://images.unsplash.com/photo-1520974769661-3b1d5b4a3b53?q=80&w=1200&auto=format&fit=crop","https://images.unsplash.com/photo-1520975938310-24e358af9527?q=80&w=1200&auto=format&fit=crop"], priceUSD:15, priceFC:15*USD_RATE, promo:"-10% semaine", link:"", notes:"Tailles S-XL", stock:""},
+      {id:crypto.randomUUID(), cat:"Téléphones", name:"Smartphone Android 4G", imgs:["https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=1200&auto=format&fit=crop","https://images.unsplash.com/photo-1510557874967-3a835f1b5b52?q=80&w=1200&auto=format&fit=crop","https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=1200&auto=format&fit=crop"], priceUSD:120, priceFC:120*USD_RATE, promo:"Garantie 6 mois", link:"", notes:"64 Go", stock:""},
+      {id:crypto.randomUUID(), cat:"Unités", name:"Unités Airtel Money (RDC)", imgs:["https://images.unsplash.com/photo-1563986768494-4dee2763ff3f?q=80&w=1200&auto=format&fit=crop"], priceUSD:5, priceFC:5*USD_RATE, promo:"Bonus +5%", link:"", notes:"", stock:""},
+      {id:crypto.randomUUID(), cat:"Accessoires", name:"Écouteurs filaires", imgs:["https://images.unsplash.com/photo-1518441902115-f96f9f4889cc?q=80&w=1200&auto=format&fit=crop"], priceUSD:6, priceFC:6*USD_RATE, promo:"2=1 offert", link:"", notes:"", stock:""}
+    ];
   }
-  if(!rows.length) return [];
 
-  const hdr=rows[0].map(x=>x.trim());
-  const idx={
-    cat: headerIndex(hdr,'catégorie')>-1? headerIndex(hdr,'catégorie') : 0,
-    name: headerIndex(hdr,'nom du produit')>-1? headerIndex(hdr,'nom du produit') : 1,
-    img1: headerIndex(hdr,'lien image')>-1? headerIndex(hdr,'lien image') : (headerIndex(hdr,'image 1')),
-    img2: headerIndex(hdr,'image 2'),
-    img3: headerIndex(hdr,'image 3'),
-    img4: headerIndex(hdr,'image 4'),
-    img5: headerIndex(hdr,'image 5'),
-    usd: headerIndex(hdr,'prix $'),
-    fc: headerIndex(hdr,'franc (total)'),
-    promo: headerIndex(hdr,'promo'),
-    link: headerIndex(hdr,'lien'),
-    notes: headerIndex(hdr,'notes'),
-    stock: headerIndex(hdr,'stock')
-  };
+  // Légère baisse prix pour attirer (ex: -3%)
+  list = list.map(p=>({...p, priceFC: Math.round(p.priceFC*0.97)}));
 
-  const prods=[];
-  for(let i=1;i<rows.length;i++){
-    const r=rows[i]; if(!r || !r.length) continue;
-    const g = (i)=>{
-      if(i==null || i<0) return ''; return (r[i]||'').toString().trim();
-    };
-    const priceUSD=parseFloat(g(idx.usd).replace(/[^0-9.\-]/g,'')); const priceFC=parseFloat(g(idx.fc).replace(/[^0-9.\-]/g,''));
-    const fc = !isNaN(priceFC) ? priceFC : (!isNaN(priceUSD) ? Math.round(priceUSD*RATE_FC) : 0);
-    const imgs = [g(idx.img1),g(idx.img2),g(idx.img3),g(idx.img4),g(idx.img5)].filter(x=>x&&x.startsWith('http'));
-    prods.push({
-      cat: g(idx.cat)||'Autres',
-      name: g(idx.name)||'Sans nom',
-      imgs: imgs.length? imgs : ["https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1200&auto=format&fit=crop"],
-      priceUSD: isNaN(priceUSD)? null : priceUSD,
-      priceFC: fc,
-      promo: g(idx.promo)||'',
-      link: g(idx.link)||'',
-      notes: g(idx.notes)||'',
-      stock: g(idx.stock)||'',
-    });
-  }
-  return prods.filter(p=>p.name && p.priceFC>0);
+  PRODUCTS = list.filter(p=>p.name && p.priceFC>0);
+  buildFilters(PRODUCTS);
+  render(PRODUCTS);
 }
+loadProducts();
 
-/* ====== Render ====== */
-const filtersEl=document.getElementById('filters');
-const cards=document.getElementById('cards');
-
-function money(n){ try{return Number(n).toLocaleString('fr-FR')}catch(e){return n} }
-
-function openModal(id){ document.getElementById(id).classList.add('show'); document.getElementById(id).setAttribute('aria-hidden','false'); }
-function closeModal(id){ document.getElementById(id).classList.remove('show'); document.getElementById(id).setAttribute('aria-hidden','true'); }
-
-function showGallery(p){
-  const big=document.getElementById('galBig'); const thumbs=document.getElementById('galThumbs'); const title=document.getElementById('galTitle');
-  title.textContent=p.name; big.src=p.imgs[0];
-  thumbs.innerHTML=p.imgs.map((u,i)=>`<img src="${u}" alt="img ${i+1}">`).join('');
-  [...thumbs.querySelectorAll('img')].forEach((im,idx)=>im.onclick=()=>{ big.src=p.imgs[idx]; });
-  openModal('galleryModal');
-}
-
-function showPay(p){
-  const title=document.getElementById('payTitle'); const info=document.getElementById('payInfo'); const pane=document.getElementById('payPane');
-  const discount = Math.round(p.priceFC*(DISCOUNT_PERCENT/100));
-  const finalFC = Math.max(0, p.priceFC - discount);
-  title.textContent=`Payer — ${p.name}`;
-  info.innerHTML=`Montant: <strong>${money(finalFC)} FC</strong> ${DISCOUNT_PERCENT? `<span class="pill" style="margin-left:6px">-${DISCOUNT_PERCENT}% promo</span>`:''}`;
-  function render(method='airtel'){
-    let html='';
-    if(method==='airtel'){
-      html = `
-        <div class="pill" style="display:block;margin-bottom:10px">
-          Envoyez exactement <strong>${money(finalFC)} FC</strong> à <strong>${AIRTEL_NUM}</strong> (Airtel Money — ${SELLER_NAME}).
-        </div>
-        <div class="row">
-          <button class="chip" onclick="copyText('${AIRTEL_NUM}')">Copier le numéro</button>
-          <a class="chip" target="_blank" href="https://wa.me/${WHATSAPP_NUM}?text=${encodeURIComponent('Bonjour, j’ai payé '+money(finalFC)+' FC pour: '+p.name)}">Notifier sur WhatsApp</a>
-        </div>
-        <div class="muted" style="margin-top:8px">
-          ⚠️ Pour votre sécurité, entrez votre <strong>code SIM</strong> uniquement dans l’application officielle Airtel. Le site ne vous demandera jamais votre code.
-        </div>`;
-    } else {
-      html = `
-        <div class="pill" style="display:block;margin-bottom:10px">
-          Veuillez payer <strong>${money(finalFC)} FC</strong> via <strong>${method.toUpperCase()}</strong> puis nous notifier sur WhatsApp.
-        </div>
-        <a class="chip" target="_blank" href="https://wa.me/${WHATSAPP_NUM}?text=${encodeURIComponent('Bonjour, j’ai payé '+money(finalFC)+' FC via '+method.toUpperCase()+' pour: '+p.name)}">Notifier sur WhatsApp</a>`;
-    }
-    pane.innerHTML=html;
-  }
-  render('airtel');
-  document.querySelectorAll('#payMethods .chip').forEach(ch=>{
-    ch.onclick=()=>{ document.querySelectorAll('#payMethods .chip').forEach(x=>x.classList.remove('active')); ch.classList.add('active'); render(ch.dataset.method); };
-  });
-  openModal('payModal');
-}
-
+/* ================== RENDER ================== */
+const cards = $("#cards"), filtersEl=$("#filters");
 function makeCard(p){
-  const discount = Math.round(p.priceFC*(DISCOUNT_PERCENT/100));
-  const finalFC = Math.max(0, p.priceFC - discount);
-  const usd = p.priceUSD ? `(~ ${money(p.priceUSD)} $)` : '';
-  const promoTag = p.promo ? `<span class="pill" style="margin-left:auto;background:rgba(245,158,11,.18);border-color:#f59e0b55;color:#fde68a">🎯 ${p.promo}</span>` : '';
+  const img = p.imgs?.[0] || "https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1200&auto=format&fit=crop";
+  const promo = p.promo? `<span class="pill" style="margin-left:auto;background:rgba(245,158,11,.18);border-color:#f59e0b55;color:#fde68a">🎯 ${p.promo}</span>` : "";
   return `
-  <article class="card">
-    <img class="thumb" loading="lazy" src="${p.imgs[0]}" alt="${p.name}" onclick='showGallery(${JSON.stringify(p)})'>
+  <article class="card" data-id="${p.id}">
+    <img class="thumb" loading="lazy" src="${img}" alt="${p.name}">
     <div class="p">
-      <div class="row" style="justify-content:space-between;align-items:flex-start">
+      <div class="row-b">
         <div class="title">${p.name}</div>
-        ${promoTag}
+        ${promo}
       </div>
       <div class="muted">${p.cat}${p.notes? ' • '+p.notes:''}</div>
       <div class="price">
-        ${DISCOUNT_PERCENT? `<div class="old">${money(p.priceFC)} FC</div>`:''}
-        <div class="fc">${money(finalFC)} FC</div>
-        <div class="usd">${usd}</div>
+        <div class="fc">${money(p.priceFC)}</div>
+        ${p.priceUSD? `<div class="usd">(~ ${fmt(p.priceUSD)} $)</div>`:''}
       </div>
-      <div class="cta">
-        <button class="btn whatsapp" onclick='orderNow(${JSON.stringify(p)})'>🛒 Acheter</button>
-        <button class="btn secondary" onclick='showGallery(${JSON.stringify(p)})'>🖼️ Photos</button>
+      <div class="row" style="gap:8px; margin-top:6px">
+        <button class="btn brand buyBtn">Acheter</button>
+        <button class="btn ghost viewBtn">Voir</button>
       </div>
     </div>
   </article>`;
 }
-
+function render(list){ cards.innerHTML = list.map(makeCard).join(''); bindCardEvents(); }
 function buildFilters(products){
-  const cats=Array.from(new Set(products.map(p=>p.cat))).filter(Boolean);
-  filtersEl.innerHTML=['_all', ...cats].map(c=>`<span class="chip${c==='_all'?' active':''}" data-cat="${c}">${c==='_all'?'Tout':c}</span>`).join('');
+  const cats = Array.from(new Set(products.map(p=>p.cat))).filter(Boolean);
+  filtersEl.innerHTML = ['_all', ...cats].map(c=>`<span class="chip${c==='_all'? ' active':''}" data-cat="${c}">${c==='_all'? 'Tout':c}</span>`).join('');
   filtersEl.querySelectorAll('.chip').forEach(el=>{
-    el.onclick=()=>{
+    el.addEventListener('click',()=>{
       filtersEl.querySelectorAll('.chip').forEach(x=>x.classList.remove('active'));
       el.classList.add('active');
-      const cat=el.getAttribute('data-cat');
-      renderCards(cat==='_all'? products : products.filter(p=>p.cat===cat));
-    }
+      applySearchSort();
+    });
   });
 }
 
-function renderCards(list){ cards.innerHTML=list.map(makeCard).join(''); }
-
-/* ====== Order flow ====== */
-async function orderNow(p){
-  // incrémente commandes + “gains estimés (FC)” côté compteur global
-  try{
-    await fetch(`https://api.countapi.xyz/hit/${COUNT_NS}/orders`).then(r=>r.json()).then(j=>{ document.getElementById('ordersCount').textContent=j.value; });
-    const discount = Math.round(p.priceFC*(DISCOUNT_PERCENT/100));
-    const finalFC = Math.max(0, p.priceFC - discount);
-    // cumule gains (en FC) — on stocke en entier FC
-    await fetch(`https://api.countapi.xyz/update/${COUNT_NS}/revenue?amount=${encodeURIComponent(finalFC)}`).catch(()=>{});
-  }catch{}
-  showPay(p);
+/* ================== Recherche / Tri ================== */
+$("#q").addEventListener('input', applySearchSort);
+$("#sort").addEventListener('change', applySearchSort);
+function applySearchSort(){
+  const q = $("#q").value.trim().toLowerCase();
+  const catAct = (filtersEl.querySelector('.chip.active')?.getAttribute('data-cat')) || '_all';
+  let list=PRODUCTS.filter(p=> (catAct==='_all' || p.cat===catAct) && (p.name.toLowerCase().includes(q) || p.notes?.toLowerCase().includes(q)));
+  const s = $("#sort").value;
+  if(s==='priceAsc') list.sort((a,b)=>a.priceFC-b.priceFC);
+  if(s==='priceDesc') list.sort((a,b)=>b.priceFC-a.priceFC);
+  if(s==='pop') list.sort((a,b)=> (b.score||0)-(a.score||0) );
+  if(s==='new') list.sort((a,b)=> (b.created||0)-(a.created||0) );
+  render(list);
 }
 
-/* ====== Boot ====== */
-async function boot(){
-  document.getElementById('year').textContent=new Date().getFullYear();
+/* ================== Modals (Produit + Paiement) ================== */
+const pm = $("#productModal"), payM = $("#payModal");
+$("#pmClose").onclick=()=>pm.classList.remove('show');
+$("#payClose").onclick=()=>payM.classList.remove('show');
+$("#payCancel").onclick=()=>payM.classList.remove('show');
 
-  let products=[];
-  try{
-    products=await fetchProducts();
-  }catch(e){
-    alert("⚠️ Erreur de chargement des produits. Vérifie tes liens Google Sheets.");
-  }
-  if(!products.length){
-    // Démo fallback
-    products = [
-      {cat:"Vêtements", name:"Chemise classique homme", imgs:["https://images.unsplash.com/photo-1520974769661-3b1d5b4a3b53?q=80&w=1200&auto=format&fit=crop","https://images.unsplash.com/photo-1516826957135-700dedea698c?q=80&w=1200&auto=format&fit=crop"], priceUSD:15, priceFC:15*RATE_FC, notes:"S-XL", promo:"-10%"},
-      {cat:"Téléphones", name:"Smartphone Android 4G", imgs:["https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=1200&auto=format&fit=crop","https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?q=80&w=1200&auto=format&fit=crop"], priceUSD:120, priceFC:120*RATE_FC, notes:"32Go/3Go", promo:"Garantie 3 mois"},
-      {cat:"Unités", name:"Unités Airtel Money (RDC)", imgs:["https://images.unsplash.com/photo-1563986768494-4dee2763ff3f?q=80&w=1200&auto=format&fit=crop"], priceUSD:5, priceFC:5*RATE_FC, notes:"Recharge rapide", promo:""}
-    ];
-  }
-  buildFilters(products);
-  renderCards(products);
+let CURRENT = null; // produit courant
+function bindCardEvents(){
+  $$(".buyBtn").forEach(btn=>{
+    btn.addEventListener('click', (e)=>{
+      const id = e.target.closest('.card').dataset.id;
+      openProduct(id, true);
+    })
+  });
+  $$(".viewBtn").forEach(btn=>{
+    btn.addEventListener('click', (e)=>{
+      const id = e.target.closest('.card').dataset.id;
+      openProduct(id, false);
+    })
+  });
 }
-boot();
+function openProduct(id, goPay=false){
+  const p = PRODUCTS.find(x=>x.id===id); if(!p) return;
+  CURRENT = p;
+  $("#pmTitle").textContent = p.name;
+  const imgs = p.imgs?.length? p.imgs : ["https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1200&auto=format&fit=crop"];
+  $("#pmBig").src = imgs[0];
+  const thumbs = imgs.map((u,i)=>`<img class="timg ${i===0?'active':''}" src="${u}" data-i="${i}">`).join('');
+  $("#pmThumbs").innerHTML = thumbs;
+  $$(".timg").forEach(t=> t.addEventListener('click', ()=>{
+    $$(".timg").forEach(x=>x.classList.remove('active')); t.classList.add('active'); $("#pmBig").src = t.src;
+  }));
+  $("#pmMeta").textContent = `${p.cat}${p.notes? ' • '+p.notes:''}${p.stock? ' • Stock:'+p.stock:''}`;
+  $("#pmPrice").innerHTML = `<div class="fc">${money(p.priceFC)}</div> ${p.priceUSD? `<div class="usd">(~ ${fmt(p.priceUSD)} $)</div>`:''}`;
+  $("#pmQty").value=1;
 
-function copyText(t){ navigator.clipboard.writeText(t).then(()=>alert("Copié !")) }
+  // WhatsApp message
+  const prof = store.get('profile', {});
+  const msg = `Bonjour ${prof?.name || ''}, je suis intéressé par: ${p.name} (${p.cat}). Prix: ${fmt(p.priceFC)} FC. Quantité: 1. Mon numéro: ${prof?.phone || ''}.`;
+  $("#pmWhats").href = `https://wa.me/${WHATSAPP_PHONE_INTL}?text=${encodeURIComponent(msg)}`;
+
+  // Stars + comments
+  loadCommentsUI(p.id);
+
+  pm.classList.add('show');
+
+  if(goPay){ setTimeout(()=> $("#pmBuyAirtel").click(), 50); }
+}
+
+$("#pmBuyAirtel").addEventListener('click', ()=>{
+  if(!CURRENT) return;
+  const qty = Math.max(1, parseInt($("#pmQty").value||'1',10));
+  const total = CURRENT.priceFC * qty;
+  $("#paySummary").innerHTML = `
+    <div><strong>Produit:</strong> ${CURRENT.name}</div>
+    <div><strong>Quantité:</strong> ${qty}</div>
+    <div><strong>Total:</strong> ${money(total)}</div>
+    <div class="muted" style="margin-top:6px">Envoyez sur <strong>${WHATSAPP_DISPLAY}</strong> (Airtel Money — ${AIRTEL_NAME}).</div>`;
+  $("#payPin").value='';
+  payM.classList.add('show');
+});
+
+$("#payConfirm").addEventListener('click', ()=>{
+  const pin = $("#payPin").value.trim();
+  if(pin !== AIRTEL_PIN_TEST){ toast(i18n[store.get('lang','fr')].wrongPin); return; }
+  // succès simulé
+  const orders = store.get('orders', []);
+  orders.push({id:CURRENT.id, name:CURRENT.name, amount:CURRENT.priceFC*parseInt($("#pmQty").value||'1',10), ts:Date.now()});
+  store.set('orders', orders);
+  // boost popularité
+  CURRENT.score = (CURRENT.score||0) + 1;
+  toast(i18n[store.get('lang','fr')].paid);
+  payM.classList.remove('show'); pm.classList.remove('show');
+});
+
+/* ================== Avis / Notes / Commentaires ================== */
+function prodKey(id, type){ return `p_${id}_${type}`; }
+function loadCommentsUI(id){
+  const starsEl = $("#pmStars"), listEl=$("#pmCommentList"), input=$("#pmComment");
+  // stars
+  const saved = store.get(prodKey(id,'stars'), 0);
+  renderStars(saved);
+  starsEl.onclick = (e)=>{
+    const x = e.offsetX / e.target.clientWidth; // 0..1
+    const note = Math.min(5, Math.max(1, Math.round(x*5)));
+    store.set(prodKey(id,'stars'), note);
+    renderStars(note);
+    toast("Merci pour votre note ⭐");
+  };
+  function renderStars(n){
+    starsEl.innerHTML = "★★★★★".split("").map((s,i)=> `<span style="color:${i<n?'#fbbf24':'#94a3b8'}">${s}</span>`).join("");
+  }
+
+  // comments
+  function refresh(){
+    const arr = store.get(prodKey(id,'comments'), []);
+    listEl.innerHTML = arr.slice(-20).reverse().map(c=> `<div class="comment"><strong>${c.who}</strong> — <span class="muted">${new Date(c.ts).toLocaleString()}</span><br>${c.txt}</div>`).join("") || `<div class="muted">Pas encore de commentaires.</div>`;
+  }
+  refresh();
+  $("#pmAddComment").onclick = ()=>{
+    const txt = input.value.trim(); if(!txt) return;
+    const prof = store.get('profile', {name:'Anonyme'});
+    const arr = store.get(prodKey(id,'comments'), []);
+    arr.push({who: prof.name || "Client", txt, ts: Date.now()}); store.set(prodKey(id,'comments'), arr);
+    input.value=''; refresh(); toast("Commentaire publié");
+  };
+}
+
+/* ================== Units Promos ================== */
+const UNITS = [
+  {network:"Airtel", bonus:"+5%", img:"https://images.unsplash.com/photo-1510557874967-3a835f1b5b52?q=80&w=1200&auto=format&fit=crop", price:1000},
+  {network:"Vodacom", bonus:"+3%", img:"https://images.unsplash.com/photo-1551816230-ef5deaed4a56?q=80&w=1200&auto=format&fit=crop", price:1000},
+  {network:"Orange", bonus:"+4%", img:"https://images.unsplash.com/photo-1531306728370-e2ebd9d7bb99?q=80&w=1200&auto=format&fit=crop", price:1000},
+  {network:"Africell", bonus:"+6%", img:"https://images.unsplash.com/photo-1532879311112-62b7188e2f7f?q=80&w=1200&auto=format&fit=crop", price:1000},
+  {network:"MTN", bonus:"+2%", img:"https://images.unsplash.com/photo-1551816231-efe4a5d39b9f?q=80&w=1200&auto=format&fit=crop", price:1000},
+];
+function renderUnits(){
+  $("#units").innerHTML = UNITS.map(u=>`
+    <article class="card">
+      <img class="thumb" src="${u.img}" alt="${u.network}">
+      <div class="p">
+        <div class="row-b"><div class="title">${u.network} — Unités</div><span class="pill" style="background:rgba(16,185,129,.18);border-color:#34d39988;color:#d1fae5">${u.bonus}</span></div>
+        <div class="muted">Recharge rapide — meilleurs taux</div>
+        <div class="price"><div class="fc">${fmt(u.price)} FC</div></div>
+        <div class="row" style="gap:8px; margin-top:6px">
+          <a class="btn whatsapp" target="_blank" href="https://wa.me/${WHATSAPP_PHONE_INTL}?text=${encodeURIComponent('Bonjour, je veux des unités '+u.network)}">Acheter sur WhatsApp</a>
+          <button class="btn brand" onclick="toast('Passez par le produit “Unités '+u.network+'” dans le catalogue pour paiement simulé.')">Payer</button>
+        </div>
+      </div>
+    </article>`).join('');
+}
+renderUnits();
+
+/* ================== Partage produit depuis modal ================== */
+$("#pmShare").addEventListener('click', async ()=>{
+  if(!CURRENT) return;
+  try{
+    await navigator.share({title:CURRENT.name, text:"Regarde cette offre 🔥", url:location.href});
+    toast("Merci pour le partage !");
+  }catch(e){}
+});
+
+/* ================== Init divers ================== */
+document.getElementById('year').textContent = new Date().getFullYear();
+// Langue + thème init
+applyTheme(store.get('theme', (matchMedia('(prefers-color-scheme: light)').matches?'light':'dark')));
+const initLang = store.get('lang','fr'); $("#lang").value=initLang; setLang(initLang);
+
+/* ============== BONUS: tri dynamique au clic badge “Tout” ============== */
+filtersEl.addEventListener('dblclick', ()=>{ $("#sort").value='pop'; applySearchSort(); });
 </script>
 </body>
-                                                                                                                                       </html>
+  </html>
