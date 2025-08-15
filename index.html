@@ -696,3 +696,231 @@ filtersEl.addEventListener('dblclick', ()=>{ $("#sort").value='pop'; applySearch
 </script>
 </body>
   </html>
+<!-- ===== Accès admin caché (3 feuilles de sécurité) ===== -->
+<style>
+  /* Point secret (invisible par défaut) */
+  #secret-dot {
+    position: fixed;
+    bottom: 12px;
+    right: 12px;
+    width: 8px;
+    height: 8px;
+    background: #cbd5e1; /* gris discret */
+    border-radius: 50%;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .25s ease, transform .2s ease;
+    z-index: 9999;
+  }
+  #secret-dot.show {
+    opacity: .35;
+    pointer-events: all;
+    cursor: pointer;
+  }
+  #secret-dot:hover { opacity: 1; transform: scale(1.15); }
+
+  /* Modal ultra-compact pour PIN + Code du jour */
+  #admin-modal {
+    position: fixed; inset: 0; display: none; align-items: center; justify-content: center;
+    background: rgba(0,0,0,.55); z-index: 10000;
+  }
+  #admin-modal.show { display: flex; }
+  #admin-sheet {
+    width: min(92vw, 360px);
+    background: var(--card, #111827);
+    color: var(--text, #e5e7eb);
+    border: 1px solid var(--bd, rgba(148,163,184,.2));
+    border-radius: 14px; padding: 14px;
+    box-shadow: 0 20px 60px rgba(0,0,0,.35);
+  }
+  #admin-sheet h3 { margin: 0 0 6px; font-size: 1rem; font-weight: 900; }
+  #admin-sheet .muted { color: var(--muted, #94a3b8); font-size: .9rem; }
+  #admin-sheet .in { width: 100%; margin-top: 8px; padding: 10px 12px; border-radius: 10px;
+                     border: 1px solid var(--bd, rgba(148,163,184,.2)); background: var(--card, #111827);
+                     color: var(--text, #e5e7eb); }
+  #admin-sheet .row { display: flex; gap: 8px; margin-top: 10px; }
+  #admin-sheet .btn {
+    flex: 1 1 auto; padding: 10px 12px; border-radius: 10px; border: 1px solid transparent; font-weight: 800;
+    background: linear-gradient(135deg, var(--brand, #10b981), var(--info, #3b82f6)); color: #fff; cursor: pointer;
+  }
+  #admin-sheet .btn.ghost {
+    background: transparent; border: 1px solid var(--bd, rgba(148,163,184,.2)); color: var(--text, #e5e7eb);
+  }
+  #admin-err { margin-top: 8px; color: #fca5a5; font-weight: 700; min-height: 1.2em; }
+  #admin-hint { margin-top: 4px; color: var(--muted, #94a3b8); font-size: .85rem; }
+</style>
+
+<!-- Point secret (devient visible après geste) -->
+<span id="secret-dot" aria-hidden="true" title=" "></span>
+
+<!-- Modal admin -->
+<div id="admin-modal" role="dialog" aria-modal="true" aria-labelledby="admin-title">
+  <div id="admin-sheet">
+    <h3 id="admin-title">Espace Admin</h3>
+    <div class="muted">Entrez votre <strong>PIN</strong> et le <strong>code du jour</strong>.</div>
+    <input id="admin-pin" class="in" type="password" inputmode="numeric" autocomplete="off" placeholder="PIN admin" maxlength="12" />
+    <input id="admin-otp" class="in" type="password" inputmode="numeric" autocomplete="one-time-code" placeholder="Code du jour (4 chiffres)" maxlength="4" />
+    <div id="admin-err"></div>
+    <div id="admin-hint"></div>
+    <div class="row">
+      <button id="admin-ok" class="btn">Valider</button>
+      <button id="admin-cancel" class="btn ghost">Annuler</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ========= PARAMS ADMIN (modifie ici si besoin) ========= */
+const ADMIN_PIN_B64 = "Njk5NjY5ODg3Nw==";  // "6996698877" encodé Base64
+const DAILY_SEED = 877;                      // graine pour code du jour
+const MAX_TRIES = 3;                         // tentatives avant verrouillage
+const LOCK_MINUTES = 10;                     // durée de lock en minutes
+const ADMIN_TARGET = "admin.html";           // page de destination
+
+/* ========= Raccourcis utiles ========= */
+const el = s => document.querySelector(s);
+function now(){ return Date.now(); }
+function pad4(n){ return String(n).padStart(4, "0"); }
+function yyyymmdd(d=new Date()){
+  const y = d.getFullYear();
+  const m = String(d.getMonth()+1).padStart(2,"0");
+  const day = String(d.getDate()).padStart(2,"0");
+  return Number(`${y}${m}${day}`);
+}
+
+/* ========= Feuille 1 : gestes secrets pour afficher le point ========= */
+const dot = el("#secret-dot");
+let konami = [38,38,40,40,37,39,37,39,66,65]; // ↑ ↑ ↓ ↓ ← → ← → B A
+let idx = 0;
+let tapCount = 0, tapTimer = null, dotKeyCount = 0, dotKeyTimer = null;
+
+// 1) KONAMI
+window.addEventListener("keydown", (e)=>{
+  if(e.keyCode === konami[idx]){ idx++; if(idx === konami.length){ revealDot(); idx = 0; } }
+  else { idx = 0; }
+
+  // 3) triple point "."
+  if(e.key === "."){
+    dotKeyCount++;
+    clearTimeout(dotKeyTimer);
+    dotKeyTimer = setTimeout(()=>{ dotKeyCount = 0; }, 1200);
+    if(dotKeyCount >= 3){ revealDot(); dotKeyCount = 0; }
+  }
+});
+
+// 2) 7 taps sur le logo "UR" (ou sur .logo)
+const logoEl = document.querySelector(".logo");
+if(logoEl){
+  logoEl.addEventListener("click", ()=>{
+    tapCount++;
+    clearTimeout(tapTimer);
+    tapTimer = setTimeout(()=>{ tapCount = 0; }, 1500);
+    if(tapCount >= 7){ revealDot(); tapCount = 0; }
+  });
+}
+
+function revealDot(){
+  dot.classList.add("show");
+}
+
+/* ========= Feuille 2 + 3 : PIN + Code du jour (avec anti-brute force) ========= */
+const modal = el("#admin-modal");
+const pinInput = el("#admin-pin");
+const otpInput = el("#admin-otp");
+const errBox = el("#admin-err");
+const hintBox = el("#admin-hint");
+
+const LOCK_KEY = "adm_lock_v1"; // {tries, until}
+const OK_FLAG = "admin_ok";     // "1" si connecté pour cette session
+
+function getLock(){
+  try{ return JSON.parse(localStorage.getItem(LOCK_KEY)) || {tries:0, until:0}; }
+  catch(e){ return {tries:0, until:0}; }
+}
+function setLock(obj){ localStorage.setItem(LOCK_KEY, JSON.stringify(obj)); }
+
+function lockedMsg(until){
+  const ms = until - now();
+  const min = Math.ceil(ms/60000);
+  return `Verrouillé. Réessayez dans ~${min} min.`;
+}
+
+function showModal(){
+  const lk = getLock();
+  errBox.textContent = "";
+  hintBox.textContent = "";
+  if(lk.until && lk.until > now()){
+    errBox.textContent = lockedMsg(lk.until);
+  }
+  pinInput.value = ""; otpInput.value = "";
+  modal.classList.add("show");
+  setTimeout(()=> pinInput.focus(), 50);
+}
+function hideModal(){ modal.classList.remove("show"); }
+
+function expectDailyCode(dateObj=new Date()){
+  const n = yyyymmdd(dateObj);
+  const raw = (n * 7 + DAILY_SEED) % 10000;
+  return pad4(raw);
+}
+
+function b64(s){ try{ return atob(s); }catch(e){ return ""; } }
+
+function checkPin(pin){
+  // légère obfuscation : comparaison avec BLURP + reverse + b64 (simple)
+  const secret = b64(ADMIN_PIN_B64); // "6996698877"
+  return String(pin) === String(secret);
+}
+
+function tryLogin(){
+  const lk = getLock();
+  if(lk.until && lk.until > now()){
+    errBox.textContent = lockedMsg(lk.until);
+    return;
+  }
+
+  const pin = pinInput.value.trim();
+  const otp = otpInput.value.trim();
+
+  // validations basiques
+  if(!pin || !otp){ errBox.textContent = "Champs manquants."; return; }
+  if(!/^\d{1,12}$/.test(pin)){ errBox.textContent = "PIN invalide."; return; }
+  if(!/^\d{4}$/.test(otp)){ errBox.textContent = "Code du jour = 4 chiffres."; return; }
+
+  const okPin = checkPin(pin);
+  const okOtp = (otp === expectDailyCode());
+
+  if(okPin && okOtp){
+    // reset lock, set session token
+    setLock({tries:0, until:0});
+    sessionStorage.setItem(OK_FLAG, "1");
+    // discrète redirection
+    window.location.href = ADMIN_TARGET;
+    return;
+  }
+
+  // erreur → incrémenter tentatives
+  lk.tries = (lk.tries || 0) + 1;
+  if(lk.tries >= MAX_TRIES){
+    lk.until = now() + LOCK_MINUTES*60000;
+    lk.tries = 0;
+    setLock(lk);
+    errBox.textContent = lockedMsg(lk.until);
+  }else{
+    setLock(lk);
+    // message d’erreur générique (ne pas révéler laquelle des 2 a raté)
+    errBox.textContent = `Code incorrect. Tentatives restantes : ${MAX_TRIES - lk.tries}`;
+    // petite “aide” facultative : montrer si la date du device est bonne
+    const today = yyyymmdd();
+    hintBox.textContent = `Astuce : assurez-vous que la date du téléphone est correcte (${today}).`;
+  }
+}
+
+/* === Ouverture / fermeture === */
+dot.addEventListener("click", showModal);
+el("#admin-cancel").addEventListener("click", hideModal);
+el("#admin-ok").addEventListener("click", tryLogin);
+// fermeture via ESC
+window.addEventListener("keydown", (e)=>{ if(e.key === "Escape") hideModal(); });
+</script>
+<!-- ===== Fin accès admin caché ===== -->
