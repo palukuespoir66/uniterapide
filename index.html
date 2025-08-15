@@ -1,96 +1,68 @@
-here<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Unité Rapide — Boutique</title>
-
-<!-- CSP souple pour GitHub Pages + Google Sheets + CountAPI -->
-<meta http-equiv="Content-Security-Policy" content="default-src 'self' https: data:; img-src 'self' https: data: blob:; style-src 'self' 'unsafe-inline' https:; script-src 'self' 'unsafe-inline' https:; connect-src 'self' https:;" />
-
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' https: data:; img-src 'self' https: data:; style-src 'self' 'unsafe-inline' https:; script-src 'self' 'unsafe-inline' https:; connect-src 'self' https:;" />
 <style>
-:root{
-  --bg1:#0f172a; --bg2:#1e293b;
-  --brand:#10b981; --accent:#f59e0b; --danger:#ef4444; --info:#3b82f6;
-  --text:#e5e7eb; --muted:#94a3b8; --card:#111827cc;
-  --shadow:0 10px 30px rgba(0,0,0,.35);
-}
-*{box-sizing:border-box}
-html,body{height:100%}
-body{
-  margin:0; color:var(--text); font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial,"Noto Sans",sans-serif;
-  background: radial-gradient(1200px 800px at 10% 10%, #0b1225 0%, #0f172a 40%, #0a0f1f 100%);
-  overflow-x:hidden;
-}
-.bg-anim{position:fixed; inset:-20vmax; z-index:-1; filter:blur(80px) saturate(130%); opacity:.45;
-  background:conic-gradient(from 180deg,#00c2ff,#7c3aed,#10b981,#f59e0b,#00c2ff); animation:spin 28s linear infinite}
-@keyframes spin{to{transform:rotate(1turn)}}
-header{position:sticky; top:0; z-index:50; backdrop-filter:saturate(140%) blur(8px);
-  background:linear-gradient(180deg, rgba(2,6,23,.85), rgba(2,6,23,.55));
-  border-bottom:1px solid rgba(148,163,184,.15)}
-.wrap{max-width:1150px; margin:0 auto; padding:16px 20px}
-.row{display:flex; gap:14px; align-items:center; flex-wrap:wrap}
-.brand{display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:.3px}
-.logo{width:38px; height:38px; border-radius:12px; background:linear-gradient(135deg,var(--brand),var(--info)); display:grid; place-items:center; box-shadow:var(--shadow); font-weight:900; color:#fff}
-.promo{background:linear-gradient(90deg, rgba(16,185,129,.15), rgba(59,130,246,.15)); border:1px solid rgba(16,185,129,.25); color:#d1fae5;
-  padding:10px 14px; border-radius:12px; font-weight:600; display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap}
-.badges{display:flex; gap:10px; flex-wrap:wrap}
-.badge{background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02)); border:1px solid rgba(148,163,184,.18);
-  padding:8px 12px; border-radius:999px; font-weight:600; display:flex; align-items:center; gap:8px; color:#e2e8f0}
-
-main{max-width:1150px; margin:24px auto; padding:0 20px 80px}
-.controls{display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin:10px 0 14px}
-.search{flex:1; min-width:220px; padding:10px 12px; border-radius:12px; border:1px solid rgba(148,163,184,.25); background:rgba(255,255,255,.06); color:#fff}
-.filters{display:flex; gap:8px; flex-wrap:wrap}
-.chip{padding:8px 12px; border-radius:999px; background:rgba(255,255,255,.06); border:1px solid rgba(148,163,184,.18); cursor:pointer; font-weight:700}
-.chip.active{background:linear-gradient(90deg, rgba(16,185,129,.25), rgba(59,130,246,.25)); border-color:#34d39977}
-
-.cards{display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:16px}
-.card{background:linear-gradient(180deg, rgba(17,24,39,.85), rgba(17,24,39,.65)); border:1px solid rgba(148,163,184,.18);
-  border-radius:18px; overflow:hidden; box-shadow:var(--shadow); display:flex; flex-direction:column; min-height:100%}
-.card img{width:100%; height:180px; object-fit:cover; background:#0b1020}
-.card .p{padding:12px 14px}
-.title{font-weight:800; font-size:1.05rem}
-.muted{color:var(--muted); font-size:.92rem}
-.price{display:flex; align-items:center; gap:10px; margin-top:6px}
-.price .fc{font-weight:900; font-size:1.15rem}
-.price .usd{color:#93c5fd; font-weight:700}
-.cta{margin-top:10px; display:flex; gap:8px}
-.btn{flex:1; display:inline-flex; justify-content:center; align-items:center; gap:8px; padding:10px 12px; border-radius:12px; border:1px solid transparent; cursor:pointer; font-weight:800; text-decoration:none}
-.btn.whatsapp{background:#25D36622; border-color:#25D36655; color:#c3f9d7}
-.btn.buy{background:#10b98122; border-color:#10b98166; color:#d1fae5}
-.btn:hover{transform:translateY(-1px)}
-.badge-timer{margin-left:auto; background:rgba(245,158,11,.18); border:1px solid #f59e0b55; color:#fde68a; padding:6px 10px; border-radius:999px; font-weight:800; font-size:.85rem}
-
-.stats{display:flex; gap:12px; flex-wrap:wrap; margin:18px 0}
-.stat{background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02)); border:1px solid rgba(148,163,184,.18); padding:10px 14px; border-radius:14px; font-weight:700}
-
-.float{position:fixed; right:18px; bottom:18px; display:flex; flex-direction:column; gap:10px; z-index:60}
-.float a{display:flex; align-items:center; gap:8px; padding:10px 12px; border-radius:999px; text-decoration:none; font-weight:800; box-shadow:var(--shadow)}
-.float .w{background:#25D366; color:#06250f}
-.float .t{background:#229ED9; color:#041e2a}
-
-footer{max-width:1150px; margin:40px auto; padding:0 20px 60px; color:#cbd5e1}
-.pay{display:flex; gap:10px; flex-wrap:wrap}
-.pill{background:rgba(255,255,255,.07); border:1px solid rgba(148,163,184,.18); padding:8px 12px; border-radius:999px; font-weight:700}
-details{background:rgba(255,255,255,.05); border:1px solid rgba(148,163,184,.18); padding:12px; border-radius:14px}
-details summary{cursor:pointer; font-weight:900}
-
-/* Modal générique */
-.modal{position:fixed; inset:0; display:none; align-items:center; justify-content:center; background:rgba(2,6,23,.65); z-index:80; padding:20px}
-.modal .box{max-width:520px; width:100%; background:linear-gradient(180deg, rgba(17,24,39,.96), rgba(17,24,39,.88)); border:1px solid rgba(148,163,184,.22); border-radius:18px; box-shadow:var(--shadow); padding:16px}
-.modal .head{display:flex; align-items:center; justify-content:space-between; margin-bottom:10px}
-.x{cursor:pointer; border:none; background:rgba(255,255,255,.06); color:#fff; padding:8px 10px; border-radius:10px; font-weight:800}
-.input{width:100%; padding:10px 12px; border-radius:12px; border:1px solid rgba(148,163,184,.25); background:rgba(255,255,255,.06); color:#fff}
-.grid2{display:grid; grid-template-columns:1fr 1fr; gap:10px}
-
-/* Galerie */
-.gallery{display:grid; grid-template-columns:repeat(5, 1fr); gap:6px; margin-top:8px}
-.gallery img{width:100%; height:64px; object-fit:cover; border-radius:10px; border:1px solid rgba(148,163,184,.2); cursor:pointer}
-
-/* Gate (inscription) */
-.gate{position:fixed; inset:0; display:none; align-items:center; justify-content:center; background:rgba(2,6,23,.85); z-index:90; padding:20px}
-.gate .card{max-width:520px; width:100%; background:linear-gradient(180deg, rgba(17,24,39,.96), rgba(17,24,39,.88)); border:1px solid rgba(148,163,184,.22); border-radius:18px; box-shadow:var(--shadow); padding:18px}
+  :root{
+    --bg1:#0f172a; --bg2:#1e293b; --brand:#10b981; --accent:#f59e0b; --danger:#ef4444; --info:#3b82f6;
+    --text:#e5e7eb; --muted:#94a3b8; --card:#111827cc; --shadow:0 10px 30px rgba(0,0,0,.35);
+  }
+  *{box-sizing:border-box} html,body{height:100%}
+  body{margin:0;color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial,"Noto Sans",sans-serif;background: radial-gradient(1200px 800px at 10% 10%, #0b1225 0%, #0f172a 40%, #0a0f1f 100%);overflow-x:hidden}
+  .bg-anim{position:fixed;inset:-20vmax;z-index:-1;filter:blur(80px) saturate(130%);opacity:.45;background:conic-gradient(from 180deg,#00c2ff,#7c3aed,#10b981,#f59e0b,#00c2ff);animation:spin 28s linear infinite}
+  @keyframes spin{to{transform:rotate(1turn)}}
+  header{position:sticky;top:0;z-index:50;backdrop-filter:saturate(140%) blur(8px);background:linear-gradient(180deg,rgba(2,6,23,.85),rgba(2,6,23,.55));border-bottom:1px solid rgba(148,163,184,.15)}
+  .wrap{max-width:1150px;margin:0 auto;padding:16px 20px}
+  .row{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.3px}
+  .logo{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,var(--brand),var(--info));display:grid;place-items:center;box-shadow:var(--shadow);font-weight:900;color:#fff}
+  .promo{background:linear-gradient(90deg,rgba(16,185,129,.15),rgba(59,130,246,.15));border:1px solid rgba(16,185,129,.25);color:#d1fae5;padding:10px 14px;border-radius:12px;font-weight:600;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+  .badges{display:flex;gap:10px;flex-wrap:wrap}
+  .badge{background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.02));border:1px solid rgba(148,163,184,.18);padding:8px 12px;border-radius:999px;font-weight:600;display:flex;align-items:center;gap:8px;color:#e2e8f0}
+  main{max-width:1150px;margin:24px auto;padding:0 20px 80px}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+  .card{background:linear-gradient(180deg,rgba(17,24,39,.85),rgba(17,24,39,.65));border:1px solid rgba(148,163,184,.18);border-radius:18px;overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column;min-height:100%}
+  .card .thumb{width:100%;height:180px;object-fit:cover;background:#0b1020}
+  .card .p{padding:12px 14px}
+  .title{font-weight:800;font-size:1.05rem}
+  .muted{color:var(--muted);font-size:.92rem}
+  .price{display:flex;align-items:center;gap:10px;margin-top:6px}
+  .price .fc{font-weight:900;font-size:1.15rem;color:#fff}
+  .price .old{color:#fca5a5;text-decoration:line-through;font-weight:700}
+  .price .usd{color:#93c5fd;font-weight:700}
+  .cta{margin-top:10px;display:flex;gap:8px}
+  .btn{flex:1;display:inline-flex;justify-content:center;align-items:center;gap:8px;padding:10px 12px;border-radius:12px;border:1px solid transparent;cursor:pointer;font-weight:800}
+  .btn.whatsapp{background:#25D36622;border-color:#25D36655;color:#c3f9d7}
+  .btn.secondary{background:rgba(255,255,255,.06);border-color:rgba(148,163,184,.18);color:#e2e8f0}
+  .btn:hover{transform:translateY(-1px)}
+  .stats{display:flex;gap:12px;flex-wrap:wrap;margin:18px 0}
+  .stat{background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.02));border:1px solid rgba(148,163,184,.18);padding:10px 14px;border-radius:14px;font-weight:700}
+  .filters{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 18px}
+  .chip{padding:8px 12px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(148,163,184,.18);cursor:pointer;font-weight:700}
+  .chip.active{background:linear-gradient(90deg,rgba(16,185,129,.25),rgba(59,130,246,.25));border-color:#34d39977}
+  .float{position:fixed;right:18px;bottom:18px;display:flex;flex-direction:column;gap:10px;z-index:60}
+  .float a{display:flex;align-items:center;gap:8px;padding:10px 12px;border-radius:999px;text-decoration:none;font-weight:800;box-shadow:var(--shadow)}
+  .float .w{background:#25D366;color:#06250f}.float .t{background:#229ED9;color:#041e2a}
+  footer{max-width:1150px;margin:40px auto;padding:0 20px 60px;color:#cbd5e1}
+  .pay{display:flex;gap:10px;flex-wrap:wrap}
+  .pill{background:rgba(255,255,255,.07);border:1px solid rgba(148,163,184,.18);padding:8px 12px;border-radius:999px;font-weight:700}
+  details{background:rgba(255,255,255,.05);border:1px solid rgba(148,163,184,.18);padding:12px;border-radius:14px}
+  details summary{cursor:pointer;font-weight:900}
+  /* Modal */
+  .modal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;padding:20px;z-index:80}
+  .modal.show{display:flex}
+  .box{max-width:520px;width:100%;background:rgba(2,6,23,.95);border:1px solid rgba(148,163,184,.2);border-radius:16px;box-shadow:var(--shadow);padding:16px}
+  .box h3{margin:6px 0 10px}
+  .radio{display:flex;gap:8px;flex-wrap:wrap}
+  .radio .chip{user-select:none}
+  .gallery{display:flex;gap:6px;margin-top:10px}
+  .gallery img{width:56px;height:56px;border-radius:10px;object-fit:cover;border:1px solid rgba(148,163,184,.18);cursor:pointer}
+  .big{width:100%;max-height:60vh;object-fit:contain;background:#0b1020;border-radius:12px}
+  .comment{display:flex;gap:8px;margin-top:8px}
+  .comment input{flex:1;padding:10px 12px;border-radius:10px;border:1px solid rgba(148,163,184,.25);background:rgba(255,255,255,.06);color:#e2e8f0}
 </style>
 </head>
 <body>
@@ -107,10 +79,10 @@ details summary{cursor:pointer; font-weight:900}
         </div>
       </div>
       <div class="badges">
-        <div class="badge">🔒 Sécurisé</div>
+        <div class="badge">🔒 Paiement sécurisé</div>
         <div class="badge">🚚 Livraison rapide</div>
         <div class="badge">⭐ Qualité garantie</div>
-        <div class="badge">🕘 24/7</div>
+        <div class="badge">🕘 Disponible 24/7</div>
         <div class="badge" id="visitsBadge">👁️ Visites : …</div>
       </div>
     </div>
@@ -121,18 +93,17 @@ details summary{cursor:pointer; font-weight:900}
   </div>
 </header>
 
-<main>
+<main class="wrap">
   <section class="stats">
-    <div class="stat">👤 Connecté : <span id="clientName">—</span> (<span id="clientPhone">—</span>)</div>
-    <div class="stat">👁️ Vues (appareil) : <span id="viewsLocal">0</span></div>
+    <div class="stat">👁️ Vues (ce navigateur) : <span id="viewsLocal">0</span></div>
     <div class="stat">❤️ J'aime : <span id="likesCount">0</span> <button id="likeBtn" class="chip" style="margin-left:8px">+ J'aime</button></div>
+    <div class="stat">🔁 Partages : <span id="shareCount">0</span> <button id="shareBtn" class="chip" style="margin-left:8px">Partager</button></div>
+    <div class="stat">🛒 Commandes : <span id="ordersCount">0</span></div>
   </section>
 
   <section>
-    <div class="controls">
-      <input id="search" class="search" placeholder="Rechercher un produit…" />
-      <div class="filters" id="filters"></div>
-    </div>
+    <h2>Catalogue</h2>
+    <div class="filters" id="filters"></div>
     <div class="cards" id="cards">Chargement…</div>
   </section>
 
@@ -140,14 +111,14 @@ details summary{cursor:pointer; font-weight:900}
     <h2>Contact</h2>
     <div class="row">
       <a class="btn whatsapp" href="https://wa.me/243990564877" target="_blank">📱 WhatsApp</a>
-      <a class="btn" style="background:#229ED922;border:1px solid #229ED955;color:#cfe9ff" href="https://t.me/cphkkk66" target="_blank">💬 Telegram</a>
+      <a class="btn secondary" href="https://t.me/cphkkk66" target="_blank">💬 Telegram</a>
     </div>
   </section>
 
   <section style="margin-top:28px">
     <h2>Modes de paiement</h2>
     <div class="pay">
-      <span class="pill">💳 Airtel Money — <strong>Mugisho Stéphane</strong> • <strong>+243 990 564 877</strong></span>
+      <span class="pill">💳 Airtel Money — <strong>Mugisho Stéphane</strong> — <strong>+243 990 564 877</strong></span>
       <span class="pill">📲 M-Pesa (Vodacom)</span>
       <span class="pill">🟠 Orange Money</span>
       <span class="pill">🟣 Afrimoney (Africell)</span>
@@ -159,570 +130,334 @@ details summary{cursor:pointer; font-weight:900}
     <details>
       <summary>🔧 Paramètres & Sécurité (infos client)</summary>
       <ul>
-        <li>Ce site affiche seulement les <strong>produits et prix</strong>. Aucune donnée sensible n'est publique.</li>
-        <li>Catalogue alimenté par une feuille <strong>PUBLIC</strong> (lecture seule).</li>
-        <li>Contacts officiels : WhatsApp <strong>+243 990 564 877</strong>, Telegram <strong>@cphkkk66</strong>, Airtel Money <strong>Mugisho Stéphane</strong>.</li>
+        <li>Affichage public = <strong>produits + prix</strong> uniquement.</li>
+        <li>Compteurs globaux: vues, j’aime, partages, commandes (CountAPI).</li>
+        <li>Vos paiements passent par l’app mobile de votre opérateur (USSD non déclenchable par le web pour sécurité).</li>
       </ul>
     </details>
   </section>
 </main>
 
-<!-- Boutons flottants -->
 <div class="float">
-  <a class="w" href="https://wa.me/243990564877?text=Bonjour%20Uniterapide%2C%20j%27aimerais%20avoir%20des%20infos%20svp" target="_blank">📱 WhatsApp</a>
+  <a class="w" href="https://wa.me/243990564877" target="_blank">📱 WhatsApp</a>
   <a class="t" href="https://t.me/cphkkk66" target="_blank">💬 Telegram</a>
 </div>
 
-<footer>
+<footer class="wrap">
   <hr style="border-color:rgba(148,163,184,.2); border-style:solid; border-width:1px 0 0; margin-bottom:16px">
   <div>© <span id="year"></span> Unité Rapide — RDC. Tous droits réservés.</div>
 </footer>
 
-<!-- MODAL ACHAT / PAIEMENT -->
-<div class="modal" id="payModal" aria-hidden="true">
+<!-- ===== Modals ===== -->
+<div id="galleryModal" class="modal" aria-hidden="true">
   <div class="box">
-    <div class="head">
-      <strong id="payTitle">Acheter</strong>
-      <button class="x" data-close>✕</button>
-    </div>
-    <div id="payBody"></div>
-  </div>
-</div>
-
-<!-- MODAL PRODUIT (galerie) -->
-<div class="modal" id="prodModal" aria-hidden="true">
-  <div class="box">
-    <div class="head">
-      <strong id="prodTitle">Produit</strong>
-      <button class="x" data-close>✕</button>
-    </div>
-    <div id="prodBody"></div>
-  </div>
-</div>
-
-<!-- ÉCRAN INSCRIPTION (style Betika) -->
-<div class="gate" id="gate">
-  <div class="card">
     <div class="row" style="justify-content:space-between">
-      <h3 style="margin:0">Bienvenue sur <span style="color:#34d399">Uniterapide</span></h3>
-      <button class="x" id="skipGate">Passer</button>
+      <h3 id="galTitle">Photos</h3>
+      <button class="chip" onclick="closeModal('galleryModal')">Fermer</button>
     </div>
-    <p class="muted" style="margin-top:4px">Entrez votre nom et numéro pour activer promos, j'aime & commentaires.</p>
-    <div class="grid2">
-      <input id="gateName" class="input" placeholder="Votre nom complet">
-      <input id="gatePhone" class="input" placeholder="Votre numéro (ex: 099... / +243...)">
+    <img id="galBig" class="big" src="" alt=""/>
+    <div id="galThumbs" class="gallery"></div>
+  </div>
+</div>
+
+<div id="payModal" class="modal" aria-hidden="true">
+  <div class="box">
+    <div class="row" style="justify-content:space-between">
+      <h3 id="payTitle">Paiement</h3>
+      <button class="chip" onclick="closeModal('payModal')">Fermer</button>
     </div>
-    <div class="row" style="margin-top:10px">
-      <button class="btn buy" id="gateSave">Activer mon compte</button>
+    <div id="payInfo" class="muted" style="margin-bottom:10px"></div>
+    <div class="radio" id="payMethods">
+      <span class="chip active" data-method="airtel">Airtel Money</span>
+      <span class="chip" data-method="mpesa">M-Pesa</span>
+      <span class="chip" data-method="orange">Orange Money</span>
+      <span class="chip" data-method="afri">Afrimoney</span>
+      <span class="chip" data-method="mtn">MoMo</span>
     </div>
+    <div id="payPane" style="margin-top:12px"></div>
   </div>
 </div>
 
 <script>
-// ========= CONFIG UTILISATEUR =========
-const BRAND = "Uniterapide";
-const WHATSAPP_NUM = "243990564877"; // format international pour click-to-chat
-const TELEGRAM = "cphkkk66";
-const AIRTEL_LABEL = "Mugisho Stéphane";
-const AIRTEL_NUM = "+243 990 564 877";
+/* ====== CONFIG ====== */
+const SHEETS_PUBHTML = [
+  "https://docs.google.com/spreadsheets/d/e/2PACX-1vRNgEaiSzpwmHuoj1bfIFzi9A34beLlxoqz8_ocD5hvb7I2T-4GRcamMbFRCKvw5-lKivYqo3Kpg0Ti/pubhtml?gid=0&single=true",
+  "https://docs.google.com/spreadsheets/d/e/2PACX-1vRNgEaiSzpwmHuoj1bfIFzi9A34beLlxoqz8_ocD5hvb7I2T-4GRcamMbFRCKvw5-lKivYqo3Kpg0Ti/pubhtml?gid=2097070430&single=true",
+  "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ7yaRVA16yeVYrB9YAGs_ckiodiHqMns2igOT2ozVM92EXoBOJpCoxZzZ3NLxmHY1G_KqvYKZfvjTS/pubhtml?gid=0&single=true"
+];
+// Optionnel: lien CSV direct si tu en as un (prioritaire sur pubhtml)
+const SHEET_CSV_URL = ""; // ex: https://docs.google.com/spreadsheets/d/ID/export?format=csv
+const DISCOUNT_PERCENT = 10; // remise auto pour attirer l’attention
 const RATE_FC = 2800;
+const WHATSAPP_NUM = "243990564877";
+const SELLER_NAME = "Mugisho Stéphane";
+const AIRTEL_NUM = "+243990564877";
+const COUNT_NS = "uniterapide_global_v3";
 
-// FEUILLES GOOGLE (transformées en CSV automatique)
-// Remplace juste les GID si tu changes d’onglets
-const SHEET_PUBLIC_HTML = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRNgEaiSzpwmHuoj1bfIFzi9A34beLlxoqz8_ocD5hvb7I2T-4GRcamMbFRCKvw5-lKivYqo3Kpg0Ti/pubhtml?gid=0&single=true";
-function htmlToCsv(url){
-  const gidMatch = url.match(/gid=(\d+)/);
-  const gid = gidMatch? gidMatch[1] : "0";
-  return url.replace("/pubhtml?","/pub?").replace("single=true","output=csv").replace("html","").replace("pub?","pub?") + "&output=csv".replace("&&","&").replace("gid=0","gid="+gid);
-}
-const SHEET_CSV_URL = htmlToCsv(SHEET_PUBLIC_HTML);
-
-// ========= COMPTEUR VISITES (CountAPI) + fallback =========
-(function(){
+/* ====== Compteurs globaux (CountAPI) + fallback ====== */
+(async function initCounters(){
   const badge = document.getElementById('visitsBadge');
-  const ns = 'uniterapide_public_v2';
-  fetch(`https://api.countapi.xyz/hit/${ns}/visits`).then(r=>r.json()).then(j=>{
-    badge.textContent = `👁️ Visites : ${j.value.toLocaleString('fr-FR')}`;
-  }).catch(()=>{
-    const k='ur_visits_fallback'; const v=(parseInt(localStorage.getItem(k)||'0',10)+1);
+  try{
+    const j = await fetch(`https://api.countapi.xyz/hit/${COUNT_NS}/visits`).then(r=>r.json());
+    badge.textContent = `👁️ Visites : ${Number(j.value||0).toLocaleString('fr-FR')}`;
+  }catch{
+    const k='ur_visits_fallback', v=(parseInt(localStorage.getItem(k)||'0',10)+1);
     localStorage.setItem(k,String(v));
     badge.textContent = `👁️ Visites : ${v.toLocaleString('fr-FR')}*`;
-  });
-})();
-
-// ========= VUES (local) =========
-const localKeyViews = 'ur_views';
-const v = parseInt(localStorage.getItem(localKeyViews) || '0', 10) + 1;
-localStorage.setItem(localKeyViews, String(v));
-document.getElementById('viewsLocal').textContent = v.toLocaleString('fr-FR');
-
-// ========= LIKES (local) =========
-(function(){
-  const likeKey = 'ur_like';
-  const likeBtn = document.getElementById('likeBtn');
-  const likesCount = document.getElementById('likesCount');
-  let liked = localStorage.getItem(likeKey) === '1';
-  likesCount.textContent = liked ? 1 : 0;
-  if(liked){ likeBtn.textContent = '❤️ Merci'; likeBtn.disabled = true; }
-  likeBtn.addEventListener('click', ()=>{
-    if(liked) return;
-    liked = true; localStorage.setItem(likeKey,'1');
-    likesCount.textContent = 1; likeBtn.textContent='❤️ Merci'; likeBtn.disabled=true;
-    // Compteur global
-    fetch(`https://api.countapi.xyz/hit/uniterapide_public_v2/like`).catch(()=>{});
-  });
-})();
-
-// ========= INSCRIPTION (Gate) =========
-const gate = document.getElementById('gate');
-const clientNameEl = document.getElementById('clientName');
-const clientPhoneEl = document.getElementById('clientPhone');
-
-function loadClient(){
-  const n = localStorage.getItem('ur_client_name')||'—';
-  const p = localStorage.getItem('ur_client_phone')||'—';
-  clientNameEl.textContent = n; clientPhoneEl.textContent = p;
-}
-loadClient();
-
-if(!localStorage.getItem('ur_client_name') || !localStorage.getItem('ur_client_phone')){
-  gate.style.display = 'flex';
-}
-document.getElementById('gateSave').onclick = ()=>{
-  const n = (document.getElementById('gateName').value||'').trim();
-  const p = (document.getElementById('gatePhone').value||'').trim();
-  if(n.length<2 || p.length<7){ alert("Veuillez saisir un nom et un numéro valides."); return; }
-  localStorage.setItem('ur_client_name', n);
-  localStorage.setItem('ur_client_phone', p);
-  gate.style.display='none'; loadClient();
-};
-document.getElementById('skipGate').onclick = ()=>{ gate.style.display='none'; };
-
-// ========= CSV PARSER =========
-function parseCSV(text){
-  const rows=[]; let cur=[]; let cell=''; let inQ=false;
-  for(let i=0;i<text.length;i++){
-    const ch=text[i], nx=text[i+1];
-    if(inQ){
-      if(ch==='"' && nx==='"'){ cell+='"'; i++; }
-      else if(ch==='"'){ inQ=false; }
-      else cell+=ch;
-    } else {
-      if(ch==='"'){ inQ=true; }
-      else if(ch===','){ cur.push(cell); cell=''; }
-      else if(ch==='\n' || ch==='\r'){ if(cell!=='' || cur.length){ cur.push(cell); rows.push(cur); cur=[]; cell=''; } }
-      else cell+=ch;
-    }
   }
-  if(cell!=='' || cur.length){ cur.push(cell); rows.push(cur); }
+})();
+const localKeyViews='ur_views'; const v=parseInt(localStorage.getItem(localKeyViews)||'0',10)+1;
+localStorage.setItem(localKeyViews,String(v));
+document.getElementById('viewsLocal').textContent=v.toLocaleString('fr-FR');
+
+(async function likesShares(){
+  const likeKey='ur_like'; const likeBtn=document.getElementById('likeBtn'); const likesCount=document.getElementById('likesCount');
+  const shareBtn=document.getElementById('shareBtn'); const shareCount=document.getElementById('shareCount');
+  let liked=localStorage.getItem(likeKey)==='1';
+  try{
+    const j=await fetch(`https://api.countapi.xyz/get/${COUNT_NS}/likes`).then(r=>r.json()).catch(()=>({value:0}));
+    likesCount.textContent=(j.value||0)+(liked?1:0);
+  }catch{likesCount.textContent=liked?1:0}
+  if(liked){ likeBtn.textContent='❤️ Merci'; likeBtn.disabled=true; }
+  likeBtn.addEventListener('click', async ()=>{
+    if(liked) return; liked=true; localStorage.setItem(likeKey,'1'); likeBtn.textContent='❤️ Merci'; likeBtn.disabled=true;
+    try{ const j=await fetch(`https://api.countapi.xyz/hit/${COUNT_NS}/likes`).then(r=>r.json()); likesCount.textContent=j.value; }catch{}
+  });
+  try{
+    const j=await fetch(`https://api.countapi.xyz/get/${COUNT_NS}/shares`).then(r=>r.json()).catch(()=>({value:0}));
+    shareCount.textContent=j.value||0;
+  }catch{}
+  shareBtn.addEventListener('click', async ()=>{
+    try{
+      await navigator.clipboard.writeText(location.href);
+      alert("Lien copié ! Merci pour le partage 🙏");
+    }catch{}
+    try{ const j=await fetch(`https://api.countapi.xyz/hit/${COUNT_NS}/shares`).then(r=>r.json()); shareCount.textContent=j.value; }catch{}
+  });
+})();
+
+/* ====== Commentaires (local pour l’instant) ====== */
+const commentsKey='ur_comments';
+function addComment(text){ const arr=JSON.parse(localStorage.getItem(commentsKey)||'[]'); arr.push({t:Date.now(),text}); localStorage.setItem(commentsKey,JSON.stringify(arr)); renderComments(); }
+function renderComments(){
+  let list=JSON.parse(localStorage.getItem(commentsKey)||'[]'); list=list.slice(-10).reverse();
+  if(!document.getElementById('comments')) {
+    const wrap=document.createElement('section'); wrap.innerHTML=`<h2>💬 Avis récents</h2><div id="comments"></div><div class="comment"><input id="cmt" placeholder="Donne ton avis (public)..." /><button class="chip" id="cmtBtn">Publier</button></div>`;
+    document.querySelector('main').appendChild(wrap);
+    document.getElementById('cmtBtn').onclick=()=>{ const v=document.getElementById('cmt').value.trim(); if(v){ addComment(v); document.getElementById('cmt').value=''; } };
+  }
+  document.getElementById('comments').innerHTML=list.map(x=>`<div class="pill" style="display:block;margin:6px 0">${new Date(x.t).toLocaleString('fr-FR')} — ${x.text}</div>`).join('');
+}
+renderComments();
+
+/* ====== Sheets loader (CSV ou pubhtml table) ====== */
+async function loadCSV(url){
+  const text=await fetch(url,{cache:'no-store'}).then(r=>r.text());
+  const rows=[];let cur=[];let cell='';let inQ=false;for(let i=0;i<text.length;i++){
+    const ch=text[i],nx=text[i+1];
+    if(inQ){ if(ch==='"'&&nx==='"'){cell+='"';i++;} else if(ch==='"'){inQ=false;} else cell+=ch; }
+    else { if(ch==='"'){inQ=true;} else if(ch===','){cur.push(cell);cell='';} else if(ch==='\n' || ch==='\r'){ if(cell!==''||cur.length){cur.push(cell);rows.push(cur);cur=[];cell='';} } else cell+=ch; }
+  }
+  if(cell!==''||cur.length){cur.push(cell);rows.push(cur)}
   return rows.filter(r=>r.some(c=>String(c).trim()!==''));
 }
+async function loadPubHtml(url){
+  const html=await fetch(url,{cache:'no-store'}).then(r=>r.text());
+  const doc=new DOMParser().parseFromString(html,'text/html');
+  const table=doc.querySelector('table'); if(!table) return [];
+  const rows=[...table.querySelectorAll('tr')].map(tr=>[...tr.children].map(td=>td.textContent.trim()));
+  return rows;
+}
+function headerIndex(hdr,name){ name=name.toLowerCase(); return hdr.findIndex(x=>x.trim().toLowerCase()===name); }
 
-// ========= UI helpers =========
-const cards = document.getElementById('cards');
-const filtersEl = document.getElementById('filters');
-const searchEl = document.getElementById('search');
+async function fetchProducts(){
+  let rows=[];
+  if(SHEET_CSV_URL){
+    try{ rows=await loadCSV(SHEET_CSV_URL); }catch(e){ console.warn('CSV fail',e); }
+  }
+  if(!rows.length){
+    for(const u of SHEETS_PUBHTML){
+      try{
+        const r=await loadPubHtml(u);
+        if(r.length) rows=rows.concat(r);
+      }catch(e){ console.warn('PUBHTML fail',e); }
+    }
+  }
+  if(!rows.length) return [];
 
-function money(n){ try{ return Number(n).toLocaleString('fr-FR'); }catch(e){ return n; } }
-function toSlug(s){ return (s||'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,''); }
-
-// ========= PRODUIT: Modals =========
-const payModal = document.getElementById('payModal');
-const payTitle = document.getElementById('payTitle');
-const payBody = document.getElementById('payBody');
-const prodModal = document.getElementById('prodModal');
-const prodTitle = document.getElementById('prodTitle');
-const prodBody = document.getElementById('prodBody');
-
-document.querySelectorAll('[data-close]').forEach(b=> b.onclick = (e)=>{ e.target.closest('.modal').style.display='none'; });
-
-// Ouvre modal paiement
-function openPay(p){
-  payTitle.textContent = "Acheter — " + p.name;
-  const clientN = localStorage.getItem('ur_client_name')||'Client';
-  const clientP = localStorage.getItem('ur_client_phone')||'—';
-  const amountFC = p.priceFC;
-  const whatsMsg = encodeURIComponent(`Bonjour ${BRAND}, je veux acheter: ${p.name} (${p.cat}) à ${amountFC} FC.\nNom: ${clientN}\nTéléphone: ${clientP}`);
-  payBody.innerHTML = `
-    <div class="muted">Choisissez un moyen de paiement :</div>
-    <div class="grid2" style="margin-top:8px">
-      <button class="btn buy" id="pm_airtel">💳 Airtel Money</button>
-      <a class="btn whatsapp" id="pm_whatsapp" href="https://wa.me/${WHATSAPP_NUM}?text=${whatsMsg}" target="_blank">📱 WhatsApp (commande)</a>
-    </div>
-    <div id="payStep" style="margin-top:12px"></div>
-  `;
-  document.getElementById('pm_airtel').onclick = ()=>{
-    document.getElementById('payStep').innerHTML = `
-      <div style="background:rgba(255,255,255,.05); padding:12px; border:1px solid rgba(148,163,184,.18); border-radius:12px">
-        <div><strong>Montant:</strong> ${money(amountFC)} FC</div>
-        <div><strong>Envoyez via Airtel Money à:</strong> ${AIRTEL_LABEL} — <strong>${AIRTEL_NUM}</strong></div>
-        <ol class="muted" style="margin-top:8px">
-          <li>Ouvrez Airtel Money (*501# ou l'app)</li>
-          <li>Choisissez <strong>Transfert d'argent</strong></li>
-          <li>Entrez le numéro: <strong>${AIRTEL_NUM}</strong></li>
-          <li>Montant: <strong>${money(amountFC)} FC</strong></li>
-          <li>Validez avec votre <strong>code PIN SIM</strong> (reste secret)</li>
-        </ol>
-        <div class="row" style="margin-top:8px">
-          <button class="btn buy" id="btnPaid">✅ J'ai payé</button>
-          <button class="btn" style="background:#0000;border:1px solid rgba(148,163,184,.3);color:#cbd5e1" id="btnCopyNum">📋 Copier le numéro</button>
-        </div>
-      </div>
-    `;
-    document.getElementById('btnCopyNum').onclick = ()=>{ navigator.clipboard.writeText(AIRTEL_NUM); alert("Numéro copié."); };
-    document.getElementById('btnPaid').onclick = ()=>{
-      // trace achat (compteur global + local)
-      fetch(`https://api.countapi.xyz/hit/uniterapide_public_v2/paid_${toSlug(p.name)}`).catch(()=>{});
-      const k='ur_paid'; const list = JSON.parse(localStorage.getItem(k)||'[]');
-      list.push({ts:Date.now(), name:p.name, cat:p.cat, fc:amountFC});
-      localStorage.setItem(k, JSON.stringify(list));
-      payBody.innerHTML = `<div style="padding:12px; border:1px solid rgba(16,185,129,.4); background:rgba(16,185,129,.15); border-radius:12px">
-        ✅ <strong>Paiement déclaré</strong> — Merci ! Nous confirmons sous peu sur WhatsApp.
-      </div>`;
-    };
+  const hdr=rows[0].map(x=>x.trim());
+  const idx={
+    cat: headerIndex(hdr,'catégorie')>-1? headerIndex(hdr,'catégorie') : 0,
+    name: headerIndex(hdr,'nom du produit')>-1? headerIndex(hdr,'nom du produit') : 1,
+    img1: headerIndex(hdr,'lien image')>-1? headerIndex(hdr,'lien image') : (headerIndex(hdr,'image 1')),
+    img2: headerIndex(hdr,'image 2'),
+    img3: headerIndex(hdr,'image 3'),
+    img4: headerIndex(hdr,'image 4'),
+    img5: headerIndex(hdr,'image 5'),
+    usd: headerIndex(hdr,'prix $'),
+    fc: headerIndex(hdr,'franc (total)'),
+    promo: headerIndex(hdr,'promo'),
+    link: headerIndex(hdr,'lien'),
+    notes: headerIndex(hdr,'notes'),
+    stock: headerIndex(hdr,'stock')
   };
-  payModal.style.display='flex';
+
+  const prods=[];
+  for(let i=1;i<rows.length;i++){
+    const r=rows[i]; if(!r || !r.length) continue;
+    const g = (i)=>{
+      if(i==null || i<0) return ''; return (r[i]||'').toString().trim();
+    };
+    const priceUSD=parseFloat(g(idx.usd).replace(/[^0-9.\-]/g,'')); const priceFC=parseFloat(g(idx.fc).replace(/[^0-9.\-]/g,''));
+    const fc = !isNaN(priceFC) ? priceFC : (!isNaN(priceUSD) ? Math.round(priceUSD*RATE_FC) : 0);
+    const imgs = [g(idx.img1),g(idx.img2),g(idx.img3),g(idx.img4),g(idx.img5)].filter(x=>x&&x.startsWith('http'));
+    prods.push({
+      cat: g(idx.cat)||'Autres',
+      name: g(idx.name)||'Sans nom',
+      imgs: imgs.length? imgs : ["https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1200&auto=format&fit=crop"],
+      priceUSD: isNaN(priceUSD)? null : priceUSD,
+      priceFC: fc,
+      promo: g(idx.promo)||'',
+      link: g(idx.link)||'',
+      notes: g(idx.notes)||'',
+      stock: g(idx.stock)||'',
+    });
+  }
+  return prods.filter(p=>p.name && p.priceFC>0);
 }
 
-// Ouvre modal produit + galerie (prend jusqu’à 5 images, séparées par | dans la feuille)
-function openProd(p){
-  prodTitle.textContent = p.name;
-  const imgs = (p.imgs && p.imgs.length)? p.imgs : [p.img];
-  const big = imgs[0] || 'https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1200&auto=format&fit=crop';
-  prodBody.innerHTML = `
-    <img id="bigImg" src="${big}" alt="${p.name}" style="width:100%; max-height:300px; object-fit:cover; border-radius:12px; border:1px solid rgba(148,163,184,.2)">
-    <div class="gallery">${imgs.map(u=>`<img src="${u}" alt="img" onclick="document.getElementById('bigImg').src='${u}'">`).join('')}</div>
-    <div class="row" style="justify-content:space-between; margin-top:10px">
-      <div>
+/* ====== Render ====== */
+const filtersEl=document.getElementById('filters');
+const cards=document.getElementById('cards');
+
+function money(n){ try{return Number(n).toLocaleString('fr-FR')}catch(e){return n} }
+
+function openModal(id){ document.getElementById(id).classList.add('show'); document.getElementById(id).setAttribute('aria-hidden','false'); }
+function closeModal(id){ document.getElementById(id).classList.remove('show'); document.getElementById(id).setAttribute('aria-hidden','true'); }
+
+function showGallery(p){
+  const big=document.getElementById('galBig'); const thumbs=document.getElementById('galThumbs'); const title=document.getElementById('galTitle');
+  title.textContent=p.name; big.src=p.imgs[0];
+  thumbs.innerHTML=p.imgs.map((u,i)=>`<img src="${u}" alt="img ${i+1}">`).join('');
+  [...thumbs.querySelectorAll('img')].forEach((im,idx)=>im.onclick=()=>{ big.src=p.imgs[idx]; });
+  openModal('galleryModal');
+}
+
+function showPay(p){
+  const title=document.getElementById('payTitle'); const info=document.getElementById('payInfo'); const pane=document.getElementById('payPane');
+  const discount = Math.round(p.priceFC*(DISCOUNT_PERCENT/100));
+  const finalFC = Math.max(0, p.priceFC - discount);
+  title.textContent=`Payer — ${p.name}`;
+  info.innerHTML=`Montant: <strong>${money(finalFC)} FC</strong> ${DISCOUNT_PERCENT? `<span class="pill" style="margin-left:6px">-${DISCOUNT_PERCENT}% promo</span>`:''}`;
+  function render(method='airtel'){
+    let html='';
+    if(method==='airtel'){
+      html = `
+        <div class="pill" style="display:block;margin-bottom:10px">
+          Envoyez exactement <strong>${money(finalFC)} FC</strong> à <strong>${AIRTEL_NUM}</strong> (Airtel Money — ${SELLER_NAME}).
+        </div>
+        <div class="row">
+          <button class="chip" onclick="copyText('${AIRTEL_NUM}')">Copier le numéro</button>
+          <a class="chip" target="_blank" href="https://wa.me/${WHATSAPP_NUM}?text=${encodeURIComponent('Bonjour, j’ai payé '+money(finalFC)+' FC pour: '+p.name)}">Notifier sur WhatsApp</a>
+        </div>
+        <div class="muted" style="margin-top:8px">
+          ⚠️ Pour votre sécurité, entrez votre <strong>code SIM</strong> uniquement dans l’application officielle Airtel. Le site ne vous demandera jamais votre code.
+        </div>`;
+    } else {
+      html = `
+        <div class="pill" style="display:block;margin-bottom:10px">
+          Veuillez payer <strong>${money(finalFC)} FC</strong> via <strong>${method.toUpperCase()}</strong> puis nous notifier sur WhatsApp.
+        </div>
+        <a class="chip" target="_blank" href="https://wa.me/${WHATSAPP_NUM}?text=${encodeURIComponent('Bonjour, j’ai payé '+money(finalFC)+' FC via '+method.toUpperCase()+' pour: '+p.name)}">Notifier sur WhatsApp</a>`;
+    }
+    pane.innerHTML=html;
+  }
+  render('airtel');
+  document.querySelectorAll('#payMethods .chip').forEach(ch=>{
+    ch.onclick=()=>{ document.querySelectorAll('#payMethods .chip').forEach(x=>x.classList.remove('active')); ch.classList.add('active'); render(ch.dataset.method); };
+  });
+  openModal('payModal');
+}
+
+function makeCard(p){
+  const discount = Math.round(p.priceFC*(DISCOUNT_PERCENT/100));
+  const finalFC = Math.max(0, p.priceFC - discount);
+  const usd = p.priceUSD ? `(~ ${money(p.priceUSD)} $)` : '';
+  const promoTag = p.promo ? `<span class="pill" style="margin-left:auto;background:rgba(245,158,11,.18);border-color:#f59e0b55;color:#fde68a">🎯 ${p.promo}</span>` : '';
+  return `
+  <article class="card">
+    <img class="thumb" loading="lazy" src="${p.imgs[0]}" alt="${p.name}" onclick='showGallery(${JSON.stringify(p)})'>
+    <div class="p">
+      <div class="row" style="justify-content:space-between;align-items:flex-start">
         <div class="title">${p.name}</div>
-        <div class="muted">${p.cat}${p.notes? ' • '+p.notes:''}</div>
-        <div class="price"><span class="fc">${money(p.priceFC)} FC</span> ${p.priceUSD? `<span class="usd">(~ ${money(p.priceUSD)} $)</span>`:''}</div>
+        ${promoTag}
       </div>
-      ${p.promo? `<span class="badge-timer">🎯 ${p.promo}</span>`:''}
+      <div class="muted">${p.cat}${p.notes? ' • '+p.notes:''}</div>
+      <div class="price">
+        ${DISCOUNT_PERCENT? `<div class="old">${money(p.priceFC)} FC</div>`:''}
+        <div class="fc">${money(finalFC)} FC</div>
+        <div class="usd">${usd}</div>
+      </div>
+      <div class="cta">
+        <button class="btn whatsapp" onclick='orderNow(${JSON.stringify(p)})'>🛒 Acheter</button>
+        <button class="btn secondary" onclick='showGallery(${JSON.stringify(p)})'>🖼️ Photos</button>
+      </div>
     </div>
-    <div class="cta" style="margin-top:12px">
-      <button class="btn buy" onclick='openPay(${JSON.stringify(p).replace(/'/g,"&apos;")})'>🛒 Acheter</button>
-      <a class="btn whatsapp" target="_blank" href="https://wa.me/${WHATSAPP_NUM}?text=${encodeURIComponent('Bonjour '+BRAND+', intéressé par: '+p.name+' ('+p.cat+')')}">📱 WhatsApp</a>
-    </div>
-  `;
-  prodModal.style.display='flex';
+  </article>`;
 }
 
-// ========= RENDER =========
-let PRODUCTS = [];
 function buildFilters(products){
-  const cats = Array.from(new Set(products.map(p=>p.cat))).filter(Boolean);
-  filtersEl.innerHTML = ['_all', ...cats].map(c=>`<span class="chip${c==='_all'? ' active':''}" data-cat="${c}">${c==='_all'? 'Tout':c}</span>`).join('');
+  const cats=Array.from(new Set(products.map(p=>p.cat))).filter(Boolean);
+  filtersEl.innerHTML=['_all', ...cats].map(c=>`<span class="chip${c==='_all'?' active':''}" data-cat="${c}">${c==='_all'?'Tout':c}</span>`).join('');
   filtersEl.querySelectorAll('.chip').forEach(el=>{
-    el.addEventListener('click',()=>{
+    el.onclick=()=>{
       filtersEl.querySelectorAll('.chip').forEach(x=>x.classList.remove('active'));
       el.classList.add('active');
-      const cat = el.getAttribute('data-cat');
-      renderCards(cat==='_all'? PRODUCTS : PRODUCTS.filter(p=>p.cat===cat));
-    })
-  })
+      const cat=el.getAttribute('data-cat');
+      renderCards(cat==='_all'? products : products.filter(p=>p.cat===cat));
+    }
+  });
 }
 
-function renderCards(list){
-  const q = (searchEl.value||'').toLowerCase().trim();
-  const filtered = q? list.filter(p => (p.name+' '+p.cat+' '+(p.notes||'')).toLowerCase().includes(q)) : list;
-  cards.innerHTML = filtered.map(p=>{
-    const promo = p.promo? `<span class="badge-timer" data-deadline="${p.deadline||''}">🎯 ${p.promo}</span>` : '';
-    const img = p.img;
-    return `
-      <article class="card">
-        <img loading="lazy" src="${img}" alt="${p.name}" onclick='openProd(${JSON.stringify(p).replace(/'/g,"&apos;")})'>
-        <div class="p">
-          <div class="row" style="justify-content:space-between; align-items:flex-start">
-            <div class="title">${p.name}</div>
-            ${promo}
-          </div>
-          <div class="muted">${p.cat}${p.notes? ' • '+p.notes:''}</div>
-          <div class="price"><div class="fc">${money(p.priceFC)} FC</div> ${p.priceUSD? `<div class="usd">(~ ${money(p.priceUSD)} $)</div>`:''}</div>
-          <div class="cta">
-            <button class="btn buy" onclick='openPay(${JSON.stringify(p).replace(/'/g,"&apos;")})'>🛒 Acheter</button>
-            <a class="btn whatsapp" href="https://wa.me/${WHATSAPP_NUM}?text=${encodeURIComponent('Bonjour '+BRAND+', intéressé par: '+p.name+' ('+p.cat+')')}" target="_blank">📱 WhatsApp</a>
-          </div>
-        </div>
-      </article>`;
-  }).join('');
+function renderCards(list){ cards.innerHTML=list.map(makeCard).join(''); }
+
+/* ====== Order flow ====== */
+async function orderNow(p){
+  // incrémente commandes + “gains estimés (FC)” côté compteur global
+  try{
+    await fetch(`https://api.countapi.xyz/hit/${COUNT_NS}/orders`).then(r=>r.json()).then(j=>{ document.getElementById('ordersCount').textContent=j.value; });
+    const discount = Math.round(p.priceFC*(DISCOUNT_PERCENT/100));
+    const finalFC = Math.max(0, p.priceFC - discount);
+    // cumule gains (en FC) — on stocke en entier FC
+    await fetch(`https://api.countapi.xyz/update/${COUNT_NS}/revenue?amount=${encodeURIComponent(finalFC)}`).catch(()=>{});
+  }catch{}
+  showPay(p);
 }
 
-searchEl.addEventListener('input', ()=> renderCards(PRODUCTS));
+/* ====== Boot ====== */
+async function boot(){
+  document.getElementById('year').textContent=new Date().getFullYear();
 
-// ========= LOAD SHEET =========
-// Feuille attendue (en-têtes, insensible à la casse) :
-// Catégorie | Nom du produit | Lien image | Prix $ | Franc (total) | Promo | Lien | Notes | Stock | Images (URLs séparées par |)
-async function load(){
   let products=[];
   try{
-    const res = await fetch(SHEET_CSV_URL, {cache:'no-store'});
-    const txt = await res.text();
-    const rows = parseCSV(txt);
-    const hdr = rows[0].map(h=>h.trim().toLowerCase());
-    const idx = {
-      cat: hdr.indexOf('catégorie'),
-      name: hdr.indexOf('nom du produit'),
-      img: hdr.indexOf('lien image'),
-      usd: hdr.indexOf('prix $'),
-      fc: hdr.indexOf('franc (total)'),
-      promo: hdr.indexOf('promo'),
-      link: hdr.indexOf('lien'),
-      notes: hdr.indexOf('notes'),
-      stock: hdr.indexOf('stock'),
-      images: hdr.indexOf('images')
-    };
-    for(let i=1;i<rows.length;i++){
-      const r=rows[i]; if(!r || !r.length) continue;
-      const usd = parseFloat((r[idx.usd]||'').toString().replace(/[^0-9.\-]/g,'')); const hasUSD=!isNaN(usd);
-      const fc  = parseFloat((r[idx.fc]||'').toString().replace(/[^0-9.\-]/g,'')); const hasFC=!isNaN(fc);
-      const priceFC = hasFC? fc : (hasUSD? Math.round(usd*RATE_FC) : 0);
-      const img = (r[idx.img]||'').trim() || 'https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1200&auto=format&fit=crop';
-      const extraImgs = ((r[idx.images]||'').trim()).split('|').map(s=>s.trim()).filter(Boolean).slice(0,5);
-      products.push({
-        cat: (r[idx.cat]||'Autres').trim(),
-        name: (r[idx.name]||'Sans nom').trim(),
-        img, imgs: extraImgs.length? [img, ...extraImgs].slice(0,5) : [img],
-        priceUSD: hasUSD? usd:null,
-        priceFC,
-        promo: (r[idx.promo]||'').trim(),
-        link: (r[idx.link]||'').trim(),
-        notes: (r[idx.notes]||'').trim(),
-        stock: (r[idx.stock]||'').trim()
-      });
-    }
+    products=await fetchProducts();
   }catch(e){
-    console.error('Erreur Sheet', e);
+    alert("⚠️ Erreur de chargement des produits. Vérifie tes liens Google Sheets.");
   }
-  products = products.filter(p=>p.name && p.priceFC>0);
-  PRODUCTS = products;
-  buildFilters(PRODUCTS);
-  renderCards(PRODUCTS);
-}
-load();
-
-document.getElementById('year').textContent = new Date().getFullYear();
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Unité Rapide — Admin</title>
-<meta http-equiv="Content-Security-Policy" content="default-src 'self' https: data:; img-src 'self' https: data:; style-src 'self' 'unsafe-inline' https:; script-src 'self' 'unsafe-inline' https:; connect-src 'self' https:;" />
-<style>
-:root{--bg:#0b1020; --card:#111827; --muted:#94a3b8; --brand:#10b981; --danger:#ef4444; --info:#3b82f6; --amber:#f59e0b; --text:#e5e7eb; --shadow:0 10px 30px rgba(0,0,0,.35)}
-*{box-sizing:border-box} body{margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial,"Noto Sans",sans-serif; background:radial-gradient(1200px 800px at 10% 10%, #0b1225 0%, #0f172a 40%, #0a0f1f 100%); color:var(--text)}
-.wrap{max-width:1150px; margin:0 auto; padding:16px 20px}
-.card{background:linear-gradient(180deg, rgba(17,24,39,.95), rgba(17,24,39,.85)); border:1px solid rgba(148,163,184,.18); border-radius:18px; box-shadow:var(--shadow); padding:16px}
-.grid{display:grid; gap:14px}
-.grid.cols-3{grid-template-columns:repeat(3,1fr)}
-h2{margin:8px 0 12px}
-.input{width:100%; padding:10px 12px; border-radius:12px; border:1px solid rgba(148,163,184,.25); background:rgba(255,255,255,.06); color:#fff}
-.btn{display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:10px 12px; border-radius:12px; border:1px solid transparent; cursor:pointer; font-weight:800; color:#fff}
-.btn.primary{background:#10b98122; border:1px solid #10b98166}
-.btn.danger{background:#ef444422; border:1px solid #ef444455}
-.table{width:100%; border-collapse:collapse}
-.table th,.table td{border-bottom:1px solid rgba(148,163,184,.18); padding:8px 6px; font-size:.95rem}
-.badge{padding:4px 8px; border-radius:999px; border:1px solid rgba(148,163,184,.3); font-weight:700; font-size:.8rem}
-.row{display:flex; gap:10px; align-items:center; flex-wrap:wrap}
-.muted{color:var(--muted)}
-.center{display:flex; align-items:center; justify-content:center}
-.hidden{display:none}
-</style>
-</head>
-<body>
-<div class="wrap">
-  <div class="card" id="loginCard">
-    <h2>Connexion Admin</h2>
-    <div class="grid" style="grid-template-columns:1fr 1fr; gap:10px">
-      <input id="admUser" class="input" placeholder="Nom admin (ex: phabogard)">
-      <input id="admPin" class="input" placeholder="PIN admin" type="password" inputmode="numeric">
-    </div>
-    <div class="row" style="margin-top:10px">
-      <button class="btn primary" id="btnLogin">Se connecter</button>
-    </div>
-    <p class="muted">Accès réservé — journal des accès enregistré localement.</p>
-  </div>
-
-  <div class="card hidden" id="app">
-    <div class="row" style="justify-content:space-between">
-      <h2>Tableau de bord — Unité Rapide</h2>
-      <button class="btn danger" id="btnLogout">Se déconnecter</button>
-    </div>
-
-    <div class="grid cols-3">
-      <div class="card">
-        <div class="muted">👁️ Visites (global)</div>
-        <div id="statVisits" style="font-size:1.6rem; font-weight:900">—</div>
-      </div>
-      <div class="card">
-        <div class="muted">🛒 Achats déclarés (local + global)</div>
-        <div id="statPaid" style="font-size:1.6rem; font-weight:900">—</div>
-      </div>
-      <div class="card">
-        <div class="muted">💸 Gains estimés</div>
-        <div id="statRevenue" style="font-size:1.6rem; font-weight:900">—</div>
-      </div>
-    </div>
-
-    <div class="card" style="margin-top:14px">
-      <div class="row" style="justify-content:space-between">
-        <strong>Ventes locales (cet appareil)</strong>
-        <div class="row">
-          <button class="btn primary" id="btnExport">Exporter (CSV)</button>
-          <button class="btn danger" id="btnClear">Effacer local</button>
-        </div>
-      </div>
-      <table class="table" id="tblSales">
-        <thead><tr><th>Date</th><th>Produit</th><th>Catégorie</th><th>Montant (FC)</th></tr></thead>
-        <tbody></tbody>
-      </table>
-    </div>
-
-    <div class="card" style="margin-top:14px">
-      <strong>Paramètres boutique</strong>
-      <div class="grid" style="grid-template-columns:1fr 1fr 1fr; gap:10px; margin-top:8px">
-        <div><div class="muted">Nom</div><input id="cfgBrand" class="input"></div>
-        <div><div class="muted">WhatsApp (international)</div><input id="cfgWa" class="input" placeholder="243..."></div>
-        <div><div class="muted">Airtel Money (texte)</div><input id="cfgAirtelName" class="input" placeholder="Nom sur compte"></div>
-        <div><div class="muted">Airtel Money (numéro affiché)</div><input id="cfgAirtelNum" class="input" placeholder="+243 ..."></div>
-        <div><div class="muted">Taux FC/$</div><input id="cfgRate" class="input" type="number" step="1"></div>
-      </div>
-      <div class="row" style="margin-top:10px">
-        <button class="btn primary" id="btnSaveCfg">Enregistrer (local)</button>
-      </div>
-      <p class="muted">Ces paramètres modifient l’affichage côté public (sur ce même appareil) via le stockage local. Pour propager à tous, mettez à jour votre Google Sheet publique.</p>
-    </div>
-
-    <div class="card" style="margin-top:14px">
-      <strong>Alertes</strong>
-      <ul id="alerts" class="muted" style="margin-top:6px"></ul>
-    </div>
-  </div>
-</div>
-
-<script>
-// ====== CREDS ADMIN (ceux qu’on a convenu) ======
-const ADMIN_USER = "phabogard";
-const ADMIN_PIN  = "6996698877";
-
-// ====== Feuille PUBLIC (pour calculer estimations si besoin) ======
-const SHEET_PUBLIC_HTML = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRNgEaiSzpwmHuoj1bfIFzi9A34beLlxoqz8_ocD5hvb7I2T-4GRcamMbFRCKvw5-lKivYqo3Kpg0Ti/pubhtml?gid=0&single=true";
-function htmlToCsv(url){
-  const gidMatch = url.match(/gid=(\\d+)/);
-  const gid = gidMatch? gidMatch[1] : "0";
-  return url.replace("/pubhtml?","/pub?").replace("single=true","output=csv").replace("html","").replace("pub?","pub?") + "&output=csv".replace("&&","&").replace("gid=0","gid="+gid);
-}
-const SHEET_CSV_URL = htmlToCsv(SHEET_PUBLIC_HTML);
-
-// ====== LOGIN ======
-const loginCard = document.getElementById('loginCard');
-const app = document.getElementById('app');
-document.getElementById('btnLogin').onclick = ()=>{
-  const u = (document.getElementById('admUser').value||'').trim();
-  const p = (document.getElementById('admPin').value||'').trim();
-  if(u===ADMIN_USER && p===ADMIN_PIN){
-    localStorage.setItem('ur_admin_session','1');
-    loginCard.classList.add('hidden'); app.classList.remove('hidden');
-    boot();
-  }else{
-    alert("Identifiants invalides.");
+  if(!products.length){
+    // Démo fallback
+    products = [
+      {cat:"Vêtements", name:"Chemise classique homme", imgs:["https://images.unsplash.com/photo-1520974769661-3b1d5b4a3b53?q=80&w=1200&auto=format&fit=crop","https://images.unsplash.com/photo-1516826957135-700dedea698c?q=80&w=1200&auto=format&fit=crop"], priceUSD:15, priceFC:15*RATE_FC, notes:"S-XL", promo:"-10%"},
+      {cat:"Téléphones", name:"Smartphone Android 4G", imgs:["https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=1200&auto=format&fit=crop","https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?q=80&w=1200&auto=format&fit=crop"], priceUSD:120, priceFC:120*RATE_FC, notes:"32Go/3Go", promo:"Garantie 3 mois"},
+      {cat:"Unités", name:"Unités Airtel Money (RDC)", imgs:["https://images.unsplash.com/photo-1563986768494-4dee2763ff3f?q=80&w=1200&auto=format&fit=crop"], priceUSD:5, priceFC:5*RATE_FC, notes:"Recharge rapide", promo:""}
+    ];
   }
-};
-document.getElementById('btnLogout').onclick=()=>{
-  localStorage.removeItem('ur_admin_session');
-  location.reload();
-};
-if(localStorage.getItem('ur_admin_session')==='1'){
-  loginCard.classList.add('hidden'); app.classList.remove('hidden');
-  boot();
+  buildFilters(products);
+  renderCards(products);
 }
+boot();
 
-// ====== STATS VISITES (CountAPI) & PAID ======
-async function getVisits(){
-  try{
-    const r = await fetch("https://api.countapi.xyz/get/uniterapide_public_v2/visits");
-    const j = await r.json();
-    return j.value||0;
-  }catch(e){ return 0; }
-}
-async function getPaidSumLocal(){
-  const list = JSON.parse(localStorage.getItem('ur_paid')||'[]');
-  return {count:list.length, sum:list.reduce((a,b)=>a+Number(b.fc||0),0), list};
-}
-
-// ====== RENDER TABLE SALES ======
-function renderSales(list){
-  const tb = document.querySelector('#tblSales tbody');
-  tb.innerHTML = list.map(x=>{
-    const d = new Date(x.ts);
-    return `<tr><td>${d.toLocaleString('fr-FR')}</td><td>${x.name}</td><td>${x.cat}</td><td>${Number(x.fc).toLocaleString('fr-FR')} FC</td></tr>`;
-  }).join('');
-}
-
-// ====== EXPORT CSV ======
-function exportCSV(rows, filename="ventes_uniterapide.csv"){
-  const hdr = "date,produit,catégorie,fc\\n";
-  const body = rows.map(x=>{
-    const d = new Date(x.ts);
-    return `"${d.toISOString()}","${(x.name||'').replace(/"/g,'""')}","${(x.cat||'').replace(/"/g,'""')}",${x.fc}`;
-  }).join("\\n");
-  const blob = new Blob([hdr+body],{type:"text/csv;charset=utf-8;"});
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob); a.download = filename; a.click();
-}
-
-// ====== CONFIG LOCALE ======
-function loadCfg(){
-  document.getElementById('cfgBrand').value = localStorage.getItem('cfg_brand')||'Uniterapide';
-  document.getElementById('cfgWa').value = localStorage.getItem('cfg_wa')||'243990564877';
-  document.getElementById('cfgAirtelName').value = localStorage.getItem('cfg_airtel_name')||'Mugisho Stéphane';
-  document.getElementById('cfgAirtelNum').value = localStorage.getItem('cfg_airtel_num')||'+243 990 564 877';
-  document.getElementById('cfgRate').value = localStorage.getItem('cfg_rate')||'2800';
-}
-function saveCfg(){
-  localStorage.setItem('cfg_brand', document.getElementById('cfgBrand').value.trim());
-  localStorage.setItem('cfg_wa', document.getElementById('cfgWa').value.trim());
-  localStorage.setItem('cfg_airtel_name', document.getElementById('cfgAirtelName').value.trim());
-  localStorage.setItem('cfg_airtel_num', document.getElementById('cfgAirtelNum').value.trim());
-  localStorage.setItem('cfg_rate', document.getElementById('cfgRate').value.trim());
-  alert("Paramètres enregistrés (locaux).");
-}
-
-// ====== ALERTES SIMPLE ======
-function addAlert(msg){ const ul=document.getElementById('alerts'); const li=document.createElement('li'); li.textContent=msg; ul.appendChild(li); }
-async function boot(){
-  loadCfg();
-
-  // visites
-  const v = await getVisits();
-  document.getElementById('statVisits').textContent = v.toLocaleString('fr-FR');
-
-  // paid
-  const paidLocal = await getPaidSumLocal();
-  document.getElementById('statPaid').textContent = `${paidLocal.count} achats / ${paidLocal.sum.toLocaleString('fr-FR')} FC`;
-  renderSales(paidLocal.list);
-
-  // gains estimés (ex: 8% de marge configurable ici)
-  const MARGE = 0.08;
-  const revenue = Math.round(paidLocal.sum * MARGE);
-  document.getElementById('statRevenue').textContent = `${revenue.toLocaleString('fr-FR')} FC (≈ ${Math.round(revenue/ (Number(localStorage.getItem('cfg_rate')||'2800')))} $)`;
-
-  // alertes basiques
-  if(v===0) addAlert("Alerte: compteur de visites indisponible.");
-  if(paidLocal.count===0) addAlert("Alerte: aucun achat déclaré localement pour le moment.");
-  if(!localStorage.getItem('cfg_brand')) addAlert("Recommandation: complétez vos paramètres boutique.");
-}
-
-// actions
-document.getElementById('btnExport').onclick = async ()=>{
-  const paidLocal = await getPaidSumLocal();
-  exportCSV(paidLocal.list);
-};
-document.getElementById('btnClear').onclick = ()=>{
-  if(confirm("Effacer les ventes locales sur cet appareil ?")){ localStorage.removeItem('ur_paid'); boot(); }
-};
-document.getElementById('btnSaveCfg').onclick = saveCfg;
+function copyText(t){ navigator.clipboard.writeText(t).then(()=>alert("Copié !")) }
 </script>
 </body>
-</html>
+                                                                                                                                       </html>
