@@ -1,496 +1,730 @@
-<!-- =============================
-PARTIE 1 — PUBLIC (index.html)
-============================== --><!doctype html>
-
+here<!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Unité Rapide – Boutique</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root{
-      --bg:#0e1726; --card:#111a2b; --text:#e6eefc; --muted:#9fb0ca; --accent:#30d158;
-      --primary:#4e9eff; --chip:#1b263b; --danger:#ff5d5d; --gold:#ffcc00;
-    }
-    *{box-sizing:border-box}
-    html,body{margin:0;background:linear-gradient(120deg,#0b1220,#0e1726 40%,#0b1324);color:var(--text);font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif}
-    a{color:inherit;text-decoration:none}
-    .wrap{max-width:1100px;margin:auto;padding:18px}
-    header{display:flex;gap:12px;align-items:center;justify-content:space-between;margin:8px 0 16px}
-    .brand{font-weight:800;letter-spacing:.3px}
-    .pill{background:#0b213f;border:1px solid #123058;color:#cfe2ff;padding:8px 12px;border-radius:999px}
-    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
-    .card{background:radial-gradient(1200px 300px at -20% -20%,#19263f,transparent),var(--card);border:1px solid #1e2a43;border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,.25);overflow:hidden}
-    .imgbox{position:relative;height:220px;background:#0b1528;display:grid;place-items:center}
-    .imgbox img{width:100%;height:100%;object-fit:cover}
-    .thumbs{position:absolute;left:10px;bottom:10px;display:flex;gap:6px}
-    .thumbs img{width:42px;height:42px;border-radius:10px;border:1px solid #22314f;cursor:pointer;opacity:.8}
-    .thumbs img.active{outline:2px solid var(--primary);opacity:1}
-    .body{padding:14px}
-    .title{font-weight:700;margin:0 0 4px;font-size:18px}
-    .cat{color:var(--muted);font-size:13px;margin-bottom:10px}
-    .price{display:flex;align-items:baseline;gap:8px;font-weight:800}
-    .price small{color:var(--muted);font-weight:600}
-    .row{display:flex;gap:10px;flex-wrap:wrap}
-    .btn{flex:1;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 14px;border-radius:14px;border:1px solid #203456;background:#0e213f;color:#d9e7ff;font-weight:700;cursor:pointer}
-    .btn.primary{background:linear-gradient(180deg,#2c74ff,#1550cf);border-color:#2a5fd1}
-    .btn.green{background:linear-gradient(180deg,#39d47c,#12a150);border-color:#0e8a44}
-    .btn.blue{background:linear-gradient(180deg,#4db9ff,#1a7bd9);border-color:#166ec0}
-    .chip{display:inline-flex;gap:6px;align-items:center;background:var(--chip);border:1px solid #263653;color:#d2e3ff;padding:6px 10px;border-radius:999px;font-size:12px}
-    .stats{display:flex;gap:10px;margin:10px 0 2px}
-    .stats .chip{background:#0d1b33}
-    footer{margin:40px 0 20px;color:var(--muted);text-align:center}
-    /* MODAL */
-    .modal{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;place-items:center;padding:18px;z-index:50}
-    .modal.open{display:grid}
-    .panel{width:min(520px,96vw);background:linear-gradient(160deg,#0e1a2e,#0a1930);border:1px solid #1f2f4c;border-radius:16px;box-shadow:0 20px 50px rgba(0,0,0,.45);overflow:hidden}
-    .panel header{padding:14px 16px;border-bottom:1px solid #213150}
-    .panel .content{padding:16px}
-    .paylist{display:grid;gap:10px}
-    .payitem{display:flex;justify-content:space-between;align-items:center;gap:10px;background:#0c1a33;border:1px solid #1d2f53;border-radius:12px;padding:12px}
-    .hint{color:#a9bfdc;font-size:13px}
-    .copy{cursor:pointer}
-    .ok{margin-top:14px}
-    .searchBar{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 18px}
-    .searchBar input,.searchBar select{background:#0d1b33;border:1px solid #213150;color:#e6f0ff;border-radius:12px;padding:10px 12px;outline:none}
-    .banner{display:flex;gap:12px;align-items:center;justify-content:center;background:linear-gradient(120deg,#1c2e55,#10386a);border:1px dashed #25518f;color:#d7e7ff;border-radius:16px;padding:10px;margin-bottom:12px}
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Unité Rapide — Boutique</title>
+
+<!-- CSP souple pour GitHub Pages + Google Sheets + CountAPI -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' https: data:; img-src 'self' https: data: blob:; style-src 'self' 'unsafe-inline' https:; script-src 'self' 'unsafe-inline' https:; connect-src 'self' https:;" />
+
+<style>
+:root{
+  --bg1:#0f172a; --bg2:#1e293b;
+  --brand:#10b981; --accent:#f59e0b; --danger:#ef4444; --info:#3b82f6;
+  --text:#e5e7eb; --muted:#94a3b8; --card:#111827cc;
+  --shadow:0 10px 30px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0; color:var(--text); font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial,"Noto Sans",sans-serif;
+  background: radial-gradient(1200px 800px at 10% 10%, #0b1225 0%, #0f172a 40%, #0a0f1f 100%);
+  overflow-x:hidden;
+}
+.bg-anim{position:fixed; inset:-20vmax; z-index:-1; filter:blur(80px) saturate(130%); opacity:.45;
+  background:conic-gradient(from 180deg,#00c2ff,#7c3aed,#10b981,#f59e0b,#00c2ff); animation:spin 28s linear infinite}
+@keyframes spin{to{transform:rotate(1turn)}}
+header{position:sticky; top:0; z-index:50; backdrop-filter:saturate(140%) blur(8px);
+  background:linear-gradient(180deg, rgba(2,6,23,.85), rgba(2,6,23,.55));
+  border-bottom:1px solid rgba(148,163,184,.15)}
+.wrap{max-width:1150px; margin:0 auto; padding:16px 20px}
+.row{display:flex; gap:14px; align-items:center; flex-wrap:wrap}
+.brand{display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:.3px}
+.logo{width:38px; height:38px; border-radius:12px; background:linear-gradient(135deg,var(--brand),var(--info)); display:grid; place-items:center; box-shadow:var(--shadow); font-weight:900; color:#fff}
+.promo{background:linear-gradient(90deg, rgba(16,185,129,.15), rgba(59,130,246,.15)); border:1px solid rgba(16,185,129,.25); color:#d1fae5;
+  padding:10px 14px; border-radius:12px; font-weight:600; display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap}
+.badges{display:flex; gap:10px; flex-wrap:wrap}
+.badge{background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02)); border:1px solid rgba(148,163,184,.18);
+  padding:8px 12px; border-radius:999px; font-weight:600; display:flex; align-items:center; gap:8px; color:#e2e8f0}
+
+main{max-width:1150px; margin:24px auto; padding:0 20px 80px}
+.controls{display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin:10px 0 14px}
+.search{flex:1; min-width:220px; padding:10px 12px; border-radius:12px; border:1px solid rgba(148,163,184,.25); background:rgba(255,255,255,.06); color:#fff}
+.filters{display:flex; gap:8px; flex-wrap:wrap}
+.chip{padding:8px 12px; border-radius:999px; background:rgba(255,255,255,.06); border:1px solid rgba(148,163,184,.18); cursor:pointer; font-weight:700}
+.chip.active{background:linear-gradient(90deg, rgba(16,185,129,.25), rgba(59,130,246,.25)); border-color:#34d39977}
+
+.cards{display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:16px}
+.card{background:linear-gradient(180deg, rgba(17,24,39,.85), rgba(17,24,39,.65)); border:1px solid rgba(148,163,184,.18);
+  border-radius:18px; overflow:hidden; box-shadow:var(--shadow); display:flex; flex-direction:column; min-height:100%}
+.card img{width:100%; height:180px; object-fit:cover; background:#0b1020}
+.card .p{padding:12px 14px}
+.title{font-weight:800; font-size:1.05rem}
+.muted{color:var(--muted); font-size:.92rem}
+.price{display:flex; align-items:center; gap:10px; margin-top:6px}
+.price .fc{font-weight:900; font-size:1.15rem}
+.price .usd{color:#93c5fd; font-weight:700}
+.cta{margin-top:10px; display:flex; gap:8px}
+.btn{flex:1; display:inline-flex; justify-content:center; align-items:center; gap:8px; padding:10px 12px; border-radius:12px; border:1px solid transparent; cursor:pointer; font-weight:800; text-decoration:none}
+.btn.whatsapp{background:#25D36622; border-color:#25D36655; color:#c3f9d7}
+.btn.buy{background:#10b98122; border-color:#10b98166; color:#d1fae5}
+.btn:hover{transform:translateY(-1px)}
+.badge-timer{margin-left:auto; background:rgba(245,158,11,.18); border:1px solid #f59e0b55; color:#fde68a; padding:6px 10px; border-radius:999px; font-weight:800; font-size:.85rem}
+
+.stats{display:flex; gap:12px; flex-wrap:wrap; margin:18px 0}
+.stat{background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02)); border:1px solid rgba(148,163,184,.18); padding:10px 14px; border-radius:14px; font-weight:700}
+
+.float{position:fixed; right:18px; bottom:18px; display:flex; flex-direction:column; gap:10px; z-index:60}
+.float a{display:flex; align-items:center; gap:8px; padding:10px 12px; border-radius:999px; text-decoration:none; font-weight:800; box-shadow:var(--shadow)}
+.float .w{background:#25D366; color:#06250f}
+.float .t{background:#229ED9; color:#041e2a}
+
+footer{max-width:1150px; margin:40px auto; padding:0 20px 60px; color:#cbd5e1}
+.pay{display:flex; gap:10px; flex-wrap:wrap}
+.pill{background:rgba(255,255,255,.07); border:1px solid rgba(148,163,184,.18); padding:8px 12px; border-radius:999px; font-weight:700}
+details{background:rgba(255,255,255,.05); border:1px solid rgba(148,163,184,.18); padding:12px; border-radius:14px}
+details summary{cursor:pointer; font-weight:900}
+
+/* Modal générique */
+.modal{position:fixed; inset:0; display:none; align-items:center; justify-content:center; background:rgba(2,6,23,.65); z-index:80; padding:20px}
+.modal .box{max-width:520px; width:100%; background:linear-gradient(180deg, rgba(17,24,39,.96), rgba(17,24,39,.88)); border:1px solid rgba(148,163,184,.22); border-radius:18px; box-shadow:var(--shadow); padding:16px}
+.modal .head{display:flex; align-items:center; justify-content:space-between; margin-bottom:10px}
+.x{cursor:pointer; border:none; background:rgba(255,255,255,.06); color:#fff; padding:8px 10px; border-radius:10px; font-weight:800}
+.input{width:100%; padding:10px 12px; border-radius:12px; border:1px solid rgba(148,163,184,.25); background:rgba(255,255,255,.06); color:#fff}
+.grid2{display:grid; grid-template-columns:1fr 1fr; gap:10px}
+
+/* Galerie */
+.gallery{display:grid; grid-template-columns:repeat(5, 1fr); gap:6px; margin-top:8px}
+.gallery img{width:100%; height:64px; object-fit:cover; border-radius:10px; border:1px solid rgba(148,163,184,.2); cursor:pointer}
+
+/* Gate (inscription) */
+.gate{position:fixed; inset:0; display:none; align-items:center; justify-content:center; background:rgba(2,6,23,.85); z-index:90; padding:20px}
+.gate .card{max-width:520px; width:100%; background:linear-gradient(180deg, rgba(17,24,39,.96), rgba(17,24,39,.88)); border:1px solid rgba(148,163,184,.22); border-radius:18px; box-shadow:var(--shadow); padding:18px}
+</style>
 </head>
 <body>
+<div class="bg-anim"></div>
+
+<header>
   <div class="wrap">
-    <header>
-      <div class="brand">🇨🇩 Unité Rapide — Boutique</div>
-      <div class="row">
-        <a class="pill" href="admin.html">Admin</a>
-        <span class="pill">Paiement principal : <strong>Airtel Money</strong></span>
-      </div>
-    </header><div class="banner">
-  <span>✨ Promo du jour : livraison rapide & assistance WhatsApp/Telegram</span>
-</div>
-
-<div class="searchBar">
-  <input id="q" type="search" placeholder="Rechercher un produit…" />
-  <select id="cat">
-    <option value="">Toutes catégories</option>
-  </select>
-</div>
-
-<div id="grid" class="grid"></div>
-
-<footer>
-  <div>© <span id="year"></span> Unité Rapide — RDC. Tous droits réservés.</div>
-  <div style="margin-top:6px">Contact : <a id="waSmall" href="#">WhatsApp</a> · <a id="tgSmall" href="#">Telegram</a></div>
-</footer>
-
-  </div>  <!-- MODAL ACHAT / PAIEMENT -->  <div id="modal" class="modal">
-    <div class="panel" role="dialog" aria-modal="true">
-      <header>
-        <strong>Moyen de paiement</strong>
-        <div style="margin-left:auto"><button id="mClose" class="pill">Fermer</button></div>
-      </header>
-      <div class="content">
-        <div id="mBody"></div>
-        <div class="ok">
-          <a id="btnProof" class="btn blue" href="#" target="_blank">Envoyer la preuve sur WhatsApp</a>
+    <div class="row" style="justify-content:space-between">
+      <div class="brand">
+        <div class="logo">UR</div>
+        <div>
+          <div style="font-size:1.05rem">Unité Rapide</div>
+          <div class="muted" style="font-size:.85rem">Unités • Téléphones • Vêtements • Accessoires</div>
         </div>
       </div>
+      <div class="badges">
+        <div class="badge">🔒 Sécurisé</div>
+        <div class="badge">🚚 Livraison rapide</div>
+        <div class="badge">⭐ Qualité garantie</div>
+        <div class="badge">🕘 24/7</div>
+        <div class="badge" id="visitsBadge">👁️ Visites : …</div>
+      </div>
     </div>
-  </div><script>
-/* ==========================
-   CONFIG (modifiable en admin)
-============================= */
-const SETTINGS = JSON.parse(localStorage.getItem('ur_settings')||'{}');
-const PHONE = SETTINGS.phone || '+243990564877';
-const OWNER = SETTINGS.owner || 'Mugisho Stéphane';
-const TELEGRAM = SETTINGS.telegram || 'cphkkk66';
-const CURRENCY = 'FC';
-const DOLLAR_RATE = SETTINGS.usdRate || 2800; // exemple conversion FC -> $
-
-// Sources Google Sheets (pubHTML -> auto transform en CSV)
-const SHEETS = SETTINGS.sheets || [
-  'https://docs.google.com/spreadsheets/d/e/2PACX-1vRNgEaiSzpwmHuoj1bfIFzi9A34beLlxoqz8_ocD5hvb7I2T-4GRcamMbFRCKvw5-lKivYqo3Kpg0Ti/pubhtml?gid=0&single=true',
-  'https://docs.google.com/spreadsheets/d/e/2PACX-1vRNgEaiSzpwmHuoj1bfIFzi9A34beLlxoqz8_ocD5hvb7I2T-4GRcamMbFRCKvw5-lKivYqo3Kpg0Ti/pubhtml?gid=2097070430&single=true',
-  'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ7yaRVA16yeVYrB9YAGs_ckiodiHqMns2igOT2ozVM92EXoBOJpCoxZzZ3NLxmHY1G_KqvYKZfvjTS/pubhtml?gid=0&single=true'
-];
-
-function pubHtmlToCsv(url){
-  const u=new URL(url); const gid=u.searchParams.get('gid')||'0';
-  return url.replace('pubhtml','pub').replace('single=true','').replace(/\?gid=.*$/,'')+`?output=csv&gid=${gid}`;
-}
-
-/* ==========================
-   UI helpers
-============================= */
-const grid = document.getElementById('grid');
-const catSel = document.getElementById('cat');
-const qInput = document.getElementById('q');
-const yearEl = document.getElementById('year');
-const modal = document.getElementById('modal');
-const mBody = document.getElementById('mBody');
-const mClose = document.getElementById('mClose');
-const btnProof = document.getElementById('btnProof');
-
-function fmt(fc){ return new Intl.NumberFormat('fr-CD').format(fc)+` ${CURRENCY}` }
-function usd(fc){ return `(~ ${Math.round(fc/DOLLAR_RATE)} $)` }
-
-function setSmallLinks(){
-  document.getElementById('waSmall').href = `https://wa.me/${PHONE.replace(/\D/g,'')}`;
-  document.getElementById('tgSmall').href = `https://t.me/${TELEGRAM}`;
-}
-
-/* ==========================
-   DATA: charger CSV de Google Sheets
-============================= */
-async function fetchCSV(url){
-  const res = await fetch(url); const txt = await res.text();
-  const rows = txt.split(/\r?\n/).filter(Boolean).map(r=>r.split(','));
-  const head = rows.shift().map(h=>h.trim().toLowerCase());
-  return rows.map(r=>{
-    const obj={}; head.forEach((h,i)=>obj[h]=r[i]||''); return obj;
-  });
-}
-
-async function loadProducts(){
-  let all=[]; for(const h of SHEETS){ try{ const csv=pubHtmlToCsv(h); const rows=await fetchCSV(csv); all=all.concat(rows);}catch(e){console.warn('Sheet error',e)} }
-  // mapping attendu: name, price, category, img1..img5, description
-  const mapped = all.filter(r=>r.name||r.nom).map(r=>({
-    id: (r.id||crypto.randomUUID()),
-    name: r.name||r.nom,
-    price: Number((r.price||r.prix||'0').toString().replace(/\D/g,''))||0,
-    category: r.category||r.categorie||'Autres',
-    images: [r.img1,r.img2,r.img3,r.img4,r.img5].filter(Boolean),
-    desc: r.description||r.desc||''
-  }));
-  return mapped;
-}
-
-/* ==========================
-   INTERACTIONS locales (vues, likes, commentaires)
-============================= */
-const store = {
-  get(k,def){ try{ return JSON.parse(localStorage.getItem(k)) ?? def }catch{ return def } },
-  set(k,v){ localStorage.setItem(k,JSON.stringify(v)) }
-};
-function keyFor(p,what){ return `ur_${what}_${p.id}` }
-function addView(p){ const k=keyFor(p,'views'); const v=(store.get(k,0)+1); store.set(k,v); return v }
-function toggleLike(p){ const k=keyFor(p,'liked'); const liked=!store.get(k,false); store.set(k,liked); const cK=keyFor(p,'likes'); let c=store.get(cK,0); c = liked? c+1 : Math.max(0,c-1); store.set(cK,c); return {liked,count:c} }
-function getStats(p){ return {views:store.get(keyFor(p,'views'),0),likes:store.get(keyFor(p,'likes'),0),liked:store.get(keyFor(p,'liked'),false)} }
-function addComment(p,txt){ const k=keyFor(p,'comments'); const list=store.get(k,[]); list.unshift({txt,at:Date.now()}); store.set(k,list); return list }
-function getComments(p){ return store.get(keyFor(p,'comments'),[]) }
-
-/* ==========================
-   RENDER
-============================= */
-let PRODUCTS=[]; let FILTER={q:'',cat:''};
-
-function productCard(p){
-  const stats = getStats(p);
-  const img = (p.images&&p.images[0]) || 'https://images.unsplash.com/photo-1513438205128-16af16280744?w=1200&q=60&auto=format&fit=crop';
-  const el = document.createElement('div'); el.className='card';
-  el.innerHTML = `
-    <div class="imgbox">
-      <img src="${img}" alt="${p.name}" onerror="this.src='https://picsum.photos/800/600?random=5'"/>
-      <div class="thumbs">${(p.images.length? p.images: [img]).slice(0,5).map((u,i)=>`<img data-i="${i}" src="${u}" class="${i? '' : 'active'}"/>`).join('')}</div>
+    <div class="promo" style="margin-top:12px">
+      <div>🔥 <strong>Promos</strong> cette semaine — meilleurs prix garantis.</div>
+      <div class="muted">WhatsApp : <strong>+243 990 564 877</strong> • Telegram : <strong>@cphkkk66</strong></div>
     </div>
-    <div class="body">
-      <div class="title">${p.name}</div>
-      <div class="cat">${p.category}</div>
-      <div class="price">${fmt(p.price)} <small>${usd(p.price)}</small></div>
-      <div class="stats">
-        <span class="chip">👁️ <span data-role="views">${stats.views}</span></span>
-        <span class="chip">❤️ <span data-role="likes">${stats.likes}</span></span>
-      </div>
-      <div class="row" style="margin-top:8px">
-        <button class="btn green" data-act="wa">WhatsApp</button>
-        <button class="btn blue" data-act="tg">Telegram</button>
-      </div>
-      <div class="row" style="margin-top:8px">
-        <button class="btn primary" data-act="buy">Acheter</button>
-        <button class="btn" data-act="like">J'aime</button>
-      </div>
-      <div class="row" style="margin-top:8px">
-        <button class="btn" data-act="comment">Commenter</button>
-        <button class="btn" data-act="share">Partager</button>
-      </div>
-    </div>`;
+  </div>
+</header>
 
-  // Thumbs switch
-  const mainImg = el.querySelector('.imgbox img');
-  el.querySelectorAll('.thumbs img').forEach(t=>{
-    t.addEventListener('click',()=>{
-      el.querySelectorAll('.thumbs img').forEach(x=>x.classList.remove('active'));
-      t.classList.add('active'); mainImg.src = p.images[Number(t.dataset.i)] || mainImg.src;
-    })
+<main>
+  <section class="stats">
+    <div class="stat">👤 Connecté : <span id="clientName">—</span> (<span id="clientPhone">—</span>)</div>
+    <div class="stat">👁️ Vues (appareil) : <span id="viewsLocal">0</span></div>
+    <div class="stat">❤️ J'aime : <span id="likesCount">0</span> <button id="likeBtn" class="chip" style="margin-left:8px">+ J'aime</button></div>
+  </section>
+
+  <section>
+    <div class="controls">
+      <input id="search" class="search" placeholder="Rechercher un produit…" />
+      <div class="filters" id="filters"></div>
+    </div>
+    <div class="cards" id="cards">Chargement…</div>
+  </section>
+
+  <section style="margin-top:28px">
+    <h2>Contact</h2>
+    <div class="row">
+      <a class="btn whatsapp" href="https://wa.me/243990564877" target="_blank">📱 WhatsApp</a>
+      <a class="btn" style="background:#229ED922;border:1px solid #229ED955;color:#cfe9ff" href="https://t.me/cphkkk66" target="_blank">💬 Telegram</a>
+    </div>
+  </section>
+
+  <section style="margin-top:28px">
+    <h2>Modes de paiement</h2>
+    <div class="pay">
+      <span class="pill">💳 Airtel Money — <strong>Mugisho Stéphane</strong> • <strong>+243 990 564 877</strong></span>
+      <span class="pill">📲 M-Pesa (Vodacom)</span>
+      <span class="pill">🟠 Orange Money</span>
+      <span class="pill">🟣 Afrimoney (Africell)</span>
+      <span class="pill">🟡 MoMo (MTN)</span>
+    </div>
+  </section>
+
+  <section style="margin-top:28px">
+    <details>
+      <summary>🔧 Paramètres & Sécurité (infos client)</summary>
+      <ul>
+        <li>Ce site affiche seulement les <strong>produits et prix</strong>. Aucune donnée sensible n'est publique.</li>
+        <li>Catalogue alimenté par une feuille <strong>PUBLIC</strong> (lecture seule).</li>
+        <li>Contacts officiels : WhatsApp <strong>+243 990 564 877</strong>, Telegram <strong>@cphkkk66</strong>, Airtel Money <strong>Mugisho Stéphane</strong>.</li>
+      </ul>
+    </details>
+  </section>
+</main>
+
+<!-- Boutons flottants -->
+<div class="float">
+  <a class="w" href="https://wa.me/243990564877?text=Bonjour%20Uniterapide%2C%20j%27aimerais%20avoir%20des%20infos%20svp" target="_blank">📱 WhatsApp</a>
+  <a class="t" href="https://t.me/cphkkk66" target="_blank">💬 Telegram</a>
+</div>
+
+<footer>
+  <hr style="border-color:rgba(148,163,184,.2); border-style:solid; border-width:1px 0 0; margin-bottom:16px">
+  <div>© <span id="year"></span> Unité Rapide — RDC. Tous droits réservés.</div>
+</footer>
+
+<!-- MODAL ACHAT / PAIEMENT -->
+<div class="modal" id="payModal" aria-hidden="true">
+  <div class="box">
+    <div class="head">
+      <strong id="payTitle">Acheter</strong>
+      <button class="x" data-close>✕</button>
+    </div>
+    <div id="payBody"></div>
+  </div>
+</div>
+
+<!-- MODAL PRODUIT (galerie) -->
+<div class="modal" id="prodModal" aria-hidden="true">
+  <div class="box">
+    <div class="head">
+      <strong id="prodTitle">Produit</strong>
+      <button class="x" data-close>✕</button>
+    </div>
+    <div id="prodBody"></div>
+  </div>
+</div>
+
+<!-- ÉCRAN INSCRIPTION (style Betika) -->
+<div class="gate" id="gate">
+  <div class="card">
+    <div class="row" style="justify-content:space-between">
+      <h3 style="margin:0">Bienvenue sur <span style="color:#34d399">Uniterapide</span></h3>
+      <button class="x" id="skipGate">Passer</button>
+    </div>
+    <p class="muted" style="margin-top:4px">Entrez votre nom et numéro pour activer promos, j'aime & commentaires.</p>
+    <div class="grid2">
+      <input id="gateName" class="input" placeholder="Votre nom complet">
+      <input id="gatePhone" class="input" placeholder="Votre numéro (ex: 099... / +243...)">
+    </div>
+    <div class="row" style="margin-top:10px">
+      <button class="btn buy" id="gateSave">Activer mon compte</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ========= CONFIG UTILISATEUR =========
+const BRAND = "Uniterapide";
+const WHATSAPP_NUM = "243990564877"; // format international pour click-to-chat
+const TELEGRAM = "cphkkk66";
+const AIRTEL_LABEL = "Mugisho Stéphane";
+const AIRTEL_NUM = "+243 990 564 877";
+const RATE_FC = 2800;
+
+// FEUILLES GOOGLE (transformées en CSV automatique)
+// Remplace juste les GID si tu changes d’onglets
+const SHEET_PUBLIC_HTML = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRNgEaiSzpwmHuoj1bfIFzi9A34beLlxoqz8_ocD5hvb7I2T-4GRcamMbFRCKvw5-lKivYqo3Kpg0Ti/pubhtml?gid=0&single=true";
+function htmlToCsv(url){
+  const gidMatch = url.match(/gid=(\d+)/);
+  const gid = gidMatch? gidMatch[1] : "0";
+  return url.replace("/pubhtml?","/pub?").replace("single=true","output=csv").replace("html","").replace("pub?","pub?") + "&output=csv".replace("&&","&").replace("gid=0","gid="+gid);
+}
+const SHEET_CSV_URL = htmlToCsv(SHEET_PUBLIC_HTML);
+
+// ========= COMPTEUR VISITES (CountAPI) + fallback =========
+(function(){
+  const badge = document.getElementById('visitsBadge');
+  const ns = 'uniterapide_public_v2';
+  fetch(`https://api.countapi.xyz/hit/${ns}/visits`).then(r=>r.json()).then(j=>{
+    badge.textContent = `👁️ Visites : ${j.value.toLocaleString('fr-FR')}`;
+  }).catch(()=>{
+    const k='ur_visits_fallback'; const v=(parseInt(localStorage.getItem(k)||'0',10)+1);
+    localStorage.setItem(k,String(v));
+    badge.textContent = `👁️ Visites : ${v.toLocaleString('fr-FR')}*`;
   });
-
-  // Count a view when card appears
-  const obs = new IntersectionObserver((entries)=>{
-    entries.forEach(en=>{ if(en.isIntersecting){ const v=addView(p); el.querySelector('[data-role="views"]').textContent=v; obs.disconnect(); }});
-  },{threshold:.5}); obs.observe(el);
-
-  // Actions
-  el.addEventListener('click',(e)=>{
-    const btn = e.target.closest('button'); if(!btn) return; const act=btn.dataset.act;
-    if(act==='wa') openWhatsApp(p);
-    if(act==='tg') openTelegram(p);
-    if(act==='buy') openBuy(p);
-    if(act==='share') shareP(p);
-    if(act==='like'){ const {liked,count}=toggleLike(p); el.querySelector('[data-role="likes"]').textContent=count; btn.textContent = liked? "J'aime ✓" : "J'aime" }
-    if(act==='comment'){ const txt = prompt('Votre commentaire :'); if(txt){ addComment(p,txt); alert('✅ Merci ! Votre commentaire est enregistré sur cet appareil.'); }}
-  });
-
-  return el;
-}
-
-function buildFilters(arr){
-  const cats=[...new Set(arr.map(x=>x.category))].sort();
-  cats.forEach(c=>{ const o=document.createElement('option'); o.value=c; o.textContent=c; catSel.appendChild(o); });
-}
-
-function render(arr){
-  grid.innerHTML=''; const q=FILTER.q.toLowerCase(), cat=FILTER.cat;
-  arr.filter(p => (!cat||p.category===cat) && (!q||p.name.toLowerCase().includes(q))).forEach(p=> grid.appendChild(productCard(p)) );
-}
-
-/* ==========================
-   ACTIONS externes
-============================= */
-function openWhatsApp(p){
-  const msg = encodeURIComponent(`Bonjour 👋\nJe suis intéressé par: ${p.name}\nPrix: ${fmt(p.price)} ${usd(p.price)}\n`);
-  window.open(`https://wa.me/${PHONE.replace(/\D/g,'')}?text=${msg}`, '_blank');
-}
-function openTelegram(p){
-  const msg = encodeURIComponent(`Achat: ${p.name} ${fmt(p.price)} ${usd(p.price)}`);
-  window.open(`https://t.me/${TELEGRAM}?start=${msg}`,'_blank');
-}
-function openBuy(p){
-  modal.classList.add('open');
-  const base = `Achat: ${p.name} — ${fmt(p.price)} ${usd(p.price)}`;
-  const rows = [
-    {id:'airtel', label:'Airtel Money (principal)', hint:`Payer à ${PHONE} — ${OWNER}`},
-    {id:'mpesa', label:'M-Pesa (Vodacom)', hint:'Indiquez le numéro au marchand'},
-    {id:'orange', label:'Orange Money', hint:'Indiquez le numéro au marchand'},
-    {id:'afri', label:'Afrimoney (Africell)', hint:'Indiquez le numéro au marchand'},
-    {id:'mtn', label:'MoMo (MTN)', hint:'Indiquez le numéro au marchand'}
-  ];
-  mBody.innerHTML = `<div class="paylist">${rows.map(r=>`
-    <div class="payitem">
-      <div>
-        <div><strong>${r.label}</strong></div>
-        <div class="hint">${r.hint}</div>
-      </div>
-      <div class="chip copy" data-kind="${r.id}">📋 Copier</div>
-    </div>`).join('')}</div>`;
-
-  mBody.querySelectorAll('.copy').forEach(c=>{
-    c.addEventListener('click',()=>{
-      navigator.clipboard.writeText(`${PHONE} — ${OWNER}`);
-      c.textContent='Copié !'; setTimeout(()=>c.textContent='📋 Copier',1200);
-    })
-  });
-  const proof = encodeURIComponent(`${base}\nMode: AIRTEL MONEY\nJ'ai payé à ${PHONE} (${OWNER}). Voici ma preuve:`);
-  btnProof.href = `https://wa.me/${PHONE.replace(/\D/g,'')}?text=${proof}`;
-}
-function shareP(p){
-  const url = location.href.split('#')[0];
-  const text = `🔥 Regarde ${p.name} à ${fmt(p.price)} chez Unité Rapide`;
-  if(navigator.share){ navigator.share({title:'Unité Rapide',text, url}); }
-  else{ prompt('Copie ce lien', url); }
-}
-
-/* ==========================
-   INIT
-============================= */
-(async function init(){
-  yearEl.textContent = new Date().getFullYear();
-  setSmallLinks();
-  PRODUCTS = await loadProducts();
-  if(!PRODUCTS.length){ // fallback démo (avec 5 images/produit)
-    PRODUCTS = [
-      {id:'demo1', name:'Basket tendance', price:120000, category:'Chaussures', images:[
-        'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=1200&q=60&auto=format&fit=crop',
-        'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=1000&q=60&auto=format&fit=crop',
-        'https://picsum.photos/seed/shoe/900/600',
-        'https://picsum.photos/seed/shoe2/900/600',
-        'https://picsum.photos/seed/shoe3/900/600']},
-      {id:'demo2', name:'Sac premium', price:95000, category:'Sacs', images:[
-        'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1200&q=60&auto=format&fit=crop',
-        'https://picsum.photos/seed/bag1/900/600',
-        'https://picsum.photos/seed/bag2/900/600',
-        'https://picsum.photos/seed/bag3/900/600',
-        'https://picsum.photos/seed/bag4/900/600']}
-    ];
-  }
-  buildFilters(PRODUCTS); render(PRODUCTS);
 })();
 
-qInput.addEventListener('input',()=>{ FILTER.q=qInput.value; render(PRODUCTS); });
-catSel.addEventListener('change',()=>{ FILTER.cat=catSel.value; render(PRODUCTS); });
-mClose.addEventListener('click',()=> modal.classList.remove('open'));
-</script></body>
-</html><!-- =============================
-PARTIE 2 — ADMIN (admin.html)
-============================== --><!doctype html>
+// ========= VUES (local) =========
+const localKeyViews = 'ur_views';
+const v = parseInt(localStorage.getItem(localKeyViews) || '0', 10) + 1;
+localStorage.setItem(localKeyViews, String(v));
+document.getElementById('viewsLocal').textContent = v.toLocaleString('fr-FR');
 
+// ========= LIKES (local) =========
+(function(){
+  const likeKey = 'ur_like';
+  const likeBtn = document.getElementById('likeBtn');
+  const likesCount = document.getElementById('likesCount');
+  let liked = localStorage.getItem(likeKey) === '1';
+  likesCount.textContent = liked ? 1 : 0;
+  if(liked){ likeBtn.textContent = '❤️ Merci'; likeBtn.disabled = true; }
+  likeBtn.addEventListener('click', ()=>{
+    if(liked) return;
+    liked = true; localStorage.setItem(likeKey,'1');
+    likesCount.textContent = 1; likeBtn.textContent='❤️ Merci'; likeBtn.disabled=true;
+    // Compteur global
+    fetch(`https://api.countapi.xyz/hit/uniterapide_public_v2/like`).catch(()=>{});
+  });
+})();
+
+// ========= INSCRIPTION (Gate) =========
+const gate = document.getElementById('gate');
+const clientNameEl = document.getElementById('clientName');
+const clientPhoneEl = document.getElementById('clientPhone');
+
+function loadClient(){
+  const n = localStorage.getItem('ur_client_name')||'—';
+  const p = localStorage.getItem('ur_client_phone')||'—';
+  clientNameEl.textContent = n; clientPhoneEl.textContent = p;
+}
+loadClient();
+
+if(!localStorage.getItem('ur_client_name') || !localStorage.getItem('ur_client_phone')){
+  gate.style.display = 'flex';
+}
+document.getElementById('gateSave').onclick = ()=>{
+  const n = (document.getElementById('gateName').value||'').trim();
+  const p = (document.getElementById('gatePhone').value||'').trim();
+  if(n.length<2 || p.length<7){ alert("Veuillez saisir un nom et un numéro valides."); return; }
+  localStorage.setItem('ur_client_name', n);
+  localStorage.setItem('ur_client_phone', p);
+  gate.style.display='none'; loadClient();
+};
+document.getElementById('skipGate').onclick = ()=>{ gate.style.display='none'; };
+
+// ========= CSV PARSER =========
+function parseCSV(text){
+  const rows=[]; let cur=[]; let cell=''; let inQ=false;
+  for(let i=0;i<text.length;i++){
+    const ch=text[i], nx=text[i+1];
+    if(inQ){
+      if(ch==='"' && nx==='"'){ cell+='"'; i++; }
+      else if(ch==='"'){ inQ=false; }
+      else cell+=ch;
+    } else {
+      if(ch==='"'){ inQ=true; }
+      else if(ch===','){ cur.push(cell); cell=''; }
+      else if(ch==='\n' || ch==='\r'){ if(cell!=='' || cur.length){ cur.push(cell); rows.push(cur); cur=[]; cell=''; } }
+      else cell+=ch;
+    }
+  }
+  if(cell!=='' || cur.length){ cur.push(cell); rows.push(cur); }
+  return rows.filter(r=>r.some(c=>String(c).trim()!==''));
+}
+
+// ========= UI helpers =========
+const cards = document.getElementById('cards');
+const filtersEl = document.getElementById('filters');
+const searchEl = document.getElementById('search');
+
+function money(n){ try{ return Number(n).toLocaleString('fr-FR'); }catch(e){ return n; } }
+function toSlug(s){ return (s||'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,''); }
+
+// ========= PRODUIT: Modals =========
+const payModal = document.getElementById('payModal');
+const payTitle = document.getElementById('payTitle');
+const payBody = document.getElementById('payBody');
+const prodModal = document.getElementById('prodModal');
+const prodTitle = document.getElementById('prodTitle');
+const prodBody = document.getElementById('prodBody');
+
+document.querySelectorAll('[data-close]').forEach(b=> b.onclick = (e)=>{ e.target.closest('.modal').style.display='none'; });
+
+// Ouvre modal paiement
+function openPay(p){
+  payTitle.textContent = "Acheter — " + p.name;
+  const clientN = localStorage.getItem('ur_client_name')||'Client';
+  const clientP = localStorage.getItem('ur_client_phone')||'—';
+  const amountFC = p.priceFC;
+  const whatsMsg = encodeURIComponent(`Bonjour ${BRAND}, je veux acheter: ${p.name} (${p.cat}) à ${amountFC} FC.\nNom: ${clientN}\nTéléphone: ${clientP}`);
+  payBody.innerHTML = `
+    <div class="muted">Choisissez un moyen de paiement :</div>
+    <div class="grid2" style="margin-top:8px">
+      <button class="btn buy" id="pm_airtel">💳 Airtel Money</button>
+      <a class="btn whatsapp" id="pm_whatsapp" href="https://wa.me/${WHATSAPP_NUM}?text=${whatsMsg}" target="_blank">📱 WhatsApp (commande)</a>
+    </div>
+    <div id="payStep" style="margin-top:12px"></div>
+  `;
+  document.getElementById('pm_airtel').onclick = ()=>{
+    document.getElementById('payStep').innerHTML = `
+      <div style="background:rgba(255,255,255,.05); padding:12px; border:1px solid rgba(148,163,184,.18); border-radius:12px">
+        <div><strong>Montant:</strong> ${money(amountFC)} FC</div>
+        <div><strong>Envoyez via Airtel Money à:</strong> ${AIRTEL_LABEL} — <strong>${AIRTEL_NUM}</strong></div>
+        <ol class="muted" style="margin-top:8px">
+          <li>Ouvrez Airtel Money (*501# ou l'app)</li>
+          <li>Choisissez <strong>Transfert d'argent</strong></li>
+          <li>Entrez le numéro: <strong>${AIRTEL_NUM}</strong></li>
+          <li>Montant: <strong>${money(amountFC)} FC</strong></li>
+          <li>Validez avec votre <strong>code PIN SIM</strong> (reste secret)</li>
+        </ol>
+        <div class="row" style="margin-top:8px">
+          <button class="btn buy" id="btnPaid">✅ J'ai payé</button>
+          <button class="btn" style="background:#0000;border:1px solid rgba(148,163,184,.3);color:#cbd5e1" id="btnCopyNum">📋 Copier le numéro</button>
+        </div>
+      </div>
+    `;
+    document.getElementById('btnCopyNum').onclick = ()=>{ navigator.clipboard.writeText(AIRTEL_NUM); alert("Numéro copié."); };
+    document.getElementById('btnPaid').onclick = ()=>{
+      // trace achat (compteur global + local)
+      fetch(`https://api.countapi.xyz/hit/uniterapide_public_v2/paid_${toSlug(p.name)}`).catch(()=>{});
+      const k='ur_paid'; const list = JSON.parse(localStorage.getItem(k)||'[]');
+      list.push({ts:Date.now(), name:p.name, cat:p.cat, fc:amountFC});
+      localStorage.setItem(k, JSON.stringify(list));
+      payBody.innerHTML = `<div style="padding:12px; border:1px solid rgba(16,185,129,.4); background:rgba(16,185,129,.15); border-radius:12px">
+        ✅ <strong>Paiement déclaré</strong> — Merci ! Nous confirmons sous peu sur WhatsApp.
+      </div>`;
+    };
+  };
+  payModal.style.display='flex';
+}
+
+// Ouvre modal produit + galerie (prend jusqu’à 5 images, séparées par | dans la feuille)
+function openProd(p){
+  prodTitle.textContent = p.name;
+  const imgs = (p.imgs && p.imgs.length)? p.imgs : [p.img];
+  const big = imgs[0] || 'https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1200&auto=format&fit=crop';
+  prodBody.innerHTML = `
+    <img id="bigImg" src="${big}" alt="${p.name}" style="width:100%; max-height:300px; object-fit:cover; border-radius:12px; border:1px solid rgba(148,163,184,.2)">
+    <div class="gallery">${imgs.map(u=>`<img src="${u}" alt="img" onclick="document.getElementById('bigImg').src='${u}'">`).join('')}</div>
+    <div class="row" style="justify-content:space-between; margin-top:10px">
+      <div>
+        <div class="title">${p.name}</div>
+        <div class="muted">${p.cat}${p.notes? ' • '+p.notes:''}</div>
+        <div class="price"><span class="fc">${money(p.priceFC)} FC</span> ${p.priceUSD? `<span class="usd">(~ ${money(p.priceUSD)} $)</span>`:''}</div>
+      </div>
+      ${p.promo? `<span class="badge-timer">🎯 ${p.promo}</span>`:''}
+    </div>
+    <div class="cta" style="margin-top:12px">
+      <button class="btn buy" onclick='openPay(${JSON.stringify(p).replace(/'/g,"&apos;")})'>🛒 Acheter</button>
+      <a class="btn whatsapp" target="_blank" href="https://wa.me/${WHATSAPP_NUM}?text=${encodeURIComponent('Bonjour '+BRAND+', intéressé par: '+p.name+' ('+p.cat+')')}">📱 WhatsApp</a>
+    </div>
+  `;
+  prodModal.style.display='flex';
+}
+
+// ========= RENDER =========
+let PRODUCTS = [];
+function buildFilters(products){
+  const cats = Array.from(new Set(products.map(p=>p.cat))).filter(Boolean);
+  filtersEl.innerHTML = ['_all', ...cats].map(c=>`<span class="chip${c==='_all'? ' active':''}" data-cat="${c}">${c==='_all'? 'Tout':c}</span>`).join('');
+  filtersEl.querySelectorAll('.chip').forEach(el=>{
+    el.addEventListener('click',()=>{
+      filtersEl.querySelectorAll('.chip').forEach(x=>x.classList.remove('active'));
+      el.classList.add('active');
+      const cat = el.getAttribute('data-cat');
+      renderCards(cat==='_all'? PRODUCTS : PRODUCTS.filter(p=>p.cat===cat));
+    })
+  })
+}
+
+function renderCards(list){
+  const q = (searchEl.value||'').toLowerCase().trim();
+  const filtered = q? list.filter(p => (p.name+' '+p.cat+' '+(p.notes||'')).toLowerCase().includes(q)) : list;
+  cards.innerHTML = filtered.map(p=>{
+    const promo = p.promo? `<span class="badge-timer" data-deadline="${p.deadline||''}">🎯 ${p.promo}</span>` : '';
+    const img = p.img;
+    return `
+      <article class="card">
+        <img loading="lazy" src="${img}" alt="${p.name}" onclick='openProd(${JSON.stringify(p).replace(/'/g,"&apos;")})'>
+        <div class="p">
+          <div class="row" style="justify-content:space-between; align-items:flex-start">
+            <div class="title">${p.name}</div>
+            ${promo}
+          </div>
+          <div class="muted">${p.cat}${p.notes? ' • '+p.notes:''}</div>
+          <div class="price"><div class="fc">${money(p.priceFC)} FC</div> ${p.priceUSD? `<div class="usd">(~ ${money(p.priceUSD)} $)</div>`:''}</div>
+          <div class="cta">
+            <button class="btn buy" onclick='openPay(${JSON.stringify(p).replace(/'/g,"&apos;")})'>🛒 Acheter</button>
+            <a class="btn whatsapp" href="https://wa.me/${WHATSAPP_NUM}?text=${encodeURIComponent('Bonjour '+BRAND+', intéressé par: '+p.name+' ('+p.cat+')')}" target="_blank">📱 WhatsApp</a>
+          </div>
+        </div>
+      </article>`;
+  }).join('');
+}
+
+searchEl.addEventListener('input', ()=> renderCards(PRODUCTS));
+
+// ========= LOAD SHEET =========
+// Feuille attendue (en-têtes, insensible à la casse) :
+// Catégorie | Nom du produit | Lien image | Prix $ | Franc (total) | Promo | Lien | Notes | Stock | Images (URLs séparées par |)
+async function load(){
+  let products=[];
+  try{
+    const res = await fetch(SHEET_CSV_URL, {cache:'no-store'});
+    const txt = await res.text();
+    const rows = parseCSV(txt);
+    const hdr = rows[0].map(h=>h.trim().toLowerCase());
+    const idx = {
+      cat: hdr.indexOf('catégorie'),
+      name: hdr.indexOf('nom du produit'),
+      img: hdr.indexOf('lien image'),
+      usd: hdr.indexOf('prix $'),
+      fc: hdr.indexOf('franc (total)'),
+      promo: hdr.indexOf('promo'),
+      link: hdr.indexOf('lien'),
+      notes: hdr.indexOf('notes'),
+      stock: hdr.indexOf('stock'),
+      images: hdr.indexOf('images')
+    };
+    for(let i=1;i<rows.length;i++){
+      const r=rows[i]; if(!r || !r.length) continue;
+      const usd = parseFloat((r[idx.usd]||'').toString().replace(/[^0-9.\-]/g,'')); const hasUSD=!isNaN(usd);
+      const fc  = parseFloat((r[idx.fc]||'').toString().replace(/[^0-9.\-]/g,'')); const hasFC=!isNaN(fc);
+      const priceFC = hasFC? fc : (hasUSD? Math.round(usd*RATE_FC) : 0);
+      const img = (r[idx.img]||'').trim() || 'https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1200&auto=format&fit=crop';
+      const extraImgs = ((r[idx.images]||'').trim()).split('|').map(s=>s.trim()).filter(Boolean).slice(0,5);
+      products.push({
+        cat: (r[idx.cat]||'Autres').trim(),
+        name: (r[idx.name]||'Sans nom').trim(),
+        img, imgs: extraImgs.length? [img, ...extraImgs].slice(0,5) : [img],
+        priceUSD: hasUSD? usd:null,
+        priceFC,
+        promo: (r[idx.promo]||'').trim(),
+        link: (r[idx.link]||'').trim(),
+        notes: (r[idx.notes]||'').trim(),
+        stock: (r[idx.stock]||'').trim()
+      });
+    }
+  }catch(e){
+    console.error('Erreur Sheet', e);
+  }
+  products = products.filter(p=>p.name && p.priceFC>0);
+  PRODUCTS = products;
+  buildFilters(PRODUCTS);
+  renderCards(PRODUCTS);
+}
+load();
+
+document.getElementById('year').textContent = new Date().getFullYear();
+<!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Admin — Unité Rapide</title>
-  <style>
-    :root{--bg:#0b1220;--panel:#0f1b31;--text:#e8f0ff;--muted:#a8bddc;--accent:#4db9ff;--good:#2ecc71;--warn:#ffb020}
-    body{margin:0;background:linear-gradient(120deg,#0b1220,#0e1726);color:var(--text);font-family:Inter,system-ui,Arial}
-    .wrap{max-width:1000px;margin:auto;padding:18px}
-    h1{margin:6px 0 14px}
-    .panel{background:var(--panel);border:1px solid #1a2c4a;border-radius:14px;padding:14px;margin:12px 0}
-    label{font-size:14px;color:var(--muted)}
-    input,textarea{width:100%;padding:10px 12px;border-radius:12px;border:1px solid #23385c;background:#0a1529;color:#e9f1ff;outline:none}
-    .row{display:flex;gap:10px;flex-wrap:wrap}
-    .btn{padding:10px 14px;border-radius:12px;border:1px solid #21406b;background:#0c2040;color:#e6f0ff;font-weight:700;cursor:pointer}
-    .btn.good{background:#174a2f;border-color:#1f6b45}
-    .btn.warn{background:#553a12;border-color:#7a5216}
-    .kv{display:grid;grid-template-columns:160px 1fr;gap:12px;align-items:center}
-    .small{color:var(--muted);font-size:12px}
-    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
-    .card{background:#0a1630;border:1px solid #1b2e58;border-radius:12px;padding:12px}
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Unité Rapide — Admin</title>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' https: data:; img-src 'self' https: data:; style-src 'self' 'unsafe-inline' https:; script-src 'self' 'unsafe-inline' https:; connect-src 'self' https:;" />
+<style>
+:root{--bg:#0b1020; --card:#111827; --muted:#94a3b8; --brand:#10b981; --danger:#ef4444; --info:#3b82f6; --amber:#f59e0b; --text:#e5e7eb; --shadow:0 10px 30px rgba(0,0,0,.35)}
+*{box-sizing:border-box} body{margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial,"Noto Sans",sans-serif; background:radial-gradient(1200px 800px at 10% 10%, #0b1225 0%, #0f172a 40%, #0a0f1f 100%); color:var(--text)}
+.wrap{max-width:1150px; margin:0 auto; padding:16px 20px}
+.card{background:linear-gradient(180deg, rgba(17,24,39,.95), rgba(17,24,39,.85)); border:1px solid rgba(148,163,184,.18); border-radius:18px; box-shadow:var(--shadow); padding:16px}
+.grid{display:grid; gap:14px}
+.grid.cols-3{grid-template-columns:repeat(3,1fr)}
+h2{margin:8px 0 12px}
+.input{width:100%; padding:10px 12px; border-radius:12px; border:1px solid rgba(148,163,184,.25); background:rgba(255,255,255,.06); color:#fff}
+.btn{display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:10px 12px; border-radius:12px; border:1px solid transparent; cursor:pointer; font-weight:800; color:#fff}
+.btn.primary{background:#10b98122; border:1px solid #10b98166}
+.btn.danger{background:#ef444422; border:1px solid #ef444455}
+.table{width:100%; border-collapse:collapse}
+.table th,.table td{border-bottom:1px solid rgba(148,163,184,.18); padding:8px 6px; font-size:.95rem}
+.badge{padding:4px 8px; border-radius:999px; border:1px solid rgba(148,163,184,.3); font-weight:700; font-size:.8rem}
+.row{display:flex; gap:10px; align-items:center; flex-wrap:wrap}
+.muted{color:var(--muted)}
+.center{display:flex; align-items:center; justify-content:center}
+.hidden{display:none}
+</style>
 </head>
 <body>
-  <div class="wrap">
-    <h1>Admin — Unité Rapide</h1><div id="login" class="panel">
-  <div class="kv">
-    <label>PIN administrateur</label>
-    <input id="pinIn" type="password" placeholder="Entrez le PIN (défaut 6996698877)">
+<div class="wrap">
+  <div class="card" id="loginCard">
+    <h2>Connexion Admin</h2>
+    <div class="grid" style="grid-template-columns:1fr 1fr; gap:10px">
+      <input id="admUser" class="input" placeholder="Nom admin (ex: phabogard)">
+      <input id="admPin" class="input" placeholder="PIN admin" type="password" inputmode="numeric">
+    </div>
+    <div class="row" style="margin-top:10px">
+      <button class="btn primary" id="btnLogin">Se connecter</button>
+    </div>
+    <p class="muted">Accès réservé — journal des accès enregistré localement.</p>
   </div>
-  <div style="margin-top:10px"><button id="openBtn" class="btn">Ouvrir</button></div>
-  <div class="small">Astuce : modifiez votre PIN ci‑dessous après connexion.</div>
+
+  <div class="card hidden" id="app">
+    <div class="row" style="justify-content:space-between">
+      <h2>Tableau de bord — Unité Rapide</h2>
+      <button class="btn danger" id="btnLogout">Se déconnecter</button>
+    </div>
+
+    <div class="grid cols-3">
+      <div class="card">
+        <div class="muted">👁️ Visites (global)</div>
+        <div id="statVisits" style="font-size:1.6rem; font-weight:900">—</div>
+      </div>
+      <div class="card">
+        <div class="muted">🛒 Achats déclarés (local + global)</div>
+        <div id="statPaid" style="font-size:1.6rem; font-weight:900">—</div>
+      </div>
+      <div class="card">
+        <div class="muted">💸 Gains estimés</div>
+        <div id="statRevenue" style="font-size:1.6rem; font-weight:900">—</div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:14px">
+      <div class="row" style="justify-content:space-between">
+        <strong>Ventes locales (cet appareil)</strong>
+        <div class="row">
+          <button class="btn primary" id="btnExport">Exporter (CSV)</button>
+          <button class="btn danger" id="btnClear">Effacer local</button>
+        </div>
+      </div>
+      <table class="table" id="tblSales">
+        <thead><tr><th>Date</th><th>Produit</th><th>Catégorie</th><th>Montant (FC)</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <div class="card" style="margin-top:14px">
+      <strong>Paramètres boutique</strong>
+      <div class="grid" style="grid-template-columns:1fr 1fr 1fr; gap:10px; margin-top:8px">
+        <div><div class="muted">Nom</div><input id="cfgBrand" class="input"></div>
+        <div><div class="muted">WhatsApp (international)</div><input id="cfgWa" class="input" placeholder="243..."></div>
+        <div><div class="muted">Airtel Money (texte)</div><input id="cfgAirtelName" class="input" placeholder="Nom sur compte"></div>
+        <div><div class="muted">Airtel Money (numéro affiché)</div><input id="cfgAirtelNum" class="input" placeholder="+243 ..."></div>
+        <div><div class="muted">Taux FC/$</div><input id="cfgRate" class="input" type="number" step="1"></div>
+      </div>
+      <div class="row" style="margin-top:10px">
+        <button class="btn primary" id="btnSaveCfg">Enregistrer (local)</button>
+      </div>
+      <p class="muted">Ces paramètres modifient l’affichage côté public (sur ce même appareil) via le stockage local. Pour propager à tous, mettez à jour votre Google Sheet publique.</p>
+    </div>
+
+    <div class="card" style="margin-top:14px">
+      <strong>Alertes</strong>
+      <ul id="alerts" class="muted" style="margin-top:6px"></ul>
+    </div>
+  </div>
 </div>
 
-<div id="app" style="display:none">
-  <div class="panel">
-    <h3>Alertes</h3>
-    <div class="small">Toutes les opérations sont côté navigateur (local). Exportez régulièrement vos données.</div>
-  </div>
+<script>
+// ====== CREDS ADMIN (ceux qu’on a convenu) ======
+const ADMIN_USER = "phabogard";
+const ADMIN_PIN  = "6996698877";
 
-  <div class="panel">
-    <h3>Paramètres</h3>
-    <div class="kv"><label>Nouveau PIN</label><input id="newPin" type="password" placeholder="Changer le PIN"></div>
-    <div class="kv"><label>Compte de retrait (Airtel Money)</label><input id="phone" placeholder="Ex: +243990564877"></div>
-    <div class="kv"><label>Nom du bénéficiaire</label><input id="owner" placeholder="Mugisho Stéphane"></div>
-    <div class="kv"><label>WhatsApp (numéro)</label><input id="wa" placeholder="+243990564877"></div>
-    <div class="kv"><label>Telegram (username)</label><input id="tg" placeholder="cphkkk66"></div>
-    <div class="kv"><label>Taux FC → $</label><input id="usdRate" type="number" placeholder="2800"></div>
-    <div class="kv"><label>Google Sheets (1 par ligne – pubHTML)</label><textarea id="sheets" rows="4"></textarea></div>
-    <div style="margin-top:10px" class="row">
-      <button id="saveSet" class="btn good">Enregistrer</button>
-      <button id="resetSet" class="btn warn">Réinitialiser (local)</button>
-    </div>
-  </div>
-
-  <div class="panel">
-    <h3>Produits (lecture des Sheets)</h3>
-    <div class="small">Colonnes attendues : name/nom, price/prix, category/categorie, img1..img5, description.</div>
-    <div class="row" style="margin:10px 0">
-      <button id="reload" class="btn">Recharger</button>
-      <button id="exportJson" class="btn">Exporter JSON</button>
-    </div>
-    <div id="products" class="grid"></div>
-  </div>
-
-  <div class="panel">
-    <h3>Historique (likes/commentaires)</h3>
-    <div class="row" style="margin:8px 0">
-      <button id="exportLocal" class="btn">Exporter (localStorage)</button>
-      <button id="clearLocal" class="btn warn">Nettoyer (local)</button>
-    </div>
-    <pre id="log" style="white-space:pre-wrap"></pre>
-  </div>
-</div>
-
-  </div><script>
-const DEFAULT_PIN = '6996698877';
-const KEY_PIN = 'ur_admin_pin';
-const KEY_SETTINGS = 'ur_settings';
-
-function getPin(){ return localStorage.getItem(KEY_PIN) || DEFAULT_PIN }
-function setPin(v){ localStorage.setItem(KEY_PIN, v) }
-
-function loadSettings(){ try{ return JSON.parse(localStorage.getItem(KEY_SETTINGS))||{} }catch{return {}} }
-function saveSettings(s){ localStorage.setItem(KEY_SETTINGS, JSON.stringify(s)) }
-
-function pubHtmlToCsv(url){
-  try{ const u=new URL(url); const gid=u.searchParams.get('gid')||'0'; return url.replace('pubhtml','pub').replace('single=true','')+`&output=csv&gid=${gid}` }catch{ return url }
+// ====== Feuille PUBLIC (pour calculer estimations si besoin) ======
+const SHEET_PUBLIC_HTML = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRNgEaiSzpwmHuoj1bfIFzi9A34beLlxoqz8_ocD5hvb7I2T-4GRcamMbFRCKvw5-lKivYqo3Kpg0Ti/pubhtml?gid=0&single=true";
+function htmlToCsv(url){
+  const gidMatch = url.match(/gid=(\\d+)/);
+  const gid = gidMatch? gidMatch[1] : "0";
+  return url.replace("/pubhtml?","/pub?").replace("single=true","output=csv").replace("html","").replace("pub?","pub?") + "&output=csv".replace("&&","&").replace("gid=0","gid="+gid);
 }
-async function fetchCSV(url){ const res=await fetch(url); const txt=await res.text(); const rows=txt.split(/\r?\n/).filter(Boolean).map(r=>r.split(',')); const head=rows.shift().map(h=>h.trim().toLowerCase()); return rows.map(r=>{const o={}; head.forEach((h,i)=>o[h]=r[i]||''); return o;}); }
+const SHEET_CSV_URL = htmlToCsv(SHEET_PUBLIC_HTML);
 
-// Login
-const login = document.getElementById('login');
+// ====== LOGIN ======
+const loginCard = document.getElementById('loginCard');
 const app = document.getElementById('app');
-openBtn.onclick = ()=>{
-  const ok = (pinIn.value||'') === getPin();
-  if(ok){ login.style.display='none'; app.style.display='block'; fillSettings(); loadAndRender(); }
-  else alert('PIN incorrect');
-}
-
-function fillSettings(){
-  const s = loadSettings();
-  phone.value = s.phone || '+243990564877';
-  owner.value = s.owner || 'Mugisho Stéphane';
-  wa.value = s.phone || '+243990564877';
-  tg.value = s.telegram || 'cphkkk66';
-  usdRate.value = s.usdRate || 2800;
-  sheets.value = (s.sheets || [
-    'https://docs.google.com/spreadsheets/d/e/2PACX-1vRNgEaiSzpwmHuoj1bfIFzi9A34beLlxoqz8_ocD5hvb7I2T-4GRcamMbFRCKvw5-lKivYqo3Kpg0Ti/pubhtml?gid=0&single=true',
-    'https://docs.google.com/spreadsheets/d/e/2PACX-1vRNgEaiSzpwmHuoj1bfIFzi9A34beLlxoqz8_ocD5hvb7I2T-4GRcamMbFRCKvw5-lKivYqo3Kpg0Ti/pubhtml?gid=2097070430&single=true',
-    'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ7yaRVA16yeVYrB9YAGs_ckiodiHqMns2igOT2ozVM92EXoBOJpCoxZzZ3NLxmHY1G_KqvYKZfvjTS/pubhtml?gid=0&single=true'
-  ]).join('\n');
-}
-
-saveSet.onclick = ()=>{
-  const s = loadSettings();
-  if(newPin.value){ setPin(newPin.value); newPin.value=''; alert('✅ PIN modifié'); }
-  const list = sheets.value.split(/\n+/).map(x=>x.trim()).filter(Boolean);
-  const out = { phone:phone.value.trim(), owner:owner.value.trim(), telegram:tg.value.trim(), usdRate:Number(usdRate.value)||2800, sheets:list };
-  saveSettings({...s,...out}); alert('✅ Paramètres enregistrés');
-}
-resetSet.onclick = ()=>{ if(confirm('Effacer paramètres locaux ?')){ localStorage.removeItem(KEY_SETTINGS); localStorage.removeItem(KEY_PIN); alert('Réinitialisé. Rechargez la page.'); location.reload(); } }
-
-async function loadAndRender(){
-  products.innerHTML='Chargement…';
-  const s = loadSettings();
-  let arr=[]; for(const h of (s.sheets||[])){ try{ const csv=pubHtmlToCsv(h); const rows=await fetchCSV(csv); arr=arr.concat(rows);}catch(e){ console.warn(e) } }
-  const mapped = arr.filter(r=>r.name||r.nom).map(r=>({
-    id: r.id || crypto.randomUUID(),
-    name: r.name||r.nom,
-    price: Number((r.price||r.prix||'0').toString().replace(/\D/g,''))||0,
-    category: r.category||r.categorie||'Autres',
-    images: [r.img1,r.img2,r.img3,r.img4,r.img5].filter(Boolean)
-  }));
-  products.innerHTML = mapped.map(p=>
-    `<div class="card"><strong>${p.name}</strong><div class="small">${p.category} — ${p.price} FC</div><div class="small">Images: ${p.images.length}</div></div>`
-  ).join('') || '<div class="small">Aucun produit lu. Vérifiez vos liens Google Sheets.</div>';
-}
-reload.onclick = loadAndRender;
-
-// Export/Import localStorage interactions
-exportLocal.onclick = ()=>{
-  const dump = Object.keys(localStorage).filter(k=>k.startsWith('ur_') && !k.includes('settings') && !k.includes('admin')).reduce((acc,k)=>{acc[k]=localStorage.getItem(k);return acc;},{});
-  const blob = new Blob([JSON.stringify(dump,null,2)],{type:'application/json'});
-  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download='ur-local-backup.json'; a.click();
-}
-clearLocal.onclick = ()=>{
-  if(confirm('Effacer likes/commentaires/vues stockés localement ?')){
-    Object.keys(localStorage).forEach(k=>{ if(k.startsWith('ur_') && !k.includes('settings') && !k.includes('admin')) localStorage.removeItem(k); });
-    alert('Nettoyé.');
+document.getElementById('btnLogin').onclick = ()=>{
+  const u = (document.getElementById('admUser').value||'').trim();
+  const p = (document.getElementById('admPin').value||'').trim();
+  if(u===ADMIN_USER && p===ADMIN_PIN){
+    localStorage.setItem('ur_admin_session','1');
+    loginCard.classList.add('hidden'); app.classList.remove('hidden');
+    boot();
+  }else{
+    alert("Identifiants invalides.");
   }
+};
+document.getElementById('btnLogout').onclick=()=>{
+  localStorage.removeItem('ur_admin_session');
+  location.reload();
+};
+if(localStorage.getItem('ur_admin_session')==='1'){
+  loginCard.classList.add('hidden'); app.classList.remove('hidden');
+  boot();
 }
-exportJson.onclick = ()=>{
-  const s = loadSettings();
-  const blob = new Blob([JSON.stringify(s,null,2)],{type:'application/json'});
-  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download='ur-settings.json'; a.click();
+
+// ====== STATS VISITES (CountAPI) & PAID ======
+async function getVisits(){
+  try{
+    const r = await fetch("https://api.countapi.xyz/get/uniterapide_public_v2/visits");
+    const j = await r.json();
+    return j.value||0;
+  }catch(e){ return 0; }
 }
-</script></body>
-      </html>
+async function getPaidSumLocal(){
+  const list = JSON.parse(localStorage.getItem('ur_paid')||'[]');
+  return {count:list.length, sum:list.reduce((a,b)=>a+Number(b.fc||0),0), list};
+}
+
+// ====== RENDER TABLE SALES ======
+function renderSales(list){
+  const tb = document.querySelector('#tblSales tbody');
+  tb.innerHTML = list.map(x=>{
+    const d = new Date(x.ts);
+    return `<tr><td>${d.toLocaleString('fr-FR')}</td><td>${x.name}</td><td>${x.cat}</td><td>${Number(x.fc).toLocaleString('fr-FR')} FC</td></tr>`;
+  }).join('');
+}
+
+// ====== EXPORT CSV ======
+function exportCSV(rows, filename="ventes_uniterapide.csv"){
+  const hdr = "date,produit,catégorie,fc\\n";
+  const body = rows.map(x=>{
+    const d = new Date(x.ts);
+    return `"${d.toISOString()}","${(x.name||'').replace(/"/g,'""')}","${(x.cat||'').replace(/"/g,'""')}",${x.fc}`;
+  }).join("\\n");
+  const blob = new Blob([hdr+body],{type:"text/csv;charset=utf-8;"});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob); a.download = filename; a.click();
+}
+
+// ====== CONFIG LOCALE ======
+function loadCfg(){
+  document.getElementById('cfgBrand').value = localStorage.getItem('cfg_brand')||'Uniterapide';
+  document.getElementById('cfgWa').value = localStorage.getItem('cfg_wa')||'243990564877';
+  document.getElementById('cfgAirtelName').value = localStorage.getItem('cfg_airtel_name')||'Mugisho Stéphane';
+  document.getElementById('cfgAirtelNum').value = localStorage.getItem('cfg_airtel_num')||'+243 990 564 877';
+  document.getElementById('cfgRate').value = localStorage.getItem('cfg_rate')||'2800';
+}
+function saveCfg(){
+  localStorage.setItem('cfg_brand', document.getElementById('cfgBrand').value.trim());
+  localStorage.setItem('cfg_wa', document.getElementById('cfgWa').value.trim());
+  localStorage.setItem('cfg_airtel_name', document.getElementById('cfgAirtelName').value.trim());
+  localStorage.setItem('cfg_airtel_num', document.getElementById('cfgAirtelNum').value.trim());
+  localStorage.setItem('cfg_rate', document.getElementById('cfgRate').value.trim());
+  alert("Paramètres enregistrés (locaux).");
+}
+
+// ====== ALERTES SIMPLE ======
+function addAlert(msg){ const ul=document.getElementById('alerts'); const li=document.createElement('li'); li.textContent=msg; ul.appendChild(li); }
+async function boot(){
+  loadCfg();
+
+  // visites
+  const v = await getVisits();
+  document.getElementById('statVisits').textContent = v.toLocaleString('fr-FR');
+
+  // paid
+  const paidLocal = await getPaidSumLocal();
+  document.getElementById('statPaid').textContent = `${paidLocal.count} achats / ${paidLocal.sum.toLocaleString('fr-FR')} FC`;
+  renderSales(paidLocal.list);
+
+  // gains estimés (ex: 8% de marge configurable ici)
+  const MARGE = 0.08;
+  const revenue = Math.round(paidLocal.sum * MARGE);
+  document.getElementById('statRevenue').textContent = `${revenue.toLocaleString('fr-FR')} FC (≈ ${Math.round(revenue/ (Number(localStorage.getItem('cfg_rate')||'2800')))} $)`;
+
+  // alertes basiques
+  if(v===0) addAlert("Alerte: compteur de visites indisponible.");
+  if(paidLocal.count===0) addAlert("Alerte: aucun achat déclaré localement pour le moment.");
+  if(!localStorage.getItem('cfg_brand')) addAlert("Recommandation: complétez vos paramètres boutique.");
+}
+
+// actions
+document.getElementById('btnExport').onclick = async ()=>{
+  const paidLocal = await getPaidSumLocal();
+  exportCSV(paidLocal.list);
+};
+document.getElementById('btnClear').onclick = ()=>{
+  if(confirm("Effacer les ventes locales sur cet appareil ?")){ localStorage.removeItem('ur_paid'); boot(); }
+};
+document.getElementById('btnSaveCfg').onclick = saveCfg;
+</script>
+</body>
+</html></script>
+</body>
+  </html>
