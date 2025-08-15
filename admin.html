@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Admin — Unité Rapide</title>
+<style>
+:root{
+  --bg:#0b1220; --card:#121a2b; --muted:#93a2b7; --txt:#e7eefc; --pri:#4f7cff; --ok:#12c48b; --warn:#ffb020; --bad:#ff5a6b;
+  --radius:16px;
+}
+:root.light{ --bg:#f6f7fb; --card:#ffffff; --muted:#5b6b7c; --txt:#1b2430; --pri:#3157ff; }
+*{box-sizing:border-box} html,body{margin:0;height:100%}
+body{font-family:Inter,system-ui,Segoe UI,Arial; background:var(--bg); color:var(--txt);}
+a{color:inherit}
+.btn{background:var(--pri); color:#fff; border:none; border-radius:12px; padding:.8rem 1rem; font-weight:600; cursor:pointer}
+.btn.ghost{background:transparent;border:1px solid #2e3b55}
+.input,select,textarea{width:100%; padding:.8rem 1rem; border-radius:12px; border:1px solid #2b3957; background:#0e1729; color:var(--txt)}
+.light .input,.light select,.light textarea{background:#fff;border-color:#e7eaf2;color:var(--txt)}
+.grid{display:grid; gap:16px}
+.card{background:var(--card); border-radius:var(--radius); padding:16px; box-shadow:0 4px 18px rgba(0,0,0,.18)}
+.row{display:flex; align-items:center; gap:12px; flex-wrap:wrap}
+.badge{padding:.25rem .6rem; background:#20304b; border-radius:999px; font-size:.8rem}
+.kpi{display:grid; grid-template-columns:repeat(4,minmax(160px,1fr)); gap:16px}
+.kpi .card h2{margin:.3rem 0 0; font-size:1.6rem}
+.small{font-size:.9rem; color:var(--muted)}
+/* layout */
+.shell{display:grid; grid-template-columns: 280px 1fr; height:100vh}
+.aside{background:linear-gradient(180deg,#0e1526,#0b1220 60%); border-right:1px solid #1f2c46; padding:18px 14px; overflow:auto}
+.brand{font-weight:800; letter-spacing:.3px; font-size:1.15rem}
+.menu{margin-top:14px}
+.menu .item{display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:12px; cursor:pointer; color:#c8d4e5}
+.menu .item.active,.menu .item:hover{background:#1a2540; color:#fff}
+.main{overflow:auto}
+.topbar{display:flex; align-items:center; justify-content:space-between; padding:14px 18px; border-bottom:1px solid #1f2c46}
+.section{padding:18px}
+.hidden{display:none}
+footer{padding:20px; text-align:center; color:var(--muted)}
+/* login */
+.login-wrap{max-width:440px;margin:6vh auto;padding:22px}
+.login-title{font-size:1.4rem; font-weight:800}
+hr{border:none; border-top:1px solid #20304b; margin:12px 0}
+.table{width:100%; border-collapse:collapse}
+.table th,.table td{padding:10px 8px; border-bottom:1px solid #20304b; text-align:left}
+.table th{color:var(--muted); font-weight:600; font-size:.9rem}
+.tag{border:1px solid #2b3957; border-radius:8px; padding:4px 8px; font-size:.85rem}
+.switch{display:inline-flex; gap:10px; align-items:center}
+.switch input{transform:scale(1.2)}
+@media(max-width:900px){ .shell{grid-template-columns:1fr} .aside{position:fixed; inset:0 auto 0 -300px; width:260px; z-index:40; transition:transform .25s} .aside.open{transform:translateX(300px)} .topbar .btn{padding:.6rem .8rem}}
+</style>
+</head>
+<body>
+
+<!-- ============= AUTH ============= -->
+<div id="auth" class="login-wrap card">
+  <div class="login-title">Connexion administrateur</div>
+  <div class="small" style="margin-top:6px">Double sécurité : <b>Utilisateur</b> + <b>PIN</b></div>
+  <hr/>
+  <div class="grid" style="grid-template-columns:1fr">
+    <label>Nom d’utilisateur
+      <input id="uLogin" class="input" placeholder="ex. phabogard" autocomplete="username"/>
+    </label>
+    <label>Code PIN
+      <input id="pLogin" class="input" placeholder="••••••••" inputmode="numeric" autocomplete="current-password"/>
+    </label>
+    <button class="btn" onclick="login()">Se connecter</button>
+  </div>
+  <div id="authMsg" class="small" style="margin-top:10px;color:#ff9a9a"></div>
+</div>
+
+<!-- ============= APP ============= -->
+<div id="app" class="shell hidden">
+
+  <!-- aside -->
+  <aside id="aside" class="aside">
+    <div class="brand">⚡ Unité Rapide — Admin</div>
+    <div class="small" style="margin-top:4px">Connecté : <span id="who"></span></div>
+    <div class="menu">
+      <div class="item active" data-page="dash">📊 Tableau de bord</div>
+      <div class="item" data-page="products">📦 Produits</div>
+      <div class="item" data-page="orders">🧾 Commandes</div>
+      <div class="item" data-page="comments">💬 Commentaires</div>
+      <div class="item" data-page="payouts">💸 Pourcentages</div>
+      <div class="item" data-page="settings">⚙️ Paramètres</div>
+      <div class="item" data-page="security">🔐 Sécurité</div>
+      <div class="item" onclick="logout()">🚪 Déconnexion</div>
+    </div>
+    <footer>© <span id="year"></span> Unité Rapide</footer>
+  </aside>
+
+  <!-- main -->
+  <main class="main">
+    <div class="topbar">
+      <button class="btn ghost" onclick="toggleAside()">☰ Menu</button>
+      <div class="row">
+        <label class="switch small"><input id="langSwitch" type="checkbox" onchange="toggleLang()"> <span id="t_lang">FR</span></label>
+        <label class="switch small"><input id="themeSwitch" type="checkbox" onchange="toggleTheme()"> <span id="t_theme">Sombre</span></label>
+      </div>
+    </div>
+
+    <!-- pages -->
+    <section id="page-dash" class="section">
+      <h2>📊 Tableau de bord</h2>
+      <div class="kpi">
+        <div class="card"><div class="small">Produits</div><h2 id="kProducts">0</h2></div>
+        <div class="card"><div class="small">Promos actives</div><h2 id="kPromos">0</h2></div>
+        <div class="card"><div class="small">Commandes (local)</div><h2 id="kOrders">0</h2></div>
+        <div class="card"><div class="small">Revenu (estim.)</div><h2 id="kRevenue">0 FC</h2></div>
+      </div>
+      <div class="card" style="margin-top:16px">
+        <div class="small">Aperçu rapide</div>
+        <div id="dashInfo" style="margin-top:8px"></div>
+      </div>
+    </section>
+
+    <section id="page-products" class="section hidden">
+      <h2>📦 Produits</h2>
+      <div class="row">
+        <button class="btn" onclick="importSheets()">↻ Charger depuis Google Sheets</button>
+        <button class="btn ghost" onclick="exportJSON()">Exporter JSON</button>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Admin — Unité Rapide</title>
+<style>
+:root{
+  --bg:#0b1220; --card:#121a2b; --muted:#93a2b7; --txt:#e7eefc; --pri:#4f7cff; --ok:#12c48b; --warn:#ffb020; --bad:#ff5a6b;
+  --radius:16px;
+}
+:root.light{ --bg:#f6f7fb; --card:#ffffff; --muted:#5b6b7c; --txt:#1b2430; --pri:#3157ff; }
+*{box-sizing:border-box} html,body{margin:0;height:100%}
+body{font-family:Inter,system-ui,Segoe UI,Arial; background:var(--bg); color:var(--txt);}
+a{color:inherit}
+.btn{background:var(--pri); color:#fff; border:none; border-radius:12px; padding:.8rem 1rem; font-weight:600; cursor:pointer}
+.btn.ghost{background:transparent;border:1px solid #2e3b55}
+.input,select,textarea{width:100%; padding:.8rem 1rem; border-radius:12px; border:1px solid #2b3957; background:#0e1729; color:var(--txt)}
+.light .input,.light select,.light textarea{background:#fff;border-color:#e7eaf2;color:var(--txt)}
+.grid{display:grid; gap:16px}
+.card{background:var(--card); border-radius:var(--radius); padding:16px; box-shadow:0 4px 18px rgba(0,0,0,.18)}
+.row{display:flex; align-items:center; gap:12px; flex-wrap:wrap}
+.badge{padding:.25rem .6rem; background:#20304b; border-radius:999px; font-size:.8rem}
+.kpi{display:grid; grid-template-columns:repeat(4,minmax(160px,1fr)); gap:16px}
+.kpi .card h2{margin:.3rem 0 0; font-size:1.6rem}
+.small{font-size:.9rem; color:var(--muted)}
+/* layout */
+.shell{display:grid; grid-template-columns: 280px 1fr; height:100vh}
+.aside{background:linear-gradient(180deg,#0e1526,#0b1220 60%); border-right:1px solid #1f2c46; padding:18px 14px; overflow:auto}
+.brand{font-weight:800; letter-spacing:.3px; font-size:1.15rem}
+.menu{margin-top:14px}
+.menu .item{display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:12px; cursor:pointer; color:#c8d4e5}
+.menu .item.active,.menu .item:hover{background:#1a2540; color:#fff}
+.main{overflow:auto}
+.topbar{display:flex; align-items:center; justify-content:space-between; padding:14px 18px; border-bottom:1px solid #1f2c46}
+.section{padding:18px}
+.hidden{display:none}
+footer{padding:20px; text-align:center; color:var(--muted)}
+/* login */
+.login-wrap{max-width:440px;margin:6vh auto;padding:22px}
+.login-title{font-size:1.4rem; font-weight:800}
+hr{border:none; border-top:1px solid #20304b; margin:12px 0}
+.table{width:100%; border-collapse:collapse}
+.table th,.table td{padding:10px 8px; border-bottom:1px solid #20304b; text-align:left}
+.table th{color:var(--muted); font-weight:600; font-size:.9rem}
+.tag{border:1px solid #2b3957; border-radius:8px; padding:4px 8px; font-size:.85rem}
+.switch{display:inline-flex; gap:10px; align-items:center}
+.switch input{transform:scale(1.2)}
+@media(max-width:900px){ .shell{grid-template-columns:1fr} .aside{position:fixed; inset:0 auto 0 -300px; width:260px; z-index:40; transition:transform .25s} .aside.open{transform:translateX(300px)} .topbar .btn{padding:.6rem .8rem}}
+</style>
+</head>
+<body>
+
+<!-- ============= AUTH ============= -->
+<div id="auth" class="login-wrap card">
+  <div class="login-title">Connexion administrateur</div>
+  <div class="small" style="margin-top:6px">Double sécurité : <b>Utilisateur</b> + <b>PIN</b></div>
+  <hr/>
+  <div class="grid" style="grid-template-columns:1fr">
+    <label>Nom d’utilisateur
+      <input id="uLogin" class="input" placeholder="ex. phabogard" autocomplete="username"/>
+    </label>
+    <label>Code PIN
+      <input id="pLogin" class="input" placeholder="••••••••" inputmode="numeric" autocomplete="current-password"/>
+    </label>
+    <button class="btn" onclick="login()">Se connecter</button>
+  </div>
+  <div id="authMsg" class="small" style="margin-top:10px;color:#ff9a9a"></div>
+</div>
+
+<!-- ============= APP ============= -->
+<div id="app" class="shell hidden">
+
+  <!-- aside -->
+  <aside id="aside" class="aside">
+    <div class="brand">⚡ Unité Rapide — Admin</div>
+    <div class="small" style="margin-top:4px">Connecté : <span id="who"></span></div>
+    <div class="menu">
+      <div class="item active" data-page="dash">📊 Tableau de bord</div>
+      <div class="item" data-page="products">📦 Produits</div>
+      <div class="item" data-page="orders">🧾 Commandes</div>
+      <div class="item" data-page="comments">💬 Commentaires</div>
+      <div class="item" data-page="payouts">💸 Pourcentages</div>
+      <div class="item" data-page="settings">⚙️ Paramètres</div>
+      <div class="item" data-page="security">🔐 Sécurité</div>
+      <div class="item" onclick="logout()">🚪 Déconnexion</div>
+    </div>
+    <footer>© <span id="year"></span> Unité Rapide</footer>
+  </aside>
+
+  <!-- main -->
+  <main class="main">
+    <div class="topbar">
+      <button class="btn ghost" onclick="toggleAside()">☰ Menu</button>
+      <div class="row">
+        <label class="switch small"><input id="langSwitch" type="checkbox" onchange="toggleLang()"> <span id="t_lang">FR</span></label>
+        <label class="switch small"><input id="themeSwitch" type="checkbox" onchange="toggleTheme()"> <span id="t_theme">Sombre</span></label>
+      </div>
+    </div>
+
+    <!-- pages -->
+    <section id="page-dash" class="section">
+      <h2>📊 Tableau de bord</h2>
+      <div class="kpi">
+        <div class="card"><div class="small">Produits</div><h2 id="kProducts">0</h2></div>
+        <div class="card"><div class="small">Promos actives</div><h2 id="kPromos">0</h2></div>
+        <div class="card"><div class="small">Commandes (local)</div><h2 id="kOrders">0</h2></div>
+        <div class="card"><div class="small">Revenu (estim.)</div><h2 id="kRevenue">0 FC</h2></div>
+      </div>
+      <div class="card" style="margin-top:16px">
+        <div class="small">Aperçu rapide</div>
+        <div id="dashInfo" style="margin-top:8px"></div>
+      </div>
+    </section>
+
+    <section id="page-products" class="section hidden">
+      <h2>📦 Produits</h2>
+      <div class="row">
+        <button class="btn" onclick="importSheets()">↻ Charger depuis Google Sheets</button>
+        <button class="btn ghost" onclick="exportJSON()">Exporter JSON</button>
+      </div>
+      <div class="card" style="margin-top:12px">
+        <table class="table" id="prodTable">
+          <thead><tr><th>#</th><th>Nom</th><th>Catégorie</th><th>Prix FC</th><th>Promo</th><th>Stock</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="page-orders" class="section hidden">
+      <h2>🧾 Commandes (simulation locale)</h2>
+      <div class="small">Ces données proviennent des tests sur la boutique publique (localStorage).</div>
+      <div class="card" style="margin-top:12px">
+        <table class="table" id="orderTable">
+          <thead><tr><th>ID</th><th>Date</th><th>Articles</th><th>Total</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="page-comments" class="section hidden">
+      <h2>💬 Commentaires</h2>
+      <div class="card">
+        <div id="cList" class="grid"></div>
+        <button class="btn" style="margin-top:10px" onclick="fakeComment()">Ajouter un commentaire de test</button>
+      </div>
+    </section>
+
+    <section id="page-payouts" class="section hidden">
+      <h2>💸 Pourcentages & Revenus</h2>
+      <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr))">
+        <label>Pourcentage Admin (%)
+          <input id="pctAdmin" class="input" type="number" value="12">
+        </label>
+        <label>Pourcentage Partenaire (%)
+          <input id="pctPartner" class="input" type="number" value="88">
+        </label>
+        <label>Montant ventes (mois) en FC
+          <input id="salesFc" class="input" type="number" value="0">
+        </label>
+      </div>
+      <div class="row" style="margin-top:10px">
+        <button class="btn" onclick="calcPayouts()">Calculer</button>
+        <span id="payoutMsg" class="badge"></span>
+      </div>
+      <div class="card" style="margin-top:12px">
+        <div id="payoutResult"></div>
+      </div>
+    </section>
+
+    <section id="page-settings" class="section hidden">
+      <h2>⚙️ Paramètres</h2>
+      <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr))">
+        <label>Numéro Airtel Money (principal)
+          <input id="sAirtel" class="input" placeholder="+243..." />
+        </label>
+        <label>WhatsApp pour preuves de paiement
+          <input id="sWA" class="input" placeholder="243xxxxxxxxx (sans +)"/>
+        </label>
+        <label>Telegram (username sans @)
+          <input id="sTG" class="input" placeholder="ex. uniterapide"/>
+        </label>
+      </div>
+      <h3 style="margin-top:18px">Sources Google Sheets</h3>
+      <div class="grid">
+        <label>Feuille 1 (produits)
+          <input id="sSheet1" class="input"/>
+        </label>
+        <label>Feuille 2 (images / variantes)
+          <input id="sSheet2" class="input"/>
+        </label>
+        <label>Feuille 3 (catégories / unités)
+          <input id="sSheet3" class="input"/>
+        </label>
+      </div>
+      <div class="row" style="margin-top:12px">
+        <button class="btn" onclick="saveSettings()">Enregistrer</button>
+        <span id="saveMsg" class="badge"></span>
+      </div>
+    </section>
+
+    <section id="page-security" class="section hidden">
+      <h2>🔐 Sécurité</h2>
+      <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr))">
+        <label>Nouveau nom d’utilisateur
+          <input id="newUser" class="input" placeholder="ex. phabogard">
+        </label>
+        <label>Nouveau PIN (4–12 chiffres)
+          <input id="newPin" class="input" inputmode="numeric" placeholder="••••">
+        </label>
+      </div>
+      <div class="row" style="margin-top:10px">
+        <button class="btn" onclick="changeCreds()">Mettre à jour</button>
+        <span class="small" id="secMsg"></span>
+      </div>
+      <hr/>
+      <div class="row">
+        <button class="btn ghost" onclick="logout()">Déconnexion immédiate</button>
+        <span class="small">La session se ferme aussi automatiquement après 20 min d’inactivité.</span>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script>
+/* ========= CONFIG PAR DÉFAUT (modifiables dans Paramètres) ========= */
+const DEFAULTS = {
+  USERNAME: 'phabogard',
+  PIN:      '6996698877',
+  AIRTEL:   '+243990564877',
+  WHATSAPP: '243990564877',      // sans +
+  TELEGRAM: 'uniterapide',
+  SHEETS: [
+    'https://docs.google.com/spreadsheets/d/e/2PACX-1vRNgEaiSzpwmHuoj1bfIFzi9A34beLlxoqz8_ocD5hvb7I2T-4GRcamMbFRCKvw5-lKivYqo3Kpg0Ti/pubhtml?gid=0&single=true',
+    'https://docs.google.com/spreadsheets/d/e/2PACX-1vRNgEaiSzpwmHuoj1bfIFzi9A34beLlxoqz8_ocD5hvb7I2T-4GRcamMbFRCKvw5-lKivYqo3Kpg0Ti/pubhtml?gid=2097070430&single=true',
+    'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ7yaRVA16yeVYrB9YAGs_ckiodiHqMns2igOT2ozVM92EXoBOJpCoxZzZ3NLxmHY1G_KqvYKZfvjTS/pubhtml?gid=0&single=true'
+  ]
+};
+const LS = {
+  CREDS:'UR_CREDS', SET:'UR_SETTINGS', ORDER:'UR_ORDERS', PRODS:'UR_PRODUCTS',
+  COMMENTS:'UR_COMMENTS', THEME:'UR_THEME', LANG:'UR_LANG'
+};
+const T = {
+  fr:{FR:'FR',EN:'EN', ThemeDark:'Sombre', ThemeLight:'Clair'},
+  en:{FR:'FR',EN:'EN', ThemeDark:'Dark', ThemeLight:'Light'}
+};
+let LANG = localStorage.getItem(LS.LANG)||'fr';
+
+/* ========= UTIL ========= */
+const $=s=>document.querySelector(s);
+const $$=s=>document.querySelectorAll(s);
+const fmtFC = n => (Number(n||0)).toLocaleString('fr-CD')+' FC';
+const toCsvUrl = u => u.replace('/pubhtml?','/pub?')+'&output=csv';
+
+/* ========= AUTH ========= */
+function getCreds(){
+  const c = JSON.parse(localStorage.getItem(LS.CREDS)||'null') || {u:DEFAULTS.USERNAME,p:DEFAULTS.PIN};
+  return c;
+}
+function login(){
+  const {u,p}=getCreds();
+  const U=$('#uLogin').value.trim(), P=$('#pLogin').value.trim();
+  if(!U||!P){$('#authMsg').textContent='Entrez utilisateur et PIN';return}
+  if(U===u && P===p){
+    sessionStorage.setItem('UR_AUTH','1');
+    $('#auth').classList.add('hidden'); $('#app').classList.remove('hidden');
+    postLogin();
+  }else{
+    $('#authMsg').textContent='Identifiants invalides';
+  }
+}
+function logout(){ sessionStorage.removeItem('UR_AUTH'); location.reload(); }
+
+/* ========= THEME / LANG ========= */
+function applyTheme(){
+  const them = localStorage.getItem(LS.THEME)||'dark';
+  document.documentElement.classList.toggle('light', them==='light');
+  $('#themeSwitch').checked = them==='light';
+  $('#t_theme').textContent = them==='light' ? (LANG==='fr'?T.fr.ThemeLight:T.en.ThemeLight) : (LANG==='fr'?T.fr.ThemeDark:T.en.ThemeDark);
+}
+function toggleTheme(){
+  const cur = localStorage.getItem(LS.THEME)||'dark';
+  localStorage.setItem(LS.THEME, cur==='dark'?'light':'dark'); applyTheme();
+}
+function applyLang(){
+  LANG = localStorage.getItem(LS.LANG)||'fr';
+  $('#langSwitch').checked = (LANG==='en');
+  $('#t_lang').textContent = LANG==='en'?T.en.EN:T.fr.FR;
+}
+function toggleLang(){ localStorage.setItem(LS.LANG, $('#langSwitch').checked?'en':'fr'); applyLang(); }
+
+/* ========= NAV ========= */
+function toggleAside(){ $('#aside').classList.toggle('open'); }
+$$('.menu .item').forEach(i=>i.addEventListener('click',e=>{
+  const p = i.getAttribute('data-page'); if(!p) return;
+  $$('.menu .item').forEach(x=>x.classList.remove('active')); i.classList.add('active');
+  $$('[id^=page-]').forEach(s=>s.classList.add('hidden'));
+  $('#page-'+p).classList.remove('hidden');
+  $('#aside').classList.remove('open');
+}));
+
+/* ========= SETTINGS ========= */
+function getSettings(){
+  const s = JSON.parse(localStorage.getItem(LS.SET)||'null');
+  if(s) return s;
+  const def = {airtel:DEFAULTS.AIRTEL, wa:DEFAULTS.WHATSAPP, tg:DEFAULTS.TELEGRAM, sheets:DEFAULTS.SHEETS};
+  localStorage.setItem(LS.SET,JSON.stringify(def)); return def;
+}
+function loadSettingsUI(){
+  const s=getSettings();
+  $('#sAirtel').value=s.airtel; $('#sWA').value=s.wa; $('#sTG').value=s.tg;
+  $('#sSheet1').value=s.sheets[0]; $('#sSheet2').value=s.sheets[1]; $('#sSheet3').value=s.sheets[2];
+}
+function saveSettings(){
+  const s={airtel:$('#sAirtel').value.trim(), wa:$('#sWA').value.trim(), tg:$('#sTG').value.trim(),
+           sheets:[$('#sSheet1').value.trim(),$('#sSheet2').value.trim(),$('#sSheet3').value.trim()]};
+  localStorage.setItem(LS.SET,JSON.stringify(s));
+  $('#saveMsg').textContent='✅ Sauvegardé';
+  setTimeout(()=>$('#saveMsg').textContent='',2000);
+}
+
+/* ========= SECURITY ========= */
+function changeCreds(){
+  const u=$('#newUser').value.trim(), p=$('#newPin').value.trim();
+  if(u.length<3 || p.length<4){ $('#secMsg').textContent='Entrées invalides'; return; }
+  localStorage.setItem(LS.CREDS, JSON.stringify({u,p}));
+  $('#secMsg').textContent='✅ Identifiants mis à jour. Reconnexion…';
+  setTimeout(()=>logout(),800);
+}
+
+/* ========= DATA: PRODUCTS / ORDERS / COMMENTS ========= */
+let PRODUCTS=[];
+function setProducts(arr){
+  PRODUCTS = arr; localStorage.setItem(LS.PRODS, JSON.stringify(arr));
+  $('#kProducts').textContent=arr.length;
+  $('#kPromos').textContent=arr.filter(p=>String(p.promo||'').trim()).length;
+  // render list
+  const tb=$('#prodTable tbody'); tb.innerHTML='';
+  arr.forEach((p,i)=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td>${i+1}</td><td>${p.name||'-'}</td><td><span class="tag">${p.cat||'-'}</span></td>
+      <td>${fmtFC(p.priceFC||0)}</td><td>${p.promo||''}</td><td>${p.stock||''}</td>`;
+    tb.appendChild(tr);
+  });
+}
+function importSheets(){
+  const s=getSettings().sheets.map(toCsvUrl);
+  Promise.all(s.map(u=>fetch(u).then(r=>r.text()))).then(csvs=>{
+    // très simple parse CSV
+    const parse=txt=>txt.split(/\r?\n/).map(l=>l.split(','));
+    const rows=parse(csvs[0]); // on prend la feuille principale
+    const head=rows.shift().map(h=>h.toLowerCase());
+    const ridx = Object.fromEntries(head.map((h,i)=>[h,i]));
+    const out=[];
+    rows.forEach(r=>{
+      if(!r.length) return;
+      const name=(r[ridx.name]||'').trim();
+      const priceFC=Number((r[ridx.pricefc]||'').replace(/\D/g,''))||0;
+      const cat=(r[ridx.cat]||'').trim();
+      const promo=(r[ridx.promo]||'').trim();
+      const stock=(r[ridx.stock]||'').trim();
+      out.push({name,priceFC,cat,promo,stock});
+    });
+    setProducts(out);
+    $('#dashInfo').textContent='Produits importés depuis Google Sheets.';
+  }).catch(e=>{
+    console.error(e); alert('Erreur d’import. Vérifie que les feuilles sont bien publiées.');
+  });
+}
+function exportJSON(){
+  const blob=new Blob([JSON.stringify(PRODUCTS,null,2)],{type:'application/json'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='produits.json'; a.click();
+}
+function loadOrders(){
+  const ord = JSON.parse(localStorage.getItem(LS.ORDER)||'[]');
+  $('#kOrders').textContent=ord.length;
+  const total = ord.reduce((s,o)=>s+(o.total||0),0);
+  $('#kRevenue').textContent = fmtFC(total);
+  const tb=$('#orderTable tbody'); tb.innerHTML='';
+  ord.forEach(o=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td>${o.id}</td><td>${o.date}</td><td>${o.items||'-'}</td><td>${fmtFC(o.total)}</td>`;
+    tb.appendChild(tr);
+  });
+}
+function loadComments(){
+  const c = JSON.parse(localStorage.getItem(LS.COMMENTS)||'[]');
+  const box=$('#cList'); box.innerHTML='';
+  c.forEach((x,i)=>{
+    const div=document.createElement('div'); div.className='card';
+    div.innerHTML=`<div class="row" style="justify-content:space-between">
+      <div><b>${x.name}</b> <span class="small">(${x.when})</span><div class="small">${x.text}</div></div>
+      <button class="btn ghost" onclick="delComment(${i})">Supprimer</button>
+    </div>`;
+    box.appendChild(div);
+  });
+}
+function saveComment(c){
+  const arr=JSON.parse(localStorage.getItem(LS.COMMENTS)||'[]'); arr.unshift(c);
+  localStorage.setItem(LS.COMMENTS,JSON.stringify(arr)); loadComments();
+}
+function delComment(i){
+  const arr=JSON.parse(localStorage.getItem(LS.COMMENTS)||'[]'); arr.splice(i,1);
+  localStorage.setItem(LS.COMMENTS,JSON.stringify(arr)); loadComments();
+}
+function fakeComment(){ // pour tester
+  saveComment({name:'Visiteur', text:'Super site, rapide 👌', when:new Date().toLocaleString()});
+}
+
+/* ========= PAYOUTS ========= */
+function calcPayouts(){
+  const a=Number($('#pctAdmin').value||0), p=Number($('#pctPartner').value||0), s=Number($('#salesFc').value||0);
+  if(a+p!==100){ $('#payoutMsg').textContent='⚠️ Les pourcentages doivent faire 100%'; return; }
+  $('#payoutMsg').textContent='';
+  const admin=Math.round(s*a/100), partner=s-admin;
+  $('#payoutResult').innerHTML=`<div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr))">
+    <div class="card"><div class="small">Part Admin (${a}%)</div><h2>${fmtFC(admin)}</h2></div>
+    <div class="card"><div class="small">Part Partenaire (${p}%)</div><h2>${fmtFC(partner)}</h2></div>
+    <div class="card"><div class="small">Total ventes</div><h2>${fmtFC(s)}</h2></div>
+  </div>`;
+}
+
+/* ========= SESSION & INIT ========= */
+let idleTimer=null;
+function armIdle(){ clearTimeout(idleTimer); idleTimer=setTimeout(()=>logout(), 20*60*1000); }
+['click','keydown','mousemove','touchstart'].forEach(ev=>document.addEventListener(ev,armIdle,{passive:true}));
+
+function postLogin(){
+  $('#who').textContent = getCreds().u;
+  document.getElementById('year').textContent=new Date().getFullYear();
+  applyTheme(); applyLang(); loadSettingsUI();
+  // charger éventuels produits locaux
+  const p = JSON.parse(localStorage.getItem(LS.PRODS)||'[]'); setProducts(p);
+  loadOrders(); loadComments(); armIdle();
+}
+(function boot(){
+  if(sessionStorage.getItem('UR_AUTH')){ $('#auth').classList.add('hidden'); $('#app').classList.remove('hidden'); postLogin(); }
+})();
+</script>
+</body>
+</html>￼Enter      </div>
+      <div class="card" style="margin-top:12px">
+        <table class="table" id="prodTable">
+          <thead><tr><th>#</th><th>Nom</th><th>Catégorie</th><th>Prix FC</th><th>Promo</th><th>Stock</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="page-orders" class="section hidden">
+      <h2>🧾 Commandes (simulation locale)</h2>
+      <div class="small">Ces données proviennent des tests sur la boutique publique (localStorage).</div>
+      <div class="card" style="margin-top:12px">
+        <table class="table" id="orderTable">
+          <thead><tr><th>ID</th><th>Date</th><th>Articles</th><th>Total</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="page-comments" class="section hidden">
+      <h2>💬 Commentaires</h2>
+      <div class="card">
+        <div id="cList" class="grid"></div>
+        <button class="btn" style="margin-top:10px" onclick="fakeComment()">Ajouter un commentaire de test</button>
+      </div>
+    </section>
+
+    <section id="page-payouts" class="section hidden">
+      <h2>💸 Pourcentages & Revenus</h2>
+      <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr))">
+        <label>Pourcentage Admin (%)
+          <input id="pctAdmin" class="input" type="number" value="12">
+        </label>
+        <label>Pourcentage Partenaire (%)
+          <input id="pctPartner" class="input" type="number" value="88">
+        </label>
+        <label>Montant ventes (mois) en FC
+          <input id="salesFc" class="input" type="number" value="0">
+        </label>
+      </div>
+      <div class="row" style="margin-top:10px">
+        <button class="btn" onclick="calcPayouts()">Calculer</button>
+        <span id="payoutMsg" class="badge"></span>
+      </div>
+      <div class="card" style="margin-top:12px">
+        <div id="payoutResult"></div>
+      </div>
+    </section>
+
+    <section id="page-settings" class="section hidden">
+      <h2>⚙️ Paramètres</h2>
+      <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr))">
+        <label>Numéro Airtel Money (principal)
+          <input id="sAirtel" class="input" placeholder="+243..." />
+        </label>
+        <label>WhatsApp pour preuves de paiement
+          <input id="sWA" class="input" placeholder="243xxxxxxxxx (sans +)"/>
+        </label>
+        <label>Telegram (username sans @)
+          <input id="sTG" class="input" placeholder="ex. uniterapide"/>
+        </label>
+      </div>
+      <h3 style="margin-top:18px">Sources Google Sheets</h3>
+      <div class="grid">
+        <label>Feuille 1 (produits)
+          <input id="sSheet1" class="input"/>
+        </label>
+        <label>Feuille 2 (images / variantes)
+          <input id="sSheet2" class="input"/>
+        </label>
+        <label>Feuille 3 (catégories / unités)
+          <input id="sSheet3" class="input"/>
+        </label>
+      </div>
+      <div class="row" style="margin-top:12px">
+        <button class="btn" onclick="saveSettings()">Enregistrer</button>
+        <span id="saveMsg" class="badge"></span>
+      </div>
+    </section>
+
+    <section id="page-security" class="section hidden">
+      <h2>🔐 Sécurité</h2>
+      <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr))">
+        <label>Nouveau nom d’utilisateur
+          <input id="newUser" class="input" placeholder="ex. phabogard">
+        </label>
+        <label>Nouveau PIN (4–12 chiffres)
+          <input id="newPin" class="input" inputmode="numeric" placeholder="••••">
+        </label>
+      </div>
+      <div class="row" style="margin-top:10px">
+        <button class="btn" onclick="changeCreds()">Mettre à jour</button>
+        <span class="small" id="secMsg"></span>
+      </div>
+      <hr/>
+      <div class="row">
+        <button class="btn ghost" onclick="logout()">Déconnexion immédiate</button>
+        <span class="small">La session se ferme aussi automatiquement après 20 min d’inactivité.</span>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script>
+/* ========= CONFIG PAR DÉFAUT (modifiables dans Paramètres) ========= */
+DEFAULTS = {
+  USERNAME: 'phabogard',
+  PIN:      '6996698877',
+  AIRTEL:   '+243990564877',
+  WHATSAPP: '243990564877',      // sans +
+  TELEGRAM: 'uniterapide',
+  SHEETS: [
+    'https://docs.google.com/spreadsheets/d/e/2PACX-1vRNgEaiSzpwmHuoj1bfIFzi9A34beLlxoqz8_ocD5hvb7I2T-4GRcamMbFRCKvw5-lKivYqo3Kpg0Ti/pubhtml?gid=0&single=true',
+    'https://docs.google.com/spreadsheets/d/e/2PACX-1vRNgEaiSzpwmHuoj1bfIFzi9A34beLlxoqz8_ocD5hvb7I2T-4GRcamMbFRCKvw5-lKivYqo3Kpg0Ti/pubhtml?gid=2097070430&single=true',
+    'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ7yaRVA16yeVYrB9YAGs_ckiodiHqMns2igOT2ozVM92EXoBOJpCoxZzZ3NLxmHY1G_KqvYKZfvjTS/pubhtml?gid=0&single=true'
+  ]
+};
+const LS = {
+  CREDS:'UR_CREDS', SET:'UR_SETTINGS', ORDER:'UR_ORDERS', PRODS:'UR_PRODUCTS',
+  COMMENTS:'UR_COMMENTS', THEME:'UR_THEME', LANG:'UR_LANG'
+};
+const T = {
+  fr:{FR:'FR',EN:'EN', ThemeDark:'Sombre', ThemeLight:'Clair'},
+  en:{FR:'FR',EN:'EN', ThemeDark:'Dark', ThemeLight:'Light'}
+};
+let LANG = localStorage.getItem(LS.LANG)||'fr';
+
+/* ========= UTIL ========= */
+const $=s=>document.querySelector(s);
+const $$=s=>document.querySelectorAll(s);
+const fmtFC = n => (Number(n||0)).toLocaleString('fr-CD')+' FC';
+const toCsvUrl = u => u.replace('/pubhtml?','/pub?')+'&output=csv';
+
+/* ========= AUTH ========= */
+function getCreds(){
+  const c = JSON.parse(localStorage.getItem(LS.CREDS)||'null') || {u:DEFAULTS.USERNAME,p:DEFAULTS.PIN};
+  return c;
+}
+function login(){
+  const {u,p}=getCreds();
+  const U=$('#uLogin').value.trim(), P=$('#pLogin').value.trim();
+  if(!U||!P){$('#authMsg').textContent='Entrez utilisateur et PIN';return}
+  if(U===u && P===p){
+    sessionStorage.setItem('UR_AUTH','1');
+    $('#auth').classList.add('hidden'); $('#app').classList.remove('hidden');
+    postLogin();
+  }else{
+    $('#authMsg').textContent='Identifiants invalides';
+  }
+}
+function logout(){ sessionStorage.removeItem('UR_AUTH'); location.reload(); }
+
+/* ========= THEME / LANG ========= */
+function applyTheme(){
+  const them = localStorage.getItem(LS.THEME)||'dark';
+  document.documentElement.classList.toggle('light', them==='light');
+  $('#themeSwitch').checked = them==='light';
+  $('#t_theme').textContent = them==='light' ? (LANG==='fr'?T.fr.ThemeLight:T.en.ThemeLight) : (LANG==='fr'?T.fr.ThemeDark:T.en.ThemeDark);
+}
+function toggleTheme(){
+  const cur = localStorage.getItem(LS.THEME)||'dark';
+  localStorage.setItem(LS.THEME, cur==='dark'?'light':'dark'); applyTheme();
+}
+function applyLang(){
+  LANG = localStorage.getItem(LS.LANG)||'fr';
+  $('#langSwitch').checked = (LANG==='en');
+  $('#t_lang').textContent = LANG==='en'?T.en.EN:T.fr.FR;
+}
+function toggleLang(){ localStorage.setItem(LS.LANG, $('#langSwitch').checked?'en':'fr'); applyLang(); }
+
+/* ========= NAV ========= */
+function toggleAside(){ $('#aside').classList.toggle('open'); }
+$$('.menu .item').forEach(i=>i.addEventListener('click',e=>{
+  const p = i.getAttribute('data-page'); if(!p) return;
+  $$('.menu .item').forEach(x=>x.classList.remove('active')); i.classList.add('active');
+  $$('[id^=page-]').forEach(s=>s.classList.add('hidden'));
+  $('#page-'+p).classList.remove('hidden');
+  $('#aside').classList.remove('open');
+}));
+
+/* ========= SETTINGS ========= */
+function getSettings(){
+  const s = JSON.parse(localStorage.getItem(LS.SET)||'null');
+  if(s) return s;
+  const def = {airtel:DEFAULTS.AIRTEL, wa:DEFAULTS.WHATSAPP, tg:DEFAULTS.TELEGRAM, sheets:DEFAULTS.SHEETS};
+  localStorage.setItem(LS.SET,JSON.stringify(def)); return def;
+}
+function loadSettingsUI(){
+  const s=getSettings();
+  $('#sAirtel').value=s.airtel; $('#sWA').value=s.wa; $('#sTG').value=s.tg;
+  $('#sSheet1').value=s.sheets[0]; $('#sSheet2').value=s.sheets[1]; $('#sSheet3').value=s.sheets[2];
+}
+function saveSettings(){
+  const s={airtel:$('#sAirtel').value.trim(), wa:$('#sWA').value.trim(), tg:$('#sTG').value.trim(),
+           sheets:[$('#sSheet1').value.trim(),$('#sSheet2').value.trim(),$('#sSheet3').value.trim()]};
+  localStorage.setItem(LS.SET,JSON.stringify(s));
+  $('#saveMsg').textContent='✅ Sauvegardé';
+  setTimeout(()=>$('#saveMsg').textContent='',2000);
+}
+
+/* ========= SECURITY ========= */
+function changeCreds(){
+  const u=$('#newUser').value.trim(), p=$('#newPin').value.trim();
+  if(u.length<3 || p.length<4){ $('#secMsg').textContent='Entrées invalides'; return; }
+  localStorage.setItem(LS.CREDS, JSON.stringify({u,p}));
+  $('#secMsg').textContent='✅ Identifiants mis à jour. Reconnexion…';
+  setTimeout(()=>logout(),800);
+}
+
+/* ========= DATA: PRODUCTS / ORDERS / COMMENTS ========= */
+let PRODUCTS=[];
+function setProducts(arr){
