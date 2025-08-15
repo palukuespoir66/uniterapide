@@ -1,13 +1,8 @@
-here<!DOCTYPE html>
-<html lang="fr">
+here<!DOCTYPE html><html lang="fr">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Uniterapide — Boutique</title>
-
-<meta http-equiv="Content-Security-Policy" content="default-src 'self' https: data:; img-src 'self' https: data: blob:; style-src 'self' 'unsafe-inline' https:; script-src 'self' 'unsafe-inline' https:; connect-src 'self' https:;" />
-
-<style>
+<title>Uniterapide — Boutique</title><meta http-equiv="Content-Security-Policy" content="default-src 'self' https: data:; img-src 'self' https: data: blob:; style-src 'self' 'unsafe-inline' https:; script-src 'self' 'unsafe-inline' https:; connect-src 'self' https:;" /><style>
   :root{
     --bg:#0b0f1a; --bg2:#0f172a; --card:#111827; --text:#e5e7eb; --muted:#94a3b8;
     --brand:#10b981; --info:#3b82f6; --accent:#f59e0b; --danger:#ef4444; --ok:#22c55e;
@@ -30,7 +25,7 @@ here<!DOCTYPE html>
   @keyframes spin{to{transform:rotate(1turn)}}
 
   header{position:sticky; top:0; z-index:40; backdrop-filter:saturate(140%) blur(8px);
-    background: linear-gradient(180deg, rgba(2,6,23,.85), rgba(2,6,23,.55)); border-bottom:1px solid var(--bd);}
+    background: linear-gradient(180deg, rgba(2,6,23,.85), rgba(2,6,23,.55)); border-bottom:1px solid var(--bd);} 
   [data-theme="light"] header{background: linear-gradient(180deg, rgba(255,255,255,.85), rgba(255,255,255,.7));}
   .wrap{max-width:1150px; margin:0 auto; padding:14px 18px}
   .row{display:flex; gap:14px; align-items:center; flex-wrap:wrap}
@@ -114,12 +109,19 @@ here<!DOCTYPE html>
   .comment{border-top:1px dashed var(--bd); padding:8px 0}
   .stars{cursor:pointer; font-size:18px}
   .toast{position:fixed; top:12px; right:12px; background:var(--card); border:1px solid var(--bd); padding:10px 12px; border-radius:10px; z-index:70}
-</style>
-</head>
-<body>
-  <div class="bg-anim"></div>
 
-  <header>
+  /* ===== Paiement Wizard ===== */
+  .steps{display:flex; gap:8px; flex-wrap:wrap; margin:8px 0 14px}
+  .step{padding:6px 10px; border-radius:999px; border:1px solid var(--bd); opacity:.75}
+  .step.active{background:linear-gradient(90deg, rgba(16,185,129,.25), rgba(59,130,246,.25)); opacity:1}
+  .grid{display:grid; gap:10px}
+  .two{grid-template-columns:1fr 1fr}
+  .warn{background:rgba(245,158,11,.14); border:1px solid #f59e0b55; color:#fde68a; padding:10px; border-radius:10px}
+  .ok{background:rgba(16,185,129,.14); border:1px solid #22c55e55; color:#bbf7d0; padding:10px; border-radius:10px}
+
+</style></head>
+<body>
+  <div class="bg-anim"></div>  <header>
     <div class="wrap">
       <div class="row" style="justify-content:space-between">
         <div class="brand">
@@ -128,123 +130,109 @@ here<!DOCTYPE html>
             <div style="font-size:1.05rem">Uniterapide</div>
             <div class="muted" style="font-size:.85rem">Unités • Téléphones • Vêtements • Accessoires</div>
           </div>
-        </div>
-
-        <div class="badges">
-          <div class="badge">🔒 Sécurisé</div>
-          <div class="badge">🚚 Livraison rapide</div>
-          <div class="badge">⭐ Qualité garantie</div>
-          <div class="badge">🕘 24/7</div>
-          <div class="badge" id="visitsBadge">👁️ Visites : …</div>
-          <div class="badge">
-            <select id="lang" class="select">
-              <option value="fr">FR</option>
-              <option value="en">EN</option>
-            </select>
-          </div>
-          <button id="themeBtn" class="btn ghost">🌓</button>
-        </div>
+        </div><div class="badges">
+      <div class="badge">🔒 Sécurisé</div>
+      <div class="badge">🚚 Livraison rapide</div>
+      <div class="badge">⭐ Qualité garantie</div>
+      <div class="badge">🕘 24/7</div>
+      <div class="badge" id="visitsBadge">👁️ Visites : …</div>
+      <div class="badge">
+        <select id="lang" class="select">
+          <option value="fr">FR</option>
+          <option value="en">EN</option>
+        </select>
       </div>
-
-      <div class="promo" style="margin-top:10px">
-        <div>🔥 <strong>Promos</strong> cette semaine sur téléphones, unités & accessoires — meilleurs prix garantis.</div>
-        <div class="muted">WhatsApp : <strong>+243 990 564 877</strong> • Telegram : <strong>@cphkkk66</strong></div>
-      </div>
-
-      <!-- Inscription rapide -->
-      <div class="auth">
-        <input id="custName" class="in" placeholder="Votre nom (obligatoire)" />
-        <input id="custPhone" class="in" placeholder="Téléphone ex: 0990564877" />
-        <button id="saveProfile" class="btn brand">Enregistrer</button>
-        <span id="hello" class="muted"></span>
-      </div>
+      <button id="themeBtn" class="btn ghost">🌓</button>
     </div>
-  </header>
+  </div>
 
-  <main>
+  <div class="promo" style="margin-top:10px">
+    <div>🔥 <strong>Promos</strong> cette semaine sur téléphones, unités & accessoires — meilleurs prix garantis.</div>
+    <div class="muted">WhatsApp : <strong>+243 990 564 877</strong> • Telegram : <strong>@cphkkk66</strong></div>
+  </div>
+
+  <!-- Inscription rapide -->
+  <div class="auth">
+    <input id="custName" class="in" placeholder="Votre nom (obligatoire)" />
+    <input id="custPhone" class="in" placeholder="Téléphone ex: 0990564877" />
+    <button id="saveProfile" class="btn brand">Enregistrer</button>
+    <span id="hello" class="muted"></span>
+  </div>
+</div>
+
+  </header>  <main>
     <section class="stats">
       <div class="stat">👁️ Vues (ce navigateur) : <span id="viewsLocal">0</span></div>
       <div class="stat">❤️ J'aime : <span id="likesCount">0</span> <button id="likeBtn" class="chip" style="margin-left:8px">+ J'aime</button></div>
       <div class="stat">🔄 Partages : <span id="shareCount">0</span> <button id="shareBtn" class="chip" style="margin-left:8px">Partager</button></div>
       <div class="stat">📶 État : Public</div>
-    </section>
+    </section><!-- Outils -->
+<section>
+  <div class="tools">
+    <input id="q" class="in search" placeholder="Recherche produit…" />
+    <select id="sort" class="select">
+      <option value="new">🆕 Nouveautés</option>
+      <option value="priceAsc">⬇️ Prix (FC)</option>
+      <option value="priceDesc">⬆️ Prix (FC)</option>
+      <option value="pop">🔥 Popularité</option>
+    </select>
+    <div id="filters" class="tools"></div>
+  </div>
+</section>
 
-    <!-- Outils -->
-    <section>
-      <div class="tools">
-        <input id="q" class="in search" placeholder="Recherche produit…" />
-        <select id="sort" class="select">
-          <option value="new">🆕 Nouveautés</option>
-          <option value="priceAsc">⬇️ Prix (FC)</option>
-          <option value="priceDesc">⬆️ Prix (FC)</option>
-          <option value="pop">🔥 Popularité</option>
-        </select>
-        <div id="filters" class="tools"></div>
-      </div>
-    </section>
+<!-- Catalogue -->
+<section>
+  <h2>Catalogue</h2>
+  <div id="cards" class="cards">Chargement…</div>
+</section>
 
-    <!-- Catalogue -->
-    <section>
-      <h2>Catalogue</h2>
-      <div id="cards" class="cards">Chargement…</div>
-    </section>
+<!-- Ventes d'unités -->
+<section style="margin-top:28px">
+  <h2>Unités & Forfaits — Promos</h2>
+  <div class="cards" id="units"></div>
+</section>
 
-    <!-- Ventes d'unités -->
-    <section style="margin-top:28px">
-      <h2>Unités & Forfaits — Promos</h2>
-      <div class="cards" id="units">
-        <!-- Rendu par JS -->
-      </div>
-    </section>
+<!-- Contact -->
+<section style="margin-top:28px">
+  <h2>Contact</h2>
+  <div class="row">
+    <a class="btn whatsapp" href="https://wa.me/243990564877" target="_blank">📱 WhatsApp</a>
+    <a class="btn telegram" href="https://t.me/cphkkk66" target="_blank">💬 Telegram</a>
+  </div>
+</section>
 
-    <!-- Contact -->
-    <section style="margin-top:28px">
-      <h2>Contact</h2>
-      <div class="row">
-        <a class="btn whatsapp" href="https://wa.me/243990564877" target="_blank">📱 WhatsApp</a>
-        <a class="btn telegram" href="https://t.me/cphkkk66" target="_blank">💬 Telegram</a>
-      </div>
-    </section>
+<!-- Paiements -->
+<section style="margin-top:28px">
+  <h2>Modes de paiement</h2>
+  <div class="pay">
+    <span class="pill">💳 Airtel Money — <strong>Mugisho Stéphane</strong> — <strong>+243 990 564 877</strong></span>
+    <span class="pill">📲 M-Pesa (Vodacom)</span>
+    <span class="pill">🟠 Orange Money</span>
+    <span class="pill">🟣 Afrimoney (Africell)</span>
+    <span class="pill">🟡 MoMo (MTN)</span>
+  </div>
+</section>
 
-    <!-- Paiements -->
-    <section style="margin-top:28px">
-      <h2>Modes de paiement</h2>
-      <div class="pay">
-        <span class="pill">💳 Airtel Money — <strong>Mugisho Stéphane</strong> — <strong>+243 990 564 877</strong></span>
-        <span class="pill">📲 M-Pesa (Vodacom)</span>
-        <span class="pill">🟠 Orange Money</span>
-        <span class="pill">🟣 Afrimoney (Africell)</span>
-        <span class="pill">🟡 MoMo (MTN)</span>
-      </div>
-    </section>
+<!-- Infos sécurité -->
+<section style="margin-top:28px">
+  <details>
+    <summary>🔧 Paramètres & Sécurité (infos client)</summary>
+    <ul>
+      <li>Ce site affiche seulement les <strong>produits et prix</strong>. Aucune donnée sensible n'est publique.</li>
+      <li>Les mises à jour viennent d’une feuille <strong>PUBLIC (lecture)</strong> ou CSV hébergé.</li>
+      <li>Contacts officiels : WhatsApp <strong>+243 990 564 877</strong>, Telegram <strong>@cphkkk66</strong>, Airtel Money <strong>Mugisho Stéphane</strong>.</li>
+      <li>⚠️ Le paiement sur le site est une <strong>simulation / redirection</strong>. <u>Ne saisissez jamais votre vrai code SIM ici</u>. Le paiement réel se fait via l’app/USSD de l’opérateur.</li>
+    </ul>
+  </details>
+</section>
 
-    <!-- Infos sécurité -->
-    <section style="margin-top:28px">
-      <details>
-        <summary>🔧 Paramètres & Sécurité (infos client)</summary>
-        <ul>
-          <li>Ce site affiche seulement les <strong>produits et prix</strong>. Aucune donnée sensible n'est publique.</li>
-          <li>Les mises à jour viennent d’une feuille <strong>PUBLIC (lecture)</strong> ou CSV hébergé.</li>
-          <li>Contacts officiels : WhatsApp <strong>+243 990 564 877</strong>, Telegram <strong>@cphkkk66</strong>, Airtel Money <strong>Mugisho Stéphane</strong>.</li>
-          <li>⚠️ Le paiement sur le site est une <strong>simulation de confirmation</strong>. <u>Ne saisissez jamais votre vrai code SIM</u>. Le paiement réel se fait via Airtel Money/USSD/app.</li>
-        </ul>
-      </details>
-    </section>
-  </main>
-
-  <!-- Boutons flottants -->
-  <div class="float">
+  </main>  <!-- Boutons flottants -->  <div class="float">
     <a class="w" href="https://wa.me/243990564877" target="_blank">📱 WhatsApp</a>
     <a class="t" href="https://t.me/cphkkk66" target="_blank">💬 Telegram</a>
-  </div>
-
-  <footer>
+  </div>  <footer>
     <hr style="border-color:var(--bd); border-style:solid; border-width:1px 0 0; margin-bottom:16px">
     <div>© <span id="year"></span> Uniterapide — RDC. Tous droits réservés.</div>
-  </footer>
-
-  <!-- Modal Produit -->
-  <div id="productModal" class="modal" role="dialog" aria-modal="true">
+  </footer>  <!-- Modal Produit (galerie améliorée) -->  <div id="productModal" class="modal" role="dialog" aria-modal="true">
     <div class="sheet">
       <div class="row-b">
         <div style="font-weight:900" id="pmTitle">Produit</div>
@@ -258,63 +246,120 @@ here<!DOCTYPE html>
       <div class="price" id="pmPrice" style="margin-top:6px"></div>
       <div class="row" style="margin-top:8px; flex-wrap:wrap; gap:8px">
         <input id="pmQty" class="in" type="number" min="1" value="1" style="width:110px" />
-        <button id="pmBuyAirtel" class="btn brand">Acheter — Airtel Money</button>
+        <button id="pmBuyAirtel" class="btn brand">Acheter</button>
         <a id="pmWhats" class="btn whatsapp" target="_blank">Commander sur WhatsApp</a>
         <button id="pmShare" class="btn ghost">Partager</button>
-      </div>
-
-      <!-- Ratings & comments -->
-      <div class="comments">
-        <div><strong>Avis & Notes</strong></div>
-        <div id="pmStars" class="stars" aria-label="Notation">★★★★★</div>
-        <div class="row" style="margin-top:8px">
-          <input id="pmComment" class="in" placeholder="Laissez un commentaire…" style="flex:1" />
-          <button id="pmAddComment" class="btn ghost">Publier</button>
-        </div>
-        <div id="pmCommentList"></div>
-      </div>
+      </div><!-- Ratings & comments -->
+  <div class="comments">
+    <div><strong>Avis & Notes</strong></div>
+    <div id="pmStars" class="stars" aria-label="Notation">★★★★★</div>
+    <div class="row" style="margin-top:8px">
+      <input id="pmComment" class="in" placeholder="Laissez un commentaire…" style="flex:1" />
+      <button id="pmAddComment" class="btn ghost">Publier</button>
     </div>
+    <div id="pmCommentList"></div>
   </div>
+</div>
 
-  <!-- Modal Paiement (simulation) -->
-  <div id="payModal" class="modal" role="dialog" aria-modal="true">
-    <div class="sheet" style="max-width:520px">
+  </div>  <!-- Modal Paiement (wizard étape par étape) -->  <div id="payModal" class="modal" role="dialog" aria-modal="true">
+    <div class="sheet" style="max-width:560px">
       <div class="row-b">
-        <div style="font-weight:900">Airtel Money — Confirmation</div>
+        <div style="font-weight:900">Paiement</div>
         <button class="close" id="payClose">✖</button>
-      </div>
-      <div id="paySummary" style="margin-top:10px"></div>
-      <div class="pill" style="margin:10px 0; line-height:1.4">
-        ⚠️ <strong>Simulation</strong> : ne saisissez <u>jamais</u> votre vrai code SIM. Utilisez le code de test <strong>1515</strong> pour valider.
-      </div>
-      <input id="payPin" class="in" placeholder="PIN de test (1515)" maxlength="4" style="width:160px" />
-      <div class="row" style="margin-top:10px">
-        <button id="payConfirm" class="btn brand">Payer</button>
-        <button id="payCancel" class="btn ghost">Annuler</button>
-      </div>
+      </div><div class="steps">
+    <div class="step" id="s1">1) Devise</div>
+    <div class="step" id="s2">2) Infos</div>
+    <div class="step" id="s3">3) Vérifier</div>
+    <div class="step" id="s4">4) PIN</div>
+  </div>
+
+  <div id="step1" class="grid">
+    <div class="warn">Choisissez la devise pour payer. Les prix en $ utilisent le taux indiqué.</div>
+    <div class="row">
+      <label class="chip"><input type="radio" name="curr" value="FC" checked> &nbsp;Franc congolais (FC)</label>
+      <label class="chip"><input type="radio" name="curr" value="USD"> &nbsp;Dollar ($)</label>
+    </div>
+    <div class="grid two">
+      <label>Opérateur
+        <select id="payOperator" class="select" style="width:100%">
+          <option value="airtel">Airtel Money</option>
+          <option value="vodacom">M-Pesa (Vodacom)</option>
+          <option value="orange">Orange Money</option>
+          <option value="africell">Afrimoney (Africell)</option>
+          <option value="mtn">MoMo (MTN)</option>
+        </select>
+      </label>
+      <div></div>
+    </div>
+    <div class="row" style="justify-content:flex-end">
+      <button id="next1" class="btn brand">Continuer</button>
     </div>
   </div>
 
-  <div id="toast" class="toast" style="display:none"></div>
+  <div id="step2" class="grid" style="display:none">
+    <div class="grid two">
+      <label>Téléphone (Mobile Money)
+        <input id="payPhone" class="in" placeholder="ex: 0990564877" />
+      </label>
+      <label>Montant
+        <input id="payAmount" class="in" type="number" min="0" step="1" />
+      </label>
+    </div>
+    <div class="row" style="justify-content:space-between">
+      <button id="back2" class="btn ghost">Retour</button>
+      <button id="next2" class="btn brand">Continuer</button>
+    </div>
+  </div>
 
-<script>
+  <div id="step3" style="display:none">
+    <div id="paySummary" class="ok"></div>
+    <div class="muted" style="margin-top:8px">Le paiement réel s’effectuera via l’application/USSD de l’opérateur.</div>
+    <div class="row" style="justify-content:space-between; margin-top:10px">
+      <button id="back3" class="btn ghost">Modifier</button>
+      <button id="openUSSD" class="btn ghost">Ouvrir USSD / App</button>
+      <button id="next3" class="btn brand">Valider</button>
+    </div>
+  </div>
+
+  <div id="step4" style="display:none">
+    <div class="pill" style="line-height:1.4; margin-bottom:8px">
+      ⚠️ <strong>Simulation</strong> : ne saisissez <u>jamais</u> votre vrai code SIM ici. Pour tester, utilisez le code <strong>1515</strong>.
+    </div>
+    <input id="payPin" class="in" placeholder="PIN de test (1515)" maxlength="4" style="width:160px" />
+    <div class="row" style="margin-top:10px">
+      <button id="back4" class="btn ghost">Retour</button>
+      <button id="payConfirm" class="btn brand">Payer</button>
+      <button id="payCancel" class="btn ghost">Annuler</button>
+    </div>
+  </div>
+</div>
+
+  </div>  <div id="toast" class="toast" style="display:none"></div><script>
 /* ================== CONFIG ================== */
-// Mets ici tes CSV publics (Option 1). Tu peux en lister plusieurs.
 const CSV_URLS = [
-  // Exemples: (remplace par tes liens CSV "export?format=csv" ou GitHub raw)
+  // Ajoute ici tes CSV publics (format export CSV ou GitHub raw). Exemple:
   // "https://raw.githubusercontent.com/toncompte/tonrepo/main/produits.csv"
 ];
 
-// Phrase WhatsApp
+// Phrase WhatsApp & marque
 const WHATSAPP_PHONE_INTL = "243990564877"; // pour wa.me
 const WHATSAPP_DISPLAY = "+243 990 564 877";
 const TELEGRAM = "@cphkkk66";
 const BRAND = "Uniterapide";
 const AIRTEL_NAME = "Mugisho Stéphane";
 const AIRTEL_MAIN_NUMBER = "0990564877";
-const AIRTEL_PIN_TEST = "1515";
-const USD_RATE = 2800; // fallback si pas de colonne FC
-const COUNTAPI_NS = "uniterapide_pub_v2";
+const AIRTEL_PIN_TEST = "1515"; // pin de test local (simulation uniquement)
+const USD_RATE = 2800; // taux utilisé si le prix $ doit être converti en FC
+const COUNTAPI_NS = "uniterapide_pub_v3";
+
+// Codes USSD – ⚠️ mets ici les bons codes pour la RDC si besoin
+const USSD_CODES = {
+  airtel:  "*501#",      // Airtel Money (exemple)
+  vodacom: "*122#",      // M-Pesa
+  orange:  "*144#",      // Orange Money
+  africell:"*111#",      // Afrimoney
+  mtn:     "*112#"       // MoMo
+};
 
 /* ================== UTIL ================== */
 const $ = s => document.querySelector(s);
@@ -331,12 +376,12 @@ const store = {
 const i18n = {
   fr: {
     search:"Recherche produit…", new:"Nouveautés", priceAsc:"Prix croissant", priceDesc:"Prix décroissant",
-    pop:"Popularité", buy:"Acheter — Airtel Money", share:"Partager", commentPH:"Laissez un commentaire…",
+    pop:"Popularité", buy:"Acheter", share:"Partager", commentPH:"Laissez un commentaire…",
     rate:"Notez ce produit", added:"Ajouté !", paid:"Paiement simulé validé ✅", wrongPin:"PIN incorrect ❌"
   },
   en: {
     search:"Search products…", new:"Newest", priceAsc:"Price ↑", priceDesc:"Price ↓",
-    pop:"Popularity", buy:"Buy — Airtel Money", share:"Share", commentPH:"Leave a comment…",
+    pop:"Popularity", buy:"Buy", share:"Share", commentPH:"Leave a comment…",
     rate:"Rate this product", added:"Added!", paid:"Simulated payment success ✅", wrongPin:"Wrong PIN ❌"
   }
 };
@@ -592,30 +637,82 @@ function openProduct(id, goPay=false){
   if(goPay){ setTimeout(()=> $("#pmBuyAirtel").click(), 50); }
 }
 
+/* ====== Paiement Wizard logique ====== */
+let PAYDATA = { curr:'FC', operator:'airtel', phone:'', amount:0 };
+
+function setStep(n){
+  // maj badges
+  for(let i=1;i<=4;i++){ $("#s"+i).classList.toggle('active', i===n); $("#step"+i)?.setAttribute('style', `display:${i===n?'block':'none'}`); }
+}
+
 $("#pmBuyAirtel").addEventListener('click', ()=>{
   if(!CURRENT) return;
+  // Préremplir
+  PAYDATA.curr = document.querySelector('input[name="curr"]:checked')?.value || 'FC';
+  PAYDATA.operator = $("#payOperator").value;
+  PAYDATA.phone = store.get('profile',{}).phone||'';
   const qty = Math.max(1, parseInt($("#pmQty").value||'1',10));
-  const total = CURRENT.priceFC * qty;
-  $("#paySummary").innerHTML = `
-    <div><strong>Produit:</strong> ${CURRENT.name}</div>
-    <div><strong>Quantité:</strong> ${qty}</div>
-    <div><strong>Total:</strong> ${money(total)}</div>
-    <div class="muted" style="margin-top:6px">Envoyez sur <strong>${WHATSAPP_DISPLAY}</strong> (Airtel Money — ${AIRTEL_NAME}).</div>`;
-  $("#payPin").value='';
+  PAYDATA.amount = CURRENT.priceFC * qty; // en FC par défaut
+  $("#payPhone").value = PAYDATA.phone;
+  $("#payAmount").value = PAYDATA.amount;
+  setStep(1);
   payM.classList.add('show');
 });
 
+$("#next1").onclick = ()=>{
+  PAYDATA.curr = document.querySelector('input[name="curr"]:checked')?.value || 'FC';
+  PAYDATA.operator = $("#payOperator").value;
+  // Maj montant par devise
+  const qty = Math.max(1, parseInt($("#pmQty").value||'1',10));
+  PAYDATA.amount = PAYDATA.curr==='USD' && CURRENT.priceUSD ? Math.round(CURRENT.priceUSD*qty) : Math.round(CURRENT.priceFC*qty);
+  $("#payAmount").value = PAYDATA.amount;
+  $("#payPhone").value = store.get('profile',{}).phone||'';
+  setStep(2);
+};
+
+$("#back2").onclick = ()=> setStep(1);
+$("#next2").onclick = ()=>{
+  const phone = $("#payPhone").value.trim();
+  const amount = parseFloat($("#payAmount").value||'0');
+  if(!phone || phone.length<7){ toast('Numéro invalide'); return; }
+  if(!amount || amount<=0){ toast('Montant invalide'); return; }
+  PAYDATA.phone = phone; PAYDATA.amount = Math.round(amount);
+  // Récap
+  const sym = PAYDATA.curr==='USD' ? '$' : 'FC';
+  $("#paySummary").innerHTML = `
+    <div><strong>Produit:</strong> ${CURRENT.name}</div>
+    <div><strong>Quantité:</strong> ${Math.max(1, parseInt($("#pmQty").value||'1',10))}</div>
+    <div><strong>Devise:</strong> ${PAYDATA.curr}</div>
+    <div><strong>Montant:</strong> ${fmt(PAYDATA.amount)} ${sym}</div>
+    <div><strong>Téléphone:</strong> ${PAYDATA.phone}</div>
+    <div><strong>Opérateur:</strong> ${$("#payOperator").options[$("#payOperator").selectedIndex].text}</div>`;
+  setStep(3);
+};
+
+$("#back3").onclick = ()=> setStep(2);
+$("#openUSSD").onclick = ()=>{
+  // Essaie d'ouvrir le dialer avec le code USSD
+  const code = USSD_CODES[PAYDATA.operator] || '*000#';
+  const link = `tel:${encodeURIComponent(code)}`;
+  window.location.href = link; // sur mobile, ouvre l'interface d'appel
+};
+$("#next3").onclick = ()=> setStep(4);
+
+$("#back4").onclick = ()=> setStep(3);
 $("#payConfirm").addEventListener('click', ()=>{
   const pin = $("#payPin").value.trim();
   if(pin !== AIRTEL_PIN_TEST){ toast(i18n[store.get('lang','fr')].wrongPin); return; }
   // succès simulé
   const orders = store.get('orders', []);
-  orders.push({id:CURRENT.id, name:CURRENT.name, amount:CURRENT.priceFC*parseInt($("#pmQty").value||'1',10), ts:Date.now()});
+  orders.push({id:CURRENT.id, name:CURRENT.name, amount:PAYDATA.amount, curr:PAYDATA.curr, phone:PAYDATA.phone, operator:PAYDATA.operator, ts:Date.now()});
   store.set('orders', orders);
   // boost popularité
   CURRENT.score = (CURRENT.score||0) + 1;
   toast(i18n[store.get('lang','fr')].paid);
   payM.classList.remove('show'); pm.classList.remove('show');
+  // Option: message WhatsApp de confirmation
+  const msg = `Bonjour, j'ai payé pour ${CURRENT.name}. Montant: ${fmt(PAYDATA.amount)} ${PAYDATA.curr}. Tel: ${PAYDATA.phone}. Opérateur: ${PAYDATA.operator}.`;
+  window.open(`https://wa.me/${WHATSAPP_PHONE_INTL}?text=${encodeURIComponent(msg)}`, '_blank');
 });
 
 /* ================== Avis / Notes / Commentaires ================== */
@@ -669,7 +766,7 @@ function renderUnits(){
         <div class="price"><div class="fc">${fmt(u.price)} FC</div></div>
         <div class="row" style="gap:8px; margin-top:6px">
           <a class="btn whatsapp" target="_blank" href="https://wa.me/${WHATSAPP_PHONE_INTL}?text=${encodeURIComponent('Bonjour, je veux des unités '+u.network)}">Acheter sur WhatsApp</a>
-          <button class="btn brand" onclick="toast('Passez par le produit “Unités '+u.network+'” dans le catalogue pour paiement simulé.')">Payer</button>
+          <button class="btn brand" onclick="toast('Passez par un produit correspondant dans le catalogue pour paiement simulé.')">Payer</button>
         </div>
       </div>
     </article>`).join('');
@@ -693,234 +790,5 @@ const initLang = store.get('lang','fr'); $("#lang").value=initLang; setLang(init
 
 /* ============== BONUS: tri dynamique au clic badge “Tout” ============== */
 filtersEl.addEventListener('dblclick', ()=>{ $("#sort").value='pop'; applySearchSort(); });
-</script>
-</body>
+</script></body>
   </html>
-<!-- ===== Accès admin caché (3 feuilles de sécurité) ===== -->
-<style>
-  /* Point secret (invisible par défaut) */
-  #secret-dot {
-    position: fixed;
-    bottom: 12px;
-    right: 12px;
-    width: 8px;
-    height: 8px;
-    background: #cbd5e1; /* gris discret */
-    border-radius: 50%;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity .25s ease, transform .2s ease;
-    z-index: 9999;
-  }
-  #secret-dot.show {
-    opacity: .35;
-    pointer-events: all;
-    cursor: pointer;
-  }
-  #secret-dot:hover { opacity: 1; transform: scale(1.15); }
-
-  /* Modal ultra-compact pour PIN + Code du jour */
-  #admin-modal {
-    position: fixed; inset: 0; display: none; align-items: center; justify-content: center;
-    background: rgba(0,0,0,.55); z-index: 10000;
-  }
-  #admin-modal.show { display: flex; }
-  #admin-sheet {
-    width: min(92vw, 360px);
-    background: var(--card, #111827);
-    color: var(--text, #e5e7eb);
-    border: 1px solid var(--bd, rgba(148,163,184,.2));
-    border-radius: 14px; padding: 14px;
-    box-shadow: 0 20px 60px rgba(0,0,0,.35);
-  }
-  #admin-sheet h3 { margin: 0 0 6px; font-size: 1rem; font-weight: 900; }
-  #admin-sheet .muted { color: var(--muted, #94a3b8); font-size: .9rem; }
-  #admin-sheet .in { width: 100%; margin-top: 8px; padding: 10px 12px; border-radius: 10px;
-                     border: 1px solid var(--bd, rgba(148,163,184,.2)); background: var(--card, #111827);
-                     color: var(--text, #e5e7eb); }
-  #admin-sheet .row { display: flex; gap: 8px; margin-top: 10px; }
-  #admin-sheet .btn {
-    flex: 1 1 auto; padding: 10px 12px; border-radius: 10px; border: 1px solid transparent; font-weight: 800;
-    background: linear-gradient(135deg, var(--brand, #10b981), var(--info, #3b82f6)); color: #fff; cursor: pointer;
-  }
-  #admin-sheet .btn.ghost {
-    background: transparent; border: 1px solid var(--bd, rgba(148,163,184,.2)); color: var(--text, #e5e7eb);
-  }
-  #admin-err { margin-top: 8px; color: #fca5a5; font-weight: 700; min-height: 1.2em; }
-  #admin-hint { margin-top: 4px; color: var(--muted, #94a3b8); font-size: .85rem; }
-</style>
-
-<!-- Point secret (devient visible après geste) -->
-<span id="secret-dot" aria-hidden="true" title=" "></span>
-
-<!-- Modal admin -->
-<div id="admin-modal" role="dialog" aria-modal="true" aria-labelledby="admin-title">
-  <div id="admin-sheet">
-    <h3 id="admin-title">Espace Admin</h3>
-    <div class="muted">Entrez votre <strong>PIN</strong> et le <strong>code du jour</strong>.</div>
-    <input id="admin-pin" class="in" type="password" inputmode="numeric" autocomplete="off" placeholder="PIN admin" maxlength="12" />
-    <input id="admin-otp" class="in" type="password" inputmode="numeric" autocomplete="one-time-code" placeholder="Code du jour (4 chiffres)" maxlength="4" />
-    <div id="admin-err"></div>
-    <div id="admin-hint"></div>
-    <div class="row">
-      <button id="admin-ok" class="btn">Valider</button>
-      <button id="admin-cancel" class="btn ghost">Annuler</button>
-    </div>
-  </div>
-</div>
-
-<script>
-/* ========= PARAMS ADMIN (modifie ici si besoin) ========= */
-const ADMIN_PIN_B64 = "Njk5NjY5ODg3Nw==";  // "6996698877" encodé Base64
-const DAILY_SEED = 877;                      // graine pour code du jour
-const MAX_TRIES = 3;                         // tentatives avant verrouillage
-const LOCK_MINUTES = 10;                     // durée de lock en minutes
-const ADMIN_TARGET = "admin.html";           // page de destination
-
-/* ========= Raccourcis utiles ========= */
-const el = s => document.querySelector(s);
-function now(){ return Date.now(); }
-function pad4(n){ return String(n).padStart(4, "0"); }
-function yyyymmdd(d=new Date()){
-  const y = d.getFullYear();
-  const m = String(d.getMonth()+1).padStart(2,"0");
-  const day = String(d.getDate()).padStart(2,"0");
-  return Number(`${y}${m}${day}`);
-}
-
-/* ========= Feuille 1 : gestes secrets pour afficher le point ========= */
-const dot = el("#secret-dot");
-let konami = [38,38,40,40,37,39,37,39,66,65]; // ↑ ↑ ↓ ↓ ← → ← → B A
-let idx = 0;
-let tapCount = 0, tapTimer = null, dotKeyCount = 0, dotKeyTimer = null;
-
-// 1) KONAMI
-window.addEventListener("keydown", (e)=>{
-  if(e.keyCode === konami[idx]){ idx++; if(idx === konami.length){ revealDot(); idx = 0; } }
-  else { idx = 0; }
-
-  // 3) triple point "."
-  if(e.key === "."){
-    dotKeyCount++;
-    clearTimeout(dotKeyTimer);
-    dotKeyTimer = setTimeout(()=>{ dotKeyCount = 0; }, 1200);
-    if(dotKeyCount >= 3){ revealDot(); dotKeyCount = 0; }
-  }
-});
-
-// 2) 7 taps sur le logo "UR" (ou sur .logo)
-const logoEl = document.querySelector(".logo");
-if(logoEl){
-  logoEl.addEventListener("click", ()=>{
-    tapCount++;
-    clearTimeout(tapTimer);
-    tapTimer = setTimeout(()=>{ tapCount = 0; }, 1500);
-    if(tapCount >= 7){ revealDot(); tapCount = 0; }
-  });
-}
-
-function revealDot(){
-  dot.classList.add("show");
-}
-
-/* ========= Feuille 2 + 3 : PIN + Code du jour (avec anti-brute force) ========= */
-const modal = el("#admin-modal");
-const pinInput = el("#admin-pin");
-const otpInput = el("#admin-otp");
-const errBox = el("#admin-err");
-const hintBox = el("#admin-hint");
-
-const LOCK_KEY = "adm_lock_v1"; // {tries, until}
-const OK_FLAG = "admin_ok";     // "1" si connecté pour cette session
-
-function getLock(){
-  try{ return JSON.parse(localStorage.getItem(LOCK_KEY)) || {tries:0, until:0}; }
-  catch(e){ return {tries:0, until:0}; }
-}
-function setLock(obj){ localStorage.setItem(LOCK_KEY, JSON.stringify(obj)); }
-
-function lockedMsg(until){
-  const ms = until - now();
-  const min = Math.ceil(ms/60000);
-  return `Verrouillé. Réessayez dans ~${min} min.`;
-}
-
-function showModal(){
-  const lk = getLock();
-  errBox.textContent = "";
-  hintBox.textContent = "";
-  if(lk.until && lk.until > now()){
-    errBox.textContent = lockedMsg(lk.until);
-  }
-  pinInput.value = ""; otpInput.value = "";
-  modal.classList.add("show");
-  setTimeout(()=> pinInput.focus(), 50);
-}
-function hideModal(){ modal.classList.remove("show"); }
-
-function expectDailyCode(dateObj=new Date()){
-  const n = yyyymmdd(dateObj);
-  const raw = (n * 7 + DAILY_SEED) % 10000;
-  return pad4(raw);
-}
-
-function b64(s){ try{ return atob(s); }catch(e){ return ""; } }
-
-function checkPin(pin){
-  // légère obfuscation : comparaison avec BLURP + reverse + b64 (simple)
-  const secret = b64(ADMIN_PIN_B64); // "6996698877"
-  return String(pin) === String(secret);
-}
-
-function tryLogin(){
-  const lk = getLock();
-  if(lk.until && lk.until > now()){
-    errBox.textContent = lockedMsg(lk.until);
-    return;
-  }
-
-  const pin = pinInput.value.trim();
-  const otp = otpInput.value.trim();
-
-  // validations basiques
-  if(!pin || !otp){ errBox.textContent = "Champs manquants."; return; }
-  if(!/^\d{1,12}$/.test(pin)){ errBox.textContent = "PIN invalide."; return; }
-  if(!/^\d{4}$/.test(otp)){ errBox.textContent = "Code du jour = 4 chiffres."; return; }
-
-  const okPin = checkPin(pin);
-  const okOtp = (otp === expectDailyCode());
-
-  if(okPin && okOtp){
-    // reset lock, set session token
-    setLock({tries:0, until:0});
-    sessionStorage.setItem(OK_FLAG, "1");
-    // discrète redirection
-    window.location.href = ADMIN_TARGET;
-    return;
-  }
-
-  // erreur → incrémenter tentatives
-  lk.tries = (lk.tries || 0) + 1;
-  if(lk.tries >= MAX_TRIES){
-    lk.until = now() + LOCK_MINUTES*60000;
-    lk.tries = 0;
-    setLock(lk);
-    errBox.textContent = lockedMsg(lk.until);
-  }else{
-    setLock(lk);
-    // message d’erreur générique (ne pas révéler laquelle des 2 a raté)
-    errBox.textContent = `Code incorrect. Tentatives restantes : ${MAX_TRIES - lk.tries}`;
-    // petite “aide” facultative : montrer si la date du device est bonne
-    const today = yyyymmdd();
-    hintBox.textContent = `Astuce : assurez-vous que la date du téléphone est correcte (${today}).`;
-  }
-}
-
-/* === Ouverture / fermeture === */
-dot.addEventListener("click", showModal);
-el("#admin-cancel").addEventListener("click", hideModal);
-el("#admin-ok").addEventListener("click", tryLogin);
-// fermeture via ESC
-window.addEventListener("keydown", (e)=>{ if(e.key === "Escape") hideModal(); });
-</script>
-<!-- ===== Fin accès admin caché ===== -->
